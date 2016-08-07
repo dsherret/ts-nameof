@@ -17,7 +17,7 @@ interface ReplaceInfo {
     readonly text: string;
 }
 
-export function replaceInFiles(fileNames: string[], onFinished: () => void) {
+export function replaceInFiles(fileNames: string[], onFinished: (err?: NodeJS.ErrnoException) => void) {
     const compilerOptions: ts.CompilerOptions = {
         allowJs: true,
         experimentalDecorators: true
@@ -39,9 +39,19 @@ export function replaceInFiles(fileNames: string[], onFinished: () => void) {
 
     for (let fileInfo of fileInfos) {
         fs.readFile(fileInfo.fileName, "utf-8", (readErr, data) => {
+            /* istanbul ignore if  */
+            if (readErr) {
+                onFinished(readErr);
+            }
+
             data = replaceCallExpressionReplacesInText(fileInfo.callExpressionReplaces, data);
 
             fs.writeFile(fileInfo.fileName, data, (writeErr) => {
+                /* istanbul ignore if  */
+                if (writeErr) {
+                    onFinished(writeErr);
+                }
+
                 completeCount++;
                 checkFinished();
             });

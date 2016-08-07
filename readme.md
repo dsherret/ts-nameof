@@ -7,7 +7,11 @@
 
 [`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
 
-This library is very experimental and untested. I'll make it stable over the next few weeks.
+This library is experimental. I'll be working on it more over the next few weeks.
+
+```
+npm install ts-nameof --save-dev
+```
 
 ## Example
 
@@ -43,8 +47,7 @@ After step 3 *dst/MyFile.js* will contain the following code:
 ## Todo
 
 1. Glob support (ex. `replaceInFiles(["./dist/**/*.js"]);`)
-2. External module support.
-3. Error handling.
+2. JS map file support
 
 ## Future
 

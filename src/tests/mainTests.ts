@@ -13,7 +13,9 @@ describe("replaceInFiles()", () => {
         it("should replace in MyTestFile.js", () => {
             const data = fs.readFileSync(fileName, "utf-8");
             const expected =
-`var myVariable = "";
+`import * as fs from "fs";
+
+var myVariable = "";
 
 console.log("myVariable");
 console.log("alert");
