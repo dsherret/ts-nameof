@@ -1,0 +1,10 @@
+/node_modules
+/.vscode
+*.js.map
+/obj
+/temp
+/bin
+*.v12.suo
+*.csproj
+*.csproj.user
+*.sln
