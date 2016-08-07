@@ -13,32 +13,32 @@ This library is very experimental and untested. I'll make it stable over the nex
 
 1. Start with your TypeScript
 
-```typescript
-// src/MyFile.ts
-var myVariable = "";
+    ```typescript
+    // src/MyFile.ts
+    var myVariable = "";
 
-console.log(nameof(myVariable));
-console.log(nameof(window.alert));
-```
+    console.log(nameof(myVariable));
+    console.log(nameof(window.alert));
+    ```
 
-2. Compile your TypeScript to JavaScript (ex. compiles *.ts* files in */src* to */dist*)
+2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*)
 
 3. Run replace in files:
 
-```javascript
-var replaceInFiles = require("ts-nameof").replaceInFiles;
-replaceInFiles(["./dist/MyFile.js"]);
-```
+    ```javascript
+    var replaceInFiles = require("ts-nameof").replaceInFiles;
+    replaceInFiles(["./dist/MyFile.js"]);
+    ```
 
 After step 3 *dst/MyFile.js* will contain the following code:
 
-```javascript
-// dist/MyFile.js
-var myVariable = "";
+    ```javascript
+    // dist/MyFile.js
+    var myVariable = "";
 
-console.log("myVariable");
-console.log("alert");
-```
+    console.log("myVariable");
+    console.log("alert");
+    ```
 
 ## Todo
 
