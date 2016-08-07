@@ -17,7 +17,7 @@ interface ReplaceInfo {
     readonly text: string;
 }
 
-export function replaceInFiles(fileNames: string[], onFinished: (err?: NodeJS.ErrnoException) => void) {
+export function replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void) {
     const compilerOptions: ts.CompilerOptions = {
         allowJs: true,
         experimentalDecorators: true
@@ -31,9 +31,16 @@ export function replaceInFiles(fileNames: string[], onFinished: (err?: NodeJS.Er
     const fileInfos = getFileInfos(sourceFiles, nameOfSymbol, typeChecker).filter(f => f.callExpressionReplaces.length > 0);
     let completeCount = 0;
 
+    function tryOnFinished(err?: NodeJS.ErrnoException) {
+        /* istanbul ignore else  */
+        if (onFinished != null) {
+            onFinished();
+        }
+    }
+
     function checkFinished() {
         if (fileInfos.length === completeCount) {
-            onFinished();
+            tryOnFinished();
         }
     }
 
@@ -41,7 +48,7 @@ export function replaceInFiles(fileNames: string[], onFinished: (err?: NodeJS.Er
         fs.readFile(fileInfo.fileName, "utf-8", (readErr, data) => {
             /* istanbul ignore if  */
             if (readErr) {
-                onFinished(readErr);
+                tryOnFinished(readErr);
             }
 
             data = replaceCallExpressionReplacesInText(fileInfo.callExpressionReplaces, data);
@@ -49,7 +56,7 @@ export function replaceInFiles(fileNames: string[], onFinished: (err?: NodeJS.Er
             fs.writeFile(fileInfo.fileName, data, (writeErr) => {
                 /* istanbul ignore if  */
                 if (writeErr) {
-                    onFinished(writeErr);
+                    tryOnFinished(writeErr);
                 }
 
                 completeCount++;
@@ -65,6 +72,7 @@ function getNameOfFunctionSymbol(sourceFiles: ts.SourceFile[]) {
     for (const file of sourceFiles) {
         if (file.fileName.indexOf(NAMEOF_DEFINITION_FILE_NAME) >= 0) {
             const symbol = (file as any).locals["nameof"] as ts.Symbol;
+            /* istanbul ignore else  */
             if (symbol != null) {
                 return symbol;
             }
