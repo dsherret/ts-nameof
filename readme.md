@@ -44,16 +44,6 @@ After step 3 *dst/MyFile.js* will contain the following code:
     console.log("alert");
     ```
 
-## Gulp Task Example
-
-```typescript
-var replaceInFiles = require("ts-nameof").replaceInFiles;
-
-gulp.task("ts-nameof", function(cb) {
-    return replaceInFiles(["./dist/MyFile.js"], cb);
-});
-```
-
 ## Todo
 
 1. Glob support (ex. `replaceInFiles(["./dist/**/*.js"]);`)
