@@ -36,13 +36,13 @@ npm install ts-nameof --save-dev
 
 After step 3 *dst/MyFile.js* will contain the following code:
 
-    ```javascript
-    // dist/MyFile.js
-    var myVariable = "";
+```javascript
+// dist/MyFile.js
+var myVariable = "";
 
-    console.log("myVariable");
-    console.log("alert");
-    ```
+console.log("myVariable");
+console.log("alert");
+```
 
 ## Todo
 
