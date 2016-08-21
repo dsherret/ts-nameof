@@ -44,16 +44,6 @@ console.log("myVariable");
 console.log("alert");
 ```
 
-## Gulp Task Example
-
-```typescript
-var replaceInFiles = require("ts-nameof").replaceInFiles;
-
-gulp.task("ts-nameof", ["typescript" /* name of dependent compile task */], function(cb) {
-    return replaceInFiles(["./dist/MyFile.js"], cb);
-});
-```
-
 ## Todo
 
 1. Glob support (ex. `replaceInFiles(["./dist/**/*.js"]);`)
