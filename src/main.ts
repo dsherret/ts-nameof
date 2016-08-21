@@ -90,9 +90,7 @@ function getFileInfos(sourceFiles: ts.SourceFile[], nameOfSymbol: ts.Symbol, typ
             callExpressionReplaces: []
         };
 
-        const nodes = getAllChildren(file);
-
-        for (let node of nodes) {
+        forAllChildren(file, node => {
             const isValidCallExpression = node.kind === ts.SyntaxKind.CallExpression &&
                 typeChecker.getSymbolAtLocation((node as ts.CallExpression).expression) === nameOfSymbol &&
                 (node as ts.CallExpression).arguments.length === 1;
@@ -104,15 +102,15 @@ function getFileInfos(sourceFiles: ts.SourceFile[], nameOfSymbol: ts.Symbol, typ
                     text: (node as ts.CallExpression).arguments[0].getText()
                 });
             }
-        }
+        });
 
         return fileInfo;
     });
 }
 
-function getAllChildren(node: ts.Node): ts.Node[] {
-    // todo: probably really bad for performance... will change to use generators later
-    return [node, ...node.getChildren().map(getAllChildren).reduce((a, b) => a.concat(b), [])];
+function forAllChildren(node: ts.Node, onChild: (node: ts.Node) => void) {
+    onChild(node);
+    node.getChildren().map(n => forAllChildren(n, onChild));
 }
 
 function replaceCallExpressionReplacesInText(callExpressionReplaces: ReplaceInfo[], data: string) {

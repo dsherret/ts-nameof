@@ -36,20 +36,20 @@ npm install ts-nameof --save-dev
 
 After step 3 *dst/MyFile.js* will contain the following code:
 
-    ```javascript
-    // dist/MyFile.js
-    var myVariable = "";
+```javascript
+// dist/MyFile.js
+var myVariable = "";
 
-    console.log("myVariable");
-    console.log("alert");
-    ```
+console.log("myVariable");
+console.log("alert");
+```
 
 ## Gulp Task Example
 
 ```typescript
 var replaceInFiles = require("ts-nameof").replaceInFiles;
 
-gulp.task("ts-nameof", function(cb) {
+gulp.task("ts-nameof", ["typescript" /* name of dependent compile task */], function(cb) {
     return replaceInFiles(["./dist/MyFile.js"], cb);
 });
 ```
@@ -58,7 +58,6 @@ gulp.task("ts-nameof", function(cb) {
 
 1. Glob support (ex. `replaceInFiles(["./dist/**/*.js"]);`)
 2. JS map file support
-3. Performance improvements
 
 ## Future
 
