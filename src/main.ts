@@ -34,7 +34,7 @@ export function replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.E
     function tryOnFinished(err?: NodeJS.ErrnoException) {
         /* istanbul ignore else  */
         if (onFinished != null) {
-            onFinished();
+            onFinished(err);
         }
     }
 
