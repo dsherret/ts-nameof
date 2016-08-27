@@ -31,10 +31,10 @@ npm install ts-nameof --save-dev
 
     ```javascript
     var replaceInFiles = require("ts-nameof").replaceInFiles;
-    replaceInFiles(["./dist/MyFile.js"]);
+    replaceInFiles(["./dist/**/*.js"]);
     ```
 
-After step 3 *dst/MyFile.js* will contain the following code:
+After step 3 *dist/MyFile.js* will contain the following code:
 
 ```javascript
 // dist/MyFile.js
@@ -46,8 +46,7 @@ console.log("alert");
 
 ## Todo
 
-1. Glob support (ex. `replaceInFiles(["./dist/**/*.js"]);`)
-2. JS map file support
+* JS map file support
 
 ## Future
 

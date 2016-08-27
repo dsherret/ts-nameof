@@ -28,4 +28,21 @@ function withinFunction() {
             assert.equal(data.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
         });
     });
+
+    describe("glob support", () => {
+        const fileName = path.join(__dirname, "testFiles/globFolder/MyGlobTestFile.js");
+
+        before(function(done) {
+            replaceInFiles([path.join(__dirname, "testFiles/globFolder/**/*.js")], () => done());
+        });
+
+        it("should replace in MyGlobTestFile.js", () => {
+            const data = fs.readFileSync(fileName, "utf-8");
+            const expected =
+`console.log("console");
+`;
+
+            assert.equal(data.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
+        });
+    });
 });

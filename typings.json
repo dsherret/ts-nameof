@@ -7,5 +7,9 @@
     },
     "resolution": {
         "main": "src/typings"
+    },
+    "devDependencies": {
+        "es6-promise": "registry:npm/es6-promise#3.0.0+20160723033700",
+        "glob": "registry:npm/glob#6.0.0+20160723033700"
     }
 }

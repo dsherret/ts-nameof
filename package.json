@@ -1,7 +1,7 @@
 {
   "name": "ts-nameof",
-  "version": "0.1.4",
-  "description": "nameof() in TypeScript",
+  "version": "0.2.0",
+  "description": "nameof in TypeScript",
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
@@ -27,6 +27,8 @@
     "definition": "ts-nameof.d.ts"
   },
   "dependencies": {
+    "es6-promise": "^3.2.1",
+    "glob": "^7.0.6",
     "typescript": "^2.0.0"
   },
   "devDependencies": {
