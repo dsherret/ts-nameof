@@ -6,7 +6,7 @@ import {replaceInFiles} from "./../main";
 describe("replaceInFiles()", () => {
     describe("MyTestFile.js", () => {
         const fileName = path.join(__dirname, "testFiles/MyTestFile.js");
-        before(function(done) {
+        before((done) => {
             replaceInFiles([fileName], () => done());
         });
 
@@ -32,7 +32,7 @@ function withinFunction() {
     describe("glob support", () => {
         const fileName = path.join(__dirname, "testFiles/globFolder/MyGlobTestFile.js");
 
-        before(function(done) {
+        before((done) => {
             replaceInFiles([path.join(__dirname, "testFiles/globFolder/**/*.js")], () => done());
         });
 
