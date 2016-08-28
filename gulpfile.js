@@ -13,7 +13,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
         typescript: require("typescript")
     });
 
-    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts"])
+    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "./ts-nameof.d.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))
@@ -31,8 +31,8 @@ gulp.task("copy-definition-file", ["clean-scripts"], function () {
 });
 
 gulp.task("copy-test-files", ["clean-scripts"], function () {
-    return gulp.src("./src/**/*.js")
-        .pipe(gulp.dest("./dist"));
+    return gulp.src("./src/tests/testFiles/**/*.{js,ts}")
+        .pipe(gulp.dest("./dist/tests/testFiles"));
 });
 
 gulp.task("pre-test", ["typescript", "copy-test-files", "copy-definition-file"], function () {
@@ -50,7 +50,7 @@ gulp.task("test", ["pre-test"], function() {
 });
 
 gulp.task("tslint", function() {
-    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts"])
+    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts", "!./src/tests/testFiles/**/*.ts"])
         .pipe(tslint())
         .pipe(tslint.report("verbose"));
 });

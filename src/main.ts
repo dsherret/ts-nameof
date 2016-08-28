@@ -25,7 +25,9 @@ export function doReplace(fileNames: string[]) {
         experimentalDecorators: true
     };
 
-    const program = ts.createProgram([...fileNames, path.join(__dirname, "../", constants.NAMEOF_DEFINITION_FILE_NAME)], compilerOptions);
+    // the definition file is copied to the dist folder
+    const definitionFileName = path.join(__dirname, constants.NAMEOF_DEFINITION_FILE_NAME);
+    const program = ts.createProgram([...fileNames, definitionFileName], compilerOptions);
     const typeChecker = program.getTypeChecker();
     const sourceFiles = program.getSourceFiles().filter(f => f.fileName.indexOf("/node_modules/") === -1);
 

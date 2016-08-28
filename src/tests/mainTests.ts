@@ -45,4 +45,24 @@ function withinFunction() {
             assert.equal(data.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
         });
     });
+
+    describe("interface file", () => {
+        const fileName = path.join(__dirname, "testFiles/InterfaceTestFile.ts");
+
+        before((done) => {
+            replaceInFiles([fileName], () => done());
+        });
+
+        it("should replace in MyGlobTestFile.js", () => {
+            const data = fs.readFileSync(fileName, "utf-8");
+            const expected =
+`interface MyInterface {
+}
+
+console.log("MyInterface");
+`;
+
+            assert.equal(data.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
+        });
+    });
 });
