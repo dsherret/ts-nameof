@@ -49,6 +49,18 @@ console.log("alert");
 
 * JS map file support
 
+## Note
+
+I am not sure why, but in some scenarios you might need to add a reference to this package's typescript definition:
+
+```typescript
+// add this to a single definition file in your project where you make other references
+
+/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
+```
+
+If someone can tell me what I'm doing wrong that makes this necessary that would be great. I thought TypeScript should resolve it.
+
 ## Future
 
 Ideally this would be a plugin for the TypeScript emitter. Unfortunately that isn't availble yet, but it will be a smooth transition once that's supported.

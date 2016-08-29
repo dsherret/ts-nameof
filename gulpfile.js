@@ -25,17 +25,12 @@ gulp.task("typescript", ["clean-scripts"], function() {
         .pipe(gulp.dest("./dist"));
 });
 
-gulp.task("copy-definition-file", ["clean-scripts"], function () {
-    return gulp.src("./ts-nameof.d.ts")
-        .pipe(gulp.dest("./dist"));
-});
-
 gulp.task("copy-test-files", ["clean-scripts"], function () {
     return gulp.src("./src/tests/testFiles/**/*.{js,ts}")
         .pipe(gulp.dest("./dist/tests/testFiles"));
 });
 
-gulp.task("pre-test", ["typescript", "copy-test-files", "copy-definition-file"], function () {
+gulp.task("pre-test", ["typescript", "copy-test-files"], function () {
     return gulp.src(["dist/**/*.js", "!dist/tests/**/*.js"])
         .pipe(istanbul())
         .pipe(istanbul.hookRequire());

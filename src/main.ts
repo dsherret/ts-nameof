@@ -25,11 +25,11 @@ export function doReplace(fileNames: string[]) {
         experimentalDecorators: true
     };
 
-    // the definition file is copied to the dist folder
-    const definitionFileName = path.join(__dirname, constants.NAMEOF_DEFINITION_FILE_NAME);
+    const definitionFileName = path.join(__dirname, "../", constants.NAMEOF_DEFINITION_FILE_NAME);
     const program = ts.createProgram([...fileNames, definitionFileName], compilerOptions);
     const typeChecker = program.getTypeChecker();
-    const sourceFiles = program.getSourceFiles().filter(f => f.fileName.indexOf("/node_modules/") === -1);
+    const sourceFiles = program.getSourceFiles()
+        .filter(f => f.fileName.indexOf("/node_modules/") === -1 || f.fileName.indexOf(constants.NAMEOF_DEFINITION_FILE_NAME) >= 0);
 
     const nameOfSymbol = getNameOfFunctionSymbol(sourceFiles);
     const fileInfos = getFileInfos(sourceFiles, nameOfSymbol, typeChecker);
