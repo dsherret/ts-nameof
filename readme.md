@@ -24,9 +24,6 @@ npm install ts-nameof --save-dev
 
     nameof(myVariable);
     nameof(window.alert);
-    nameof<MyInterface>();
-    nameof<MyNamespace.MyClass>();
-    nameof<Array<any>>();
     ```
 
 2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*)
@@ -46,9 +43,6 @@ var myVariable = "";
 
 "myVariable";
 "alert";
-"MyInterface";
-"MyClass";
-"Array";
 ```
 
 ## Todo
