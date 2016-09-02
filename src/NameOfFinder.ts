@@ -97,7 +97,7 @@ export class NameOfFinder {
                         pos: startIndex,
                         end: this.currentIndex + 1,
                         argText: this.text.substring(this.text.indexOf("(", startIndex) + 1, this.currentIndex),
-                        angleText: angleText
+                        angleText
                     };
                 }
 
