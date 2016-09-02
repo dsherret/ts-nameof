@@ -1,5 +1,6 @@
 ﻿export interface ReplaceInfo {
     pos: number;
     end: number;
-    readonly text: string;
+    readonly argText: string;
+    readonly angleText: string;
 }

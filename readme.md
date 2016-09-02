@@ -22,8 +22,11 @@ npm install ts-nameof --save-dev
     // src/MyFile.ts
     var myVariable = "";
 
-    console.log(nameof(myVariable));
-    console.log(nameof(window.alert));
+    nameof(myVariable);
+    nameof(window.alert);
+    nameof<MyInterface>();
+    nameof<MyNamespace.MyClass>();
+    nameof<Array<any>>();
     ```
 
 2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*)
@@ -41,8 +44,11 @@ After step 3 *dist/MyFile.js* will contain the following code:
 // dist/MyFile.js
 var myVariable = "";
 
-console.log("myVariable");
-console.log("alert");
+"myVariable";
+"alert";
+"MyInterface";
+"MyClass";
+"Array";
 ```
 
 ## Todo
@@ -59,7 +65,7 @@ I am not sure why, but in some scenarios you might need to add a reference to th
 /// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
 ```
 
-If someone can tell me what I'm doing wrong that makes this necessary that would be great. I thought TypeScript should resolve it.
+If someone can tell me what I'm doing wrong that makes this necessary that would be great. I thought TypeScript should resolve it automatically.
 
 ## Future
 

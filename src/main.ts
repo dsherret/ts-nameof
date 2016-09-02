@@ -1,11 +1,10 @@
-import * as ts from "typescript";
-import * as path from "path";
+import * as fs from "fs";
 import {Promise} from "es6-promise";
-import * as constants from "./constants";
 import {getFileNamesFromGlobs} from "./getFileNamesFromGlobs";
-import {getNameOfFunctionSymbol} from "./getNameOfFunctionSymbol";
-import {updateFileBasedOnFileInfo} from "./updateFileBasedOnFileInfo";
-import {getFileInfos} from "./getFileInfos";
+import {NameOfFinder} from "./NameOfFinder";
+import {replaceCallExpressionReplacesInText} from "./replaceCallExpressionReplacesInText";
+
+// todo: cleanup
 
 export function replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void) {
     getFileNamesFromGlobs(fileNames).then(doReplace).then(() => {
@@ -20,20 +19,39 @@ export function replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.E
 }
 
 export function doReplace(fileNames: string[]) {
-    const compilerOptions: ts.CompilerOptions = {
-        allowJs: true,
-        experimentalDecorators: true
-    };
+    const promises: Promise<void>[] = [];
 
-    const definitionFileName = path.join(__dirname, "../", constants.NAMEOF_DEFINITION_FILE_NAME);
-    const program = ts.createProgram([...fileNames, definitionFileName], compilerOptions);
-    const typeChecker = program.getTypeChecker();
-    const sourceFiles = program.getSourceFiles()
-        .filter(f => f.fileName.indexOf("/node_modules/") === -1 || f.fileName.indexOf(constants.NAMEOF_DEFINITION_FILE_NAME) >= 0);
+    fileNames.forEach(fileName => {
+        promises.push(new Promise<void>((resolve, reject) => {
+            fs.readFile(fileName, "utf-8", (readErr, fileText) => {
+                /* istanbul ignore if */
+                if (readErr) {
+                    reject(readErr);
+                    return;
+                }
 
-    const nameOfSymbol = getNameOfFunctionSymbol(sourceFiles);
-    const fileInfos = getFileInfos(sourceFiles, nameOfSymbol, typeChecker);
-    const promises = fileInfos.map(f => updateFileBasedOnFileInfo(f));
+                const finder = new NameOfFinder(fileText);
+                const indexes = finder.indexOfAll();
+
+                if (indexes.length === 0) {
+                    resolve();
+                    return;
+                }
+
+                fileText = replaceCallExpressionReplacesInText(indexes, fileText);
+
+                fs.writeFile(fileName, fileText, (writeErr) => {
+                    /* istanbul ignore if */
+                    if (writeErr) {
+                        reject(writeErr);
+                        return;
+                    }
+
+                    resolve();
+                });
+            });
+        }));
+    });
 
     return Promise.all(promises);
 }

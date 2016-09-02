@@ -1,8 +1,21 @@
-﻿import {ReplaceInfo} from "./structures";
+﻿import {ReplaceInfo} from "./ReplaceInfo";
 
 export function replaceCallExpressionReplacesInText(callExpressionReplaces: ReplaceInfo[], data: string) {
     for (let i = 0; i < callExpressionReplaces.length; i++) {
-        const newText = `"${callExpressionReplaces[i].text.substr(callExpressionReplaces[i].text.lastIndexOf(".") + 1)}"`;
+        let text: string;
+
+        if (callExpressionReplaces[i].angleText) {
+            text = callExpressionReplaces[i].angleText;
+            const bracketIndex = text.indexOf("<");
+            if (bracketIndex > 0) {
+                text = text.substring(0, bracketIndex);
+            }
+        }
+        else {
+            text = callExpressionReplaces[i].argText;
+        }
+
+        const newText = `"${text.substr(text.lastIndexOf(".") + 1).trim()}"`;
         const offset = newText.length - (callExpressionReplaces[i].end - callExpressionReplaces[i].pos);
 
         data = data.substring(0, callExpressionReplaces[i].pos) + newText + data.substring(callExpressionReplaces[i].end);
