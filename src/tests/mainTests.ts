@@ -37,7 +37,7 @@ describe("replaceInFiles()", () => {
     describe("general file", () => {
         it("should have the correct number of characters", () => {
             // because an IDE might auto-format the code, this makes sure that hasn't happened
-            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.ts"), "utf-8").length, 186);
+            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.ts"), "utf-8").replace(/\r?\n/g, "\n").length, 181);
         });
 
         const expected =
