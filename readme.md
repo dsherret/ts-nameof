@@ -32,24 +32,24 @@ npm install ts-nameof --save-dev
 
     ```javascript
     var ts = require("gulp-typescript");
-    var tsNameof = require("ts-nameof");
+    var tsnameof = require("ts-nameof");
 
     gulp.src("src/**/*.ts")
-        .pipe(tsNameof())
+        .pipe(tsnameof())
         .pipe(ts())
         .pipe(gulp.dest("dist"));
     ```
 
 After step 2, *dist/MyFile.js* will contain the following code:
 
-    ```javascript
-    console.log("console");
-    console.log("log");
+```javascript
+console.log("console");
+console.log("log");
 
-    "MyInterface";
-    console.log("Array");
-    "MyInnerInterface";
-    ```
+"MyInterface";
+console.log("Array");
+"MyInnerInterface";
+```
 
 
 ## Example - Replacing in *.js* files (using `replaceInFiles`)
