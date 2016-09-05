@@ -1,5 +1,11 @@
 declare module "ts-nameof" {
-    export function replaceInFiles(fileNames: string[], onFinished?: (err?: any) => void): void;
+    interface Api {
+        (): NodeJS.ReadWriteStream;
+        replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+        replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+    }
+    var func: Api;
+    export = func;
 }
 
 declare function nameof<T>(): string;

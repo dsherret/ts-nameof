@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/types/npm-through2/83d47b72bdd67d6b94155846514a0e4212458d53/typings.json",
+    "raw": "registry:npm/through2#2.0.0+20160817101636",
+    "main": "index.d.ts",
+    "global": false,
+    "name": "through2",
+    "type": "typings"
+  }
+}

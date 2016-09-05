@@ -13,7 +13,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
         typescript: require("typescript")
     });
 
-    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "./ts-nameof.d.ts"])
+    return gulp.src(["./src/typings/**/*.d.ts", "./src/**/*.ts", "./ts-nameof.d.ts", "!./src/tests/definitionFileTests.ts"])
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(replace(/(}\)\()(.*\|\|.*;)/g, '$1/* istanbul ignore next */$2'))
@@ -45,7 +45,7 @@ gulp.task("test", ["pre-test"], function() {
 });
 
 gulp.task("tslint", function() {
-    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts", "!./src/tests/testFiles/**/*.ts"])
+    return gulp.src(["./src/**/*.ts", "!./src/typings/**/*.d.ts", "!./src/tests/testFiles/**/*.ts", "!./src/tests/definitionFileTests.ts"])
         .pipe(tslint())
         .pipe(tslint.report("verbose"));
 });

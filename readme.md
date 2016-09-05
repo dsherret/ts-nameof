@@ -14,9 +14,47 @@ This library is experimental. I'll be working on it more over the next few weeks
 npm install ts-nameof --save-dev
 ```
 
-## Example
+## Example - Replacing in *.ts* files (with stream)
 
-1. Start with your TypeScript
+1. Start with your TypeScript.
+
+    ```typescript
+    // src/MyFile.ts
+    console.log(nameof(console));
+    console.log(nameof(console.log));
+
+    nameof<MyInterface>();
+    console.log(nameof<Array<MyInterface>>());
+    nameof<MyNamespace.MyInnerInterface>();
+    ```
+
+2. Pipe your *.ts* files to `tsNameof`:
+
+    ```javascript
+    var ts = require("gulp-typescript");
+    var tsNameof = require("ts-nameof");
+
+    gulp.src("src/**/*.ts")
+        .pipe(tsNameof())
+        .pipe(ts())
+        .pipe(gulp.dest("dist"));
+    ```
+
+After step 2, *dist/MyFile.js* will contain the following code:
+
+    ```javascript
+    console.log("console");
+    console.log("log");
+
+    "MyInterface";
+    console.log("Array");
+    "MyInnerInterface";
+    ```
+
+
+## Example - Replacing in *.js* files (using `replaceInFiles`)
+
+1. Start with your TypeScript.
 
     ```typescript
     // src/MyFile.ts
@@ -26,7 +64,7 @@ npm install ts-nameof --save-dev
     nameof(window.alert);
     ```
 
-2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*)
+2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*).
 
 3. Run replace in files:
 
@@ -45,9 +83,17 @@ var myVariable = "";
 "alert";
 ```
 
+## Example - Replacing in *.ts* files (using `replaceInFiles`)
+
+You can use `replaceInFiles` to replace in .ts files:
+
+1. Copy your .ts files to a build folder. This is necessary so you don't overwrite your original source files.
+2. Run `replaceInFiles` on these files.
+3. Compile the resultant typescript files.
+
 ## Todo
 
-* JS map file support
+* JS map file support.
 
 ## Note
 

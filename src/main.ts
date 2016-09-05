@@ -1,55 +1,72 @@
 import * as fs from "fs";
 import {Promise} from "es6-promise";
 import {getFileNamesFromGlobs} from "./getFileNamesFromGlobs";
-import {NameOfFinder} from "./NameOfFinder";
-import {replaceCallExpressionReplacesInText} from "./replaceCallExpressionReplacesInText";
+import {stream} from "./stream";
 
 // todo: cleanup
 
-export function replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void) {
-    getFileNamesFromGlobs(fileNames).then(doReplace).then(() => {
-        if (onFinished) {
-            onFinished();
-        }
+interface Api {
+    (): NodeJS.ReadWriteStream;
+    replaceInFiles(fileNames: string[], opts?: { encoding: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+    replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+}
+
+type OnFinishedType = (err?: NodeJS.ErrnoException) => void;
+
+function replaceInFiles(fileNames: string[], onFinished?: OnFinishedType): void;
+function replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: OnFinishedType): void;
+function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encoding?: string } | OnFinishedType, onFinishedParam?: OnFinishedType): void {
+    const opts = { encoding: "utf8" };
+    let onFinished: OnFinishedType = () => {};
+
+    if (optsOrOnFinished instanceof Function) {
+        onFinished = optsOrOnFinished;
+    }
+    else if (onFinishedParam instanceof Function) {
+        onFinished = onFinishedParam;
+    }
+
+    if (optsOrOnFinished && !(optsOrOnFinished instanceof Function)) {
+        opts.encoding = optsOrOnFinished.encoding || opts.encoding;
+    }
+
+    getFileNamesFromGlobs(fileNames).then(globbedFileNames => doReplaceInFiles(globbedFileNames, opts.encoding)).then(() => {
+        onFinished();
     }).catch(/*istanbul ignore next*/ err => {
-        if (onFinished) {
-            onFinished(err);
-        }
+        onFinished(err);
     });
 }
 
-export function doReplace(fileNames: string[]) {
+let api: Api = stream as Api;
+api.replaceInFiles = replaceInFiles;
+
+export = api;
+
+function doReplaceInFiles(fileNames: string[], encoding: string) {
     const promises: Promise<void>[] = [];
 
     fileNames.forEach(fileName => {
         promises.push(new Promise<void>((resolve, reject) => {
-            fs.readFile(fileName, "utf-8", (readErr, fileText) => {
-                /* istanbul ignore if */
-                if (readErr) {
-                    reject(readErr);
-                    return;
-                }
+            let contents = "";
+            fs.createReadStream(fileName)
+                .pipe(stream())
+                .on("error", /* istanbul ignore next */ (e: any) => {
+                    reject(e);
+                })
+                .on("data", (buffer: Buffer) => {
+                    contents += buffer.toString();
+                })
+                .on("finish", () => {
+                    fs.writeFile(fileName, contents, (writeErr) => {
+                        /* istanbul ignore if */
+                        if (writeErr) {
+                            reject(writeErr);
+                            return;
+                        }
 
-                const finder = new NameOfFinder(fileText);
-                const indexes = finder.indexOfAll();
-
-                if (indexes.length === 0) {
-                    resolve();
-                    return;
-                }
-
-                fileText = replaceCallExpressionReplacesInText(indexes, fileText);
-
-                fs.writeFile(fileName, fileText, (writeErr) => {
-                    /* istanbul ignore if */
-                    if (writeErr) {
-                        reject(writeErr);
-                        return;
-                    }
-
-                    resolve();
+                        resolve();
+                    });
                 });
-            });
         }));
     });
 
