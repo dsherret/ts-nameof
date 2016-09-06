@@ -2,7 +2,6 @@
 import * as assert from "assert";
 import * as path from "path";
 import * as fs from "fs";
-import {Promise} from "es6-promise";
 import * as tsNameof from "./../main";
 
 describe("stream()", () => {

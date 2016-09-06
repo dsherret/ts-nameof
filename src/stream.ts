@@ -44,7 +44,7 @@ function getContentsAsString(chunk: Buffer | GulpChunk) {
     }
 }
 
-function getNewBuffer(chunk: Buffer | GulpChunk, newText: string) : Buffer | GulpChunk {
+function getNewBuffer(chunk: Buffer | GulpChunk, newText: string): Buffer | GulpChunk {
     if (isGulpChunk(chunk)) {
         chunk.contents = new Buffer(newText);
         return chunk;
