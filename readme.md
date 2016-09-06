@@ -33,11 +33,11 @@ npm install ts-nameof --save-dev
     ```javascript
     var gulp = require("gulp");
     var ts = require("gulp-typescript");
-    var tsnameof = require("ts-nameof");
+    var tsNameof = require("ts-nameof");
 
     gulp.task("typescript", function() {
         gulp.src("src/**/*.ts")
-            .pipe(tsnameof())
+            .pipe(tsNameof())
             .pipe(ts())
             .pipe(gulp.dest("dist"));
     });
