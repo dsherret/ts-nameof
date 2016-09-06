@@ -1,0 +1,89 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/types/npm-gulp/e01fe07d5fb6dbe07a0e37492e90e4969badbda2/4.0.0-alpha.2/typings.json",
+    "raw": "registry:npm/gulp#4.0.0-alpha.2+20160817105618",
+    "main": "index.d.ts",
+    "version": "4.0.0-alpha.2",
+    "global": false,
+    "dependencies": {
+      "chokidar": {
+        "src": "https://raw.githubusercontent.com/types/npm-chokidar/b60918f9b3b996a68f1ea27f192233475cfbbc22/typings.json",
+        "raw": "registry:npm/chokidar#1.6.0+20160817083815",
+        "main": "index.d.ts",
+        "version": "1.6.0",
+        "global": false,
+        "name": "chokidar",
+        "type": "typings"
+      },
+      "undertaker": {
+        "src": "https://raw.githubusercontent.com/types/npm-undertaker/7173e366378a4eb493f8921629e29ca0f84a50d3/typings.json",
+        "raw": "registry:npm/undertaker#1.0.0+20160817104605",
+        "main": "index.d.ts",
+        "version": "1.0.0",
+        "global": false,
+        "name": "undertaker",
+        "type": "typings"
+      },
+      "vinyl-fs": {
+        "src": "https://raw.githubusercontent.com/types/npm-vinyl-fs/94022d746133d86138b21e97fdc4179a89645685/typings.json",
+        "raw": "registry:npm/vinyl-fs#2.4.3+20160817102725",
+        "main": "index.d.ts",
+        "version": "2.4.3",
+        "global": false,
+        "dependencies": {
+          "glob-stream": {
+            "src": "https://raw.githubusercontent.com/types/npm-glob-stream/678827da5642c639d3e0c572d96211d278b1e87e/typings.json",
+            "raw": "registry:npm/glob-stream#5.3.1+20160817012007",
+            "main": "index.d.ts",
+            "version": "5.3.1",
+            "global": false,
+            "dependencies": {
+              "glob": {
+                "src": "https://raw.githubusercontent.com/types/npm-glob/59ca0f5d4696a8d4da27858035316c1014133fcb/typings.json",
+                "raw": "registry:npm/glob#6.0.0+20160723033700",
+                "main": "glob.d.ts",
+                "global": false,
+                "dependencies": {
+                  "minimatch": {
+                    "src": "https://raw.githubusercontent.com/typed-typings/npm-minimatch/74f47de8acb42d668491987fc6bc144e7d9aa891/typings.json",
+                    "raw": "github:typed-typings/npm-minimatch#74f47de8acb42d668491987fc6bc144e7d9aa891",
+                    "main": "minimatch.d.ts",
+                    "global": false,
+                    "name": "minimatch",
+                    "type": "typings"
+                  }
+                },
+                "name": "glob",
+                "type": "typings"
+              }
+            },
+            "name": "glob-stream",
+            "type": "typings"
+          },
+          "through2": {
+            "src": "https://raw.githubusercontent.com/types/npm-through2/83d47b72bdd67d6b94155846514a0e4212458d53/typings.json",
+            "raw": "registry:npm/through2#2.0.0+20160817101636",
+            "main": "index.d.ts",
+            "global": false,
+            "name": "through2",
+            "type": "typings"
+          },
+          "vinyl": {
+            "src": "https://raw.githubusercontent.com/types/npm-vinyl/13670eff75aba7b4c95546ec9eebbb72e3537188/typings.json",
+            "raw": "registry:npm/vinyl#1.2.0+20160817093728",
+            "main": "index.d.ts",
+            "version": "1.2.0",
+            "global": false,
+            "name": "vinyl",
+            "type": "typings"
+          }
+        },
+        "name": "vinyl-fs",
+        "type": "typings"
+      }
+    },
+    "name": "gulp",
+    "type": "typings"
+  }
+}

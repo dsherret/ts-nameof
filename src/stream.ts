@@ -2,15 +2,17 @@
 import {NameOfFinder} from "./NameOfFinder";
 import {replaceCallExpressionReplacesInText} from "./replaceCallExpressionReplacesInText";
 
+type GulpChunk = { contents: Buffer; };
+
 export function stream() {
-    function transform(chunk: Buffer, encoding: string, callback: (error: any, file: Buffer) => void) {
+    function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
         let err: any = null;
 
         try {
-            let result = getReplacedText(chunk.toString());
+            let result = getReplacedText(getContentsAsString(chunk));
 
             if (result.replaced) {
-                chunk = new Buffer(result.fileText!);
+                chunk = getNewBuffer(chunk, result.fileText!);
             }
         } catch (e) {
             err = e;
@@ -31,4 +33,26 @@ function getReplacedText(fileText: string): { fileText?: string, replaced: boole
     }
 
     return { fileText: replaceCallExpressionReplacesInText(indexes, fileText), replaced: true };
+}
+
+function getContentsAsString(chunk: Buffer | GulpChunk) {
+    if (isGulpChunk(chunk)) {
+        return chunk.contents.toString();
+    }
+    else {
+        return chunk.toString();
+    }
+}
+
+function getNewBuffer(chunk: Buffer | GulpChunk, newText: string) {
+    if (isGulpChunk(chunk)) {
+        return chunk.contents = new Buffer(newText);
+    }
+    else {
+        return new Buffer(newText);
+    }
+}
+
+function isGulpChunk(chunk: Buffer | GulpChunk): chunk is GulpChunk {
+    return chunk != null && typeof (chunk as GulpChunk).contents !== "undefined";
 }

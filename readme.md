@@ -16,7 +16,7 @@ npm install ts-nameof --save-dev
 
 ## Example - Replacing in *.ts* files (with stream)
 
-1. Start with your TypeScript.
+1. Start with your TypeScript:
 
     ```typescript
     // src/MyFile.ts
@@ -31,16 +31,25 @@ npm install ts-nameof --save-dev
 2. Pipe your *.ts* files to `tsNameof`:
 
     ```javascript
+    var gulp = require("gulp");
     var ts = require("gulp-typescript");
     var tsnameof = require("ts-nameof");
 
-    gulp.src("src/**/*.ts")
-        .pipe(tsnameof())
-        .pipe(ts())
-        .pipe(gulp.dest("dist"));
+    gulp.task("typescript", function() {
+        gulp.src("src/**/*.ts")
+            .pipe(tsnameof())
+            .pipe(ts())
+            .pipe(gulp.dest("dist"));
+    });
     ```
 
-After step 2, *dist/MyFile.js* will contain the following code:
+3. Compile:
+
+    ```bash
+    gulp typescript
+    ```
+
+After step 3, *dist/MyFile.js* will contain the following code:
 
 ```javascript
 console.log("console");
@@ -54,7 +63,7 @@ console.log("Array");
 
 ## Example - Replacing in *.js* files (using `replaceInFiles`)
 
-1. Start with your TypeScript.
+1. Start with your TypeScript:
 
     ```typescript
     // src/MyFile.ts
