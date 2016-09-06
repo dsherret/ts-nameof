@@ -11,9 +11,12 @@ describe("stream()", () => {
         let contents = "";
 
         before((done) => {
-            getContentsFromStream(fs.createReadStream(fileName))
-                .then(readContents => {
-                    contents = readContents;
+            fs.createReadStream(fileName)
+                .pipe(tsNameof())
+                .on("data", (buffer: Buffer) => {
+                    contents += buffer.toString();
+                })
+                .on("end", () => {
                     done();
                 });
         });
@@ -21,20 +24,6 @@ describe("stream()", () => {
         it("should replace", () => {
             assert.equal(contents.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
         });
-    }
-
-    function getContentsFromStream(stream: fs.ReadStream | NodeJS.ReadWriteStream) {
-        return new Promise<string>((resolve, reject) => {
-            let contents = "";
-
-            stream.pipe(tsNameof())
-                .on("data", (buffer: Buffer) => {
-                    contents += buffer.toString();
-                })
-                .on("end", () => {
-                    resolve(contents);
-                });
-         });
     }
 
     describe("stream test file", () => {
@@ -55,14 +44,21 @@ describe("stream()", () => {
         const expected =
 `"window";
 `;
+        let contents = "";
 
-        it("should get the contents for a gulp stream", (done) => {
-            let gulpStream = gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.ts")).pipe(tsNameof());
-            getContentsFromStream(gulpStream).then(contents => {
-                assert.equal(contents.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
-                done();
-            });
+        before((done) => {
+            gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.ts"))
+                .pipe(tsNameof())
+                .on("data", (chunk: { contents: Buffer; }) => {
+                    contents += chunk.contents.toString();
+                })
+                .on("end", () => {
+                    done();
+                });
         });
-        runTest("StreamTestFile.ts", expected);
+
+        it("should get the contents for a gulp stream", () => {
+            assert.equal(contents.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
+        });
     });
 });

@@ -44,9 +44,10 @@ function getContentsAsString(chunk: Buffer | GulpChunk) {
     }
 }
 
-function getNewBuffer(chunk: Buffer | GulpChunk, newText: string) {
+function getNewBuffer(chunk: Buffer | GulpChunk, newText: string) : Buffer | GulpChunk {
     if (isGulpChunk(chunk)) {
-        return chunk.contents = new Buffer(newText);
+        chunk.contents = new Buffer(newText);
+        return chunk;
     }
     else {
         return new Buffer(newText);
