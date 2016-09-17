@@ -1,25 +1,25 @@
 ﻿import {ReplaceInfo} from "./ReplaceInfo";
+import {StringIterator} from "./StringIterator";
 
 // todo: cleanup
 
 export class NameOfFinder {
     private stringCharStack: string[] = [];
-    private currentIndex = 0;
     private currentMatchIndex = 0;
     private validNameChars = /[A-Za-z0-9_]/;
     private validCharsInParens = /[A-Za-z0-9_\.\s]/;
     private readonly searchingMethodName = "nameof";
 
-    constructor(private readonly text: string) {
+    constructor(private readonly iterator: StringIterator) {
     }
 
     indexOfAll() {
         this.currentMatchIndex = 0;
-        const currentCharMatches = () => this.currentMatchIndex < this.searchingMethodName.length && this.getCurrentChar() === this.searchingMethodName[this.currentMatchIndex];
-        const isValidFirstChar = () => !this.isValidNameChar(this.getLastChar()) && this.getLastChar() !== ".";
+        const currentCharMatches = () => this.currentMatchIndex < this.searchingMethodName.length && this.iterator.getCurrentChar() === this.searchingMethodName[this.currentMatchIndex];
+        const isValidFirstChar = () => !this.isValidNameChar(this.iterator.getLastChar()) && this.iterator.getLastChar() !== ".";
         const foundIndexes: ReplaceInfo[] = [];
 
-        for (this.currentIndex = 0; this.currentIndex < this.text.length; this.currentIndex++) {
+        while (this.iterator.canMoveNext()) {
             this.handleStringChar();
             this.handleComment();
 
@@ -31,7 +31,7 @@ export class NameOfFinder {
             }
 
             if (this.currentMatchIndex === this.searchingMethodName.length) {
-                this.currentIndex++;
+                this.iterator.moveNext();
 
                 const foundIndex = this.handleFoundName();
 
@@ -41,67 +41,71 @@ export class NameOfFinder {
 
                 this.currentMatchIndex = 0;
             }
+
+            if (this.iterator.canMoveNext()) {
+                this.iterator.moveNext();
+            }
         }
 
         return foundIndexes;
     }
 
-    private passSpaces() {
-        while (this.currentIndex < this.text.length && this.getCurrentChar() === " ") {
-            this.currentIndex++;
-        }
-    }
-
     private handleFoundName() {
-        const startIndex = this.currentIndex - this.searchingMethodName.length;
+        const startIndex = this.iterator.getCurrentIndex() - this.searchingMethodName.length;
         let foundIndex: ReplaceInfo | null = null;
         let angleText: string = "";
 
-        this.passSpaces();
+        this.iterator.passSpaces();
 
-        if (this.getCurrentChar() === "<") {
-            this.currentIndex++;
+        if (this.iterator.getCurrentChar() === "<") {
+            this.iterator.moveNext();
 
             let angleBrackets = 1;
-            while (angleBrackets > 0 && this.currentIndex < this.text.length) {
-                if (this.getCurrentChar() === ">") {
+            while (angleBrackets > 0 && this.iterator.canMoveNext()) {
+                if (this.iterator.getCurrentChar() === ">") {
                     angleBrackets--;
                 }
-                else if (this.getCurrentChar() === "<") {
+                else if (this.iterator.getCurrentChar() === "<") {
                     angleBrackets++;
                 }
-                else if (!this.validCharsInParens.test(this.getCurrentChar())) {
-                    return;
+                else if (!this.validCharsInParens.test(this.iterator.getCurrentChar())) {
+                    return null;
                 }
 
-                this.currentIndex++;
-            }
+                if (angleBrackets !== 0) {
+                    angleText += this.iterator.getCurrentChar();
+                }
 
-            angleText = this.text.substring(this.text.indexOf("<", startIndex) + 1, this.currentIndex - 1);
+                this.iterator.moveNext();
+            }
         }
 
-        if (this.getCurrentChar() === "(") {
+        if (this.iterator.getCurrentChar() === "(") {
             let foundParen = false;
-            this.currentIndex++;
+            let argText = "";
+            this.iterator.moveNext();
 
-            while (!foundParen && this.currentIndex < this.text.length) {
-                if (this.getCurrentChar() === ")") {
+            while (!foundParen && this.iterator.canMoveNext()) {
+                if (this.iterator.getCurrentChar() === ")") {
                    foundParen = true;
                 }
-                else if (!this.validCharsInParens.test(this.getCurrentChar())) {
-                    return;
+                else if (!this.validCharsInParens.test(this.iterator.getCurrentChar())) {
+                    return null;
+                }
+                else {
+                    argText += this.iterator.getCurrentChar();
                 }
 
                 if (foundParen) {
                     foundIndex = {
                         pos: startIndex,
-                        end: this.currentIndex + 1,
-                        argText: this.text.substring(this.text.indexOf("(", startIndex) + 1, this.currentIndex),
+                        end: this.iterator.getCurrentIndex() + 1,
+                        argText,
                         angleText
                     };
                 }
 
-                this.currentIndex++;
+                this.iterator.moveNext();
             }
         }
 
@@ -115,7 +119,7 @@ export class NameOfFinder {
     private handleStringChar() {
         if (this.isCurrentStringChar()) {
             const lastStringChar = this.getLastStringCharOnStack();
-            const currentChar = this.getCurrentChar();
+            const currentChar = this.iterator.getCurrentChar();
 
             if (currentChar === lastStringChar) {
                 this.stringCharStack.pop();
@@ -127,8 +131,8 @@ export class NameOfFinder {
     }
 
     private isCurrentStringChar() {
-        const lastChar = this.getLastChar();
-        const currentChar = this.getCurrentChar();
+        const lastChar = this.iterator.getLastChar();
+        const currentChar = this.iterator.getCurrentChar();
         const lastStringChar = this.getLastStringCharOnStack();
 
         if (lastChar === "\\") {
@@ -160,13 +164,13 @@ export class NameOfFinder {
         this.currentMatchIndex = 0;
 
         if (this.isOpenCommentChar()) {
-            while (this.currentIndex < this.text.length && !this.isCloseCommentChar()) {
-                this.currentIndex++;
+            while (this.iterator.getCurrentIndex() < this.iterator.getLength() && !this.isCloseCommentChar()) {
+                this.iterator.moveNext();
             }
         }
         else if (this.isCommentChar()) {
-            while (this.currentIndex < this.text.length && this.getCurrentChar() !== "\n") {
-                this.currentIndex++;
+            while (this.iterator.getCurrentIndex() < this.iterator.getLength() && this.iterator.getCurrentChar() !== "\n") {
+                this.iterator.moveNext();
             }
         }
     }
@@ -175,7 +179,7 @@ export class NameOfFinder {
         return this.stringCharStack.length > 0 && this.getLastStringCharOnStack() !== "}";
     }
 
-    private getLastStringCharOnStack() {
+    private getLastStringCharOnStack(): string | null {
         if (this.stringCharStack.length > 0) {
             return this.stringCharStack[this.stringCharStack.length - 1];
         }
@@ -185,22 +189,14 @@ export class NameOfFinder {
     }
 
     private isCommentChar() {
-        return this.getLastChar() === "/" && this.getCurrentChar() === "/";
+        return this.iterator.getLastChar() === "/" && this.iterator.getCurrentChar() === "/";
     }
 
     private isOpenCommentChar() {
-        return this.getLastChar() === "/" && this.getCurrentChar() === "*";
+        return this.iterator.getLastChar() === "/" && this.iterator.getCurrentChar() === "*";
     }
 
     private isCloseCommentChar() {
-        return this.getLastChar() === "*" && this.getCurrentChar() === "/";
-    }
-
-    private getLastChar() {
-        return this.currentIndex - 1 < 0 ? null : this.text[this.currentIndex - 1];
-    }
-
-    private getCurrentChar() {
-        return this.text[this.currentIndex];
+        return this.iterator.getLastChar() === "*" && this.iterator.getCurrentChar() === "/";
     }
 }
