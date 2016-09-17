@@ -2,7 +2,7 @@
 import {ReplaceInfo} from "./ReplaceInfo";
 
 const searchingMethodName = "nameof";
-const validCharsInParens = /[A-Za-z0-9_\.\s]/;
+const validCharsInParens = /[A-Za-z0-9_\.\s\t]/;
 
 export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     const startIndex = iterator.getCurrentIndex();

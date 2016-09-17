@@ -1,4 +1,5 @@
-﻿import {NameOfFinder} from "./../NameOfFinder";
+﻿import * as assert from "assert";
+import {NameOfFinder} from "./../NameOfFinder";
 import {StringIterator} from "./../StringIterator";
 import {testReplaceInfo} from "./testReplaceInfo";
 
@@ -23,6 +24,37 @@ describe("NameOfFinder", () => {
                     pos: 12,
                     end: 21
                 });
+            });
+        });
+
+        describe("name tests", () => {
+            function startStringTest(startString: string) {
+                const finder = new NameOfFinder(new StringIterator(startString + "nameof(str);"));
+                const indexes = finder.indexOfAll();
+
+                it("should not find anything", () => {
+                    assert.equal(indexes.length, 0);
+                });
+            }
+
+            describe("where there's an alpha char at the beginning", () => {
+                startStringTest("a");
+            });
+
+            describe("where there's a number char at the beginning", () => {
+                startStringTest("0");
+            });
+
+            describe("where there's an underscore char at the beginning", () => {
+                startStringTest("_");
+            });
+
+            describe("where it's a property of an object", () => {
+                startStringTest("test.");
+            });
+
+            describe("where it's a property of an object, but there's a space after the period", () => {
+                startStringTest("test. \t\r");
             });
         });
     });

@@ -30,7 +30,7 @@
     }
 
     passSpaces() {
-        while (this.canMoveNext() && this.getCurrentChar() === " ") {
+        while (this.canMoveNext() && (this.getCurrentChar() === " " || this.getCurrentChar() === "\t")) {
             this.moveNext();
         }
     }
@@ -57,6 +57,22 @@
         }
 
         return this.text[this.currentIndex];
+    }
+
+    getLastNonSpaceChar() {
+        let currentIndex = this.currentIndex - 1;
+
+        while (currentIndex >= 0) {
+            const char = this.text[currentIndex];
+
+            if (!/[\s\r\n\t]/.test(char)) {
+                break;
+            }
+
+            currentIndex--;
+        }
+
+        return currentIndex < 0 ? null : this.text[currentIndex];
     }
 
     getLastChar() {

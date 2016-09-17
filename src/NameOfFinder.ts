@@ -11,7 +11,7 @@ export class NameOfFinder {
     }
 
     indexOfAll() {
-        const isValidFirstChar = () => !this.isValidNameChar(this.iterator.getLastChar()) && this.iterator.getLastChar() !== ".";
+        const isValidFirstChar = () => !this.isValidNameChar(this.iterator.getLastChar()) && this.iterator.getLastNonSpaceChar() !== ".";
         const foundIndexes: ReplaceInfo[] = [];
 
         while (this.iterator.canMoveNext()) {
@@ -19,13 +19,13 @@ export class NameOfFinder {
 
             if (!this.isInString()) {
                 handleComment(this.iterator);
-            }
 
-            if (isValidFirstChar() && !this.isInString()) {
-                const foundIndex = handleNameOf(this.iterator);
+                if (isValidFirstChar()) {
+                    const foundIndex = handleNameOf(this.iterator);
 
-                if (foundIndex != null) {
-                    foundIndexes.push(foundIndex);
+                    if (foundIndex != null) {
+                        foundIndexes.push(foundIndex);
+                    }
                 }
             }
 

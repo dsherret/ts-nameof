@@ -68,7 +68,7 @@ describe("StringIterator", () => {
         });
 
         it("should pass all the spaces if there are spaces to pass", () => {
-            const iterator = new StringIterator("    t");
+            const iterator = new StringIterator("\t   t");
             iterator.passSpaces();
             assert.equal(iterator.getCurrentIndex(), 4);
         });
@@ -137,6 +137,24 @@ describe("StringIterator", () => {
             const iterator = new StringIterator("ab");
             iterator.moveNext();
             assert.equal(iterator.getLastChar(), "a");
+        });
+    });
+
+    describe("#getLastNonSpaceChar()", () => {
+        it("should return null at the beginning of a string", () => {
+            const iterator = new StringIterator("a\t\r\n b");
+            assert.equal(iterator.getLastNonSpaceChar(), null);
+        });
+
+        it("should return the last non space char", () => {
+            const iterator = new StringIterator("a\t\r\n b");
+            iterator.moveNext();
+            iterator.moveNext();
+            iterator.moveNext();
+            iterator.moveNext();
+            iterator.moveNext();
+            assert.equal(iterator.getCurrentChar(), "b");
+            assert.equal(iterator.getLastNonSpaceChar(), "a");
         });
     });
 
