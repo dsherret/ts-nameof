@@ -10,3 +10,7 @@ declare module "ts-nameof" {
 
 declare function nameof<T>(): string;
 declare function nameof(obj: Object): string;
+declare namespace nameof {
+    function full<T>(): string;
+    function full(obj: Object): string;
+}

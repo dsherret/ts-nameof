@@ -14,7 +14,8 @@ describe("NameOfFinder", () => {
                     typeArgText: "",
                     argText: "str",
                     pos: 0,
-                    end: 11
+                    end: 11,
+                    showFull: false
                 });
             });
             describe("nameof: 1", () => {
@@ -22,7 +23,8 @@ describe("NameOfFinder", () => {
                     typeArgText: "",
                     argText: "t",
                     pos: 12,
-                    end: 21
+                    end: 21,
+                    showFull: false
                 });
             });
         });

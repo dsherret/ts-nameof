@@ -1,7 +1,8 @@
 ﻿import {StringIterator} from "./StringIterator";
 import {ReplaceInfo} from "./ReplaceInfo";
 
-const searchingMethodName = "nameof";
+const searchingFunctionName = "nameof";
+const searchingFullPropertyName = "full";
 const validCharsInParens = /[A-Za-z0-9_\.\s\t]/;
 
 export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
@@ -12,6 +13,10 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
         iterator.restoreLastState();
         return null;
     }
+
+    iterator.passSpaces();
+
+    const showFull = tryHandleFullProperty(iterator);
 
     iterator.passSpaces();
 
@@ -37,14 +42,39 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
         pos: startIndex,
         end: iterator.getCurrentIndex(),
         argText: (argTextResult.text || "").trim(),
-        typeArgText: (typeArgTextResult.text || "").trim()
+        typeArgText: (typeArgTextResult.text || "").trim(),
+        showFull
     };
 }
 
 export function tryHandleFunctionName(iterator: StringIterator) {
     iterator.saveState();
 
-    for (let char of searchingMethodName) {
+    for (let char of searchingFunctionName) {
+        if (!iterator.canMoveNext() || iterator.getCurrentChar() !== char) {
+            iterator.restoreLastState();
+            return false;
+        }
+
+        iterator.moveNext();
+    }
+
+    iterator.clearLastState();
+    return true;
+}
+
+export function tryHandleFullProperty(iterator: StringIterator) {
+    iterator.saveState();
+
+    if (iterator.getCurrentChar() !== ".") {
+        iterator.restoreLastState();
+        return false;
+    }
+
+    iterator.moveNext();
+    iterator.passSpaces();
+
+    for (let char of searchingFullPropertyName) {
         if (!iterator.canMoveNext() || iterator.getCurrentChar() !== char) {
             iterator.restoreLastState();
             return false;

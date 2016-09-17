@@ -3,4 +3,5 @@
     end: number;
     readonly argText: string;
     readonly typeArgText: string;
+    showFull: boolean;
 }

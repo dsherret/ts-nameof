@@ -14,4 +14,7 @@ export function testReplaceInfo(actual: ReplaceInfo, expected: ReplaceInfo) {
     it("it should have the same end", () => {
         assert.equal(actual.end, expected.end);
     });
+    it("it should have the same showFull", () => {
+        assert.equal(actual.showFull, expected.showFull);
+    });
 }

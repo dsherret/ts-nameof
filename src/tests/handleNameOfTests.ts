@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import {StringIterator} from "./../StringIterator";
-import {handleNameOf, tryHandleFunctionName, tryGetTypeArgText, tryGetArgText} from "./../handleNameOf";
+import {handleNameOf, tryHandleFunctionName, tryHandleFullProperty, tryGetTypeArgText, tryGetArgText} from "./../handleNameOf";
 import {testReplaceInfo} from "./testReplaceInfo";
 
 describe("handleNameOf", () => {
@@ -13,7 +13,8 @@ describe("handleNameOf", () => {
                 pos: 0,
                 end: iterator.getLength(),
                 typeArgText: "typeArg",
-                argText: "argText"
+                argText: "argText",
+                showFull: false
             });
 
             it("should have the iterator at the end", () => {
@@ -33,7 +34,50 @@ describe("handleNameOf", () => {
                 pos: 0,
                 end: iterator.getLength(),
                 typeArgText: "typeArg",
-                argText: "argText"
+                argText: "argText",
+                showFull: false
+            });
+
+            it("should have the iterator at the end", () => {
+                assert.equal(iterator.getCurrentIndex(), iterator.getLength());
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("finding a nameof.full with a type arg and arg text", () => {
+            const iterator = new StringIterator("nameof.full<typeArg>(argText)");
+            const result = handleNameOf(iterator);
+
+            testReplaceInfo(result!, {
+                pos: 0,
+                end: iterator.getLength(),
+                typeArgText: "typeArg",
+                argText: "argText",
+                showFull: true
+            });
+
+            it("should have the iterator at the end", () => {
+                assert.equal(iterator.getCurrentIndex(), iterator.getLength());
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("finding a nameof with a type arg and arg text with spaces", () => {
+            const iterator = new StringIterator("nameof  .  full  <  typeArg  >  (  argText  )");
+            const result = handleNameOf(iterator);
+
+            testReplaceInfo(result!, {
+                pos: 0,
+                end: iterator.getLength(),
+                typeArgText: "typeArg",
+                argText: "argText",
+                showFull: true
             });
 
             it("should have the iterator at the end", () => {
@@ -99,7 +143,8 @@ describe("handleNameOf", () => {
 
     describe("#tryHandleFunctionName()", () => {
         describe("finding the name", () => {
-            const iterator = new StringIterator("nameof");
+            const text = "nameof";
+            const iterator = new StringIterator(text);
             const result = tryHandleFunctionName(iterator);
 
             it("should return true", () => {
@@ -107,7 +152,7 @@ describe("handleNameOf", () => {
             });
 
             it("should have the iterator at the end of the name", () => {
-                assert.equal(iterator.getCurrentIndex(), "nameof".length);
+                assert.equal(iterator.getCurrentIndex(), text.length);
             });
 
             it("should have the iterator with zero states", () => {
@@ -135,6 +180,78 @@ describe("handleNameOf", () => {
         describe("not finding the name", () => {
             const iterator = new StringIterator("anameof");
             const result = tryHandleFunctionName(iterator);
+
+            it("should return false", () => {
+                assert.equal(result, false);
+            });
+
+            it("should have the iterator at the same location", () => {
+                assert.equal(iterator.getCurrentIndex(), 0);
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+    });
+
+    describe("#tryHandleFullProperty()", () => {
+        describe("finding the property", () => {
+            const text = ".full";
+            const iterator = new StringIterator(text);
+            const result = tryHandleFullProperty(iterator);
+
+            it("should return true", () => {
+                assert.equal(result, true);
+            });
+
+            it("should have the iterator at the end of the name", () => {
+                assert.equal(iterator.getCurrentIndex(), text.length);
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("finding the property when there are spaces after the period", () => {
+            const text = ". \tfull";
+            const iterator = new StringIterator(text);
+            const result = tryHandleFullProperty(iterator);
+
+            it("should return true", () => {
+                assert.equal(result, true);
+            });
+
+            it("should have the iterator at the end of the name", () => {
+                assert.equal(iterator.getCurrentIndex(), text.length);
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("finding part of the property", () => {
+            const iterator = new StringIterator(".ful");
+            const result = tryHandleFullProperty(iterator);
+
+            it("should return false", () => {
+                assert.equal(result, false);
+            });
+
+            it("should have the iterator at the same location", () => {
+                assert.equal(iterator.getCurrentIndex(), 0);
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("not finding the property", () => {
+            const iterator = new StringIterator("a.full");
+            const result = tryHandleFullProperty(iterator);
 
             it("should return false", () => {
                 assert.equal(result, false);

@@ -31,6 +31,7 @@ May need to add a reference to this package's typescript definition file:
     // src/MyFile.ts
     console.log(nameof(console));
     console.log(nameof(console.log));
+    console.log(nameof.full(console.log));
 
     nameof<MyInterface>();
     console.log(nameof<Array<MyInterface>>());
@@ -63,6 +64,7 @@ After step 3, *dist/MyFile.js* will contain the following code:
 ```javascript
 console.log("console");
 console.log("log");
+console.log("console.log");
 
 "MyInterface";
 console.log("Array");
