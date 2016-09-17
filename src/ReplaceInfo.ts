@@ -2,5 +2,5 @@
     pos: number;
     end: number;
     readonly argText: string;
-    readonly angleText: string;
+    readonly typeArgText: string;
 }

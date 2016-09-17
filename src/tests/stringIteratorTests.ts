@@ -2,6 +2,64 @@
 import {StringIterator} from "./../StringIterator";
 
 describe("StringIterator", () => {
+    describe("#restoreLastState()", () => {
+        it("should restore the saved state", () => {
+            const iterator = new StringIterator("012");
+            iterator.saveState();
+            iterator.moveNext();
+            iterator.restoreLastState();
+            assert.equal(0, iterator.getCurrentIndex());
+        });
+
+        it("should restore for multiple save states", () => {
+            const iterator = new StringIterator("012");
+            iterator.saveState();
+            iterator.moveNext();
+            iterator.saveState();
+            iterator.moveNext();
+            assert.equal(2, iterator.getCurrentIndex());
+            iterator.restoreLastState();
+            assert.equal(1, iterator.getCurrentIndex());
+            iterator.restoreLastState();
+            assert.equal(0, iterator.getCurrentIndex());
+        });
+
+        it("should throw an error when restoring a non-existent state", () => {
+            const iterator = new StringIterator("012");
+            iterator.saveState();
+            iterator.restoreLastState();
+
+            assert.throws(() => {
+                iterator.restoreLastState();
+            });
+        });
+    });
+
+    describe("#clearLastState()", () => {
+        it("should clear for multiple save states", () => {
+            const iterator = new StringIterator("012");
+            iterator.saveState();
+            iterator.moveNext();
+            iterator.saveState();
+            iterator.moveNext();
+            assert.equal(2, iterator.getCurrentIndex());
+            iterator.clearLastState();
+            assert.equal(2, iterator.getCurrentIndex());
+            iterator.restoreLastState();
+            assert.equal(0, iterator.getCurrentIndex());
+        });
+
+        it("should throw an error when clearing a non-existent state", () => {
+            const iterator = new StringIterator("012");
+            iterator.saveState();
+            iterator.clearLastState();
+
+            assert.throws(() => {
+                iterator.clearLastState();
+            });
+        });
+    });
+
     describe("#passSpaces()", () => {
         it("should not change the index of there are no spaces to pass", () => {
             const iterator = new StringIterator("t    t");
@@ -16,7 +74,7 @@ describe("StringIterator", () => {
         });
     });
 
-    describe("#canMoveNext()", () => {
+    describe("#isAtEnd()", () => {
         it("should be able to move to the next if not at the end", () => {
             const iterator = new StringIterator("a");
             assert.equal(iterator.canMoveNext(), true);
@@ -59,6 +117,13 @@ describe("StringIterator", () => {
             assert.equal(iterator.getCurrentChar(), "a");
             iterator.moveNext();
             assert.equal(iterator.getCurrentChar(), "b");
+        });
+
+        it("should error when getting the current char at the end of astring", () => {
+            const iterator = new StringIterator("");
+            assert.throws(() => {
+                iterator.getCurrentChar();
+            });
         });
     });
 

@@ -4,8 +4,8 @@ export function replaceCallExpressionReplacesInText(callExpressionReplaces: Repl
     for (let i = 0; i < callExpressionReplaces.length; i++) {
         let text: string;
 
-        if (callExpressionReplaces[i].angleText) {
-            text = callExpressionReplaces[i].angleText;
+        if (callExpressionReplaces[i].typeArgText) {
+            text = callExpressionReplaces[i].typeArgText;
             const bracketIndex = text.indexOf("<");
             if (bracketIndex > 0) {
                 text = text.substring(0, bracketIndex);

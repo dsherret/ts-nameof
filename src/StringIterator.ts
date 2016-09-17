@@ -1,7 +1,32 @@
 ﻿export class StringIterator {
     private currentIndex = 0;
+    private stateStack: number[] = [];
 
     constructor(private text: string) {
+    }
+
+    saveState() {
+        this.stateStack.push(this.currentIndex);
+    }
+
+    restoreLastState() {
+        if (this.stateStack.length === 0) {
+            throw new Error("Cannot restore a state that hasn't been saved.");
+        }
+
+        this.currentIndex = this.stateStack.pop()!;
+    }
+
+    clearLastState() {
+        if (this.stateStack.length === 0) {
+            throw new Error("Cannot clear a state that hasn't been saved.");
+        }
+
+        this.stateStack.pop();
+    }
+
+    getNumberStatesForTesting() {
+        return this.stateStack.length;
     }
 
     passSpaces() {
@@ -27,6 +52,10 @@
     }
 
     getCurrentChar() {
+        if (this.currentIndex === this.getLength()) {
+            throw new Error("Cannot get the current character at the end of a string.");
+        }
+
         return this.text[this.currentIndex];
     }
 
