@@ -1,8 +1,7 @@
 ﻿import {ReplaceInfo} from "./ReplaceInfo";
 import {StringIterator} from "./StringIterator";
 import {handleNameOf} from "./handleNameOf";
-
-// todo: cleanup
+import {handleComment} from "./handleComment";
 
 export class NameOfFinder {
     private stringCharStack: string[] = [];
@@ -17,7 +16,10 @@ export class NameOfFinder {
 
         while (this.iterator.canMoveNext()) {
             this.handleStringChar();
-            this.handleComment();
+
+            if (!this.isInString()) {
+                handleComment(this.iterator);
+            }
 
             if (isValidFirstChar() && !this.isInString()) {
                 const foundIndex = handleNameOf(this.iterator);
@@ -75,27 +77,6 @@ export class NameOfFinder {
         }
     }
 
-    private handleComment() {
-        if (this.isInString()) {
-            return;
-        }
-
-        if (!this.isOpenCommentChar() && !this.isCommentChar()) {
-            return;
-        }
-
-        if (this.isOpenCommentChar()) {
-            while (this.iterator.canMoveNext() && !this.isCloseCommentChar()) {
-                this.iterator.moveNext();
-            }
-        }
-        else if (this.isCommentChar()) {
-            while (this.iterator.canMoveNext() && this.iterator.getCurrentChar() !== "\n") {
-                this.iterator.moveNext();
-            }
-        }
-    }
-
     private isInString() {
         return this.stringCharStack.length > 0 && this.getLastStringCharOnStack() !== "}";
     }
@@ -107,17 +88,5 @@ export class NameOfFinder {
         else {
             return null;
         }
-    }
-
-    private isCommentChar() {
-        return this.iterator.getLastChar() === "/" && this.iterator.getCurrentChar() === "/";
-    }
-
-    private isOpenCommentChar() {
-        return this.iterator.getLastChar() === "/" && this.iterator.getCurrentChar() === "*";
-    }
-
-    private isCloseCommentChar() {
-        return this.iterator.getLastChar() === "*" && this.iterator.getCurrentChar() === "/";
     }
 }

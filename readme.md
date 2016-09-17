@@ -14,6 +14,15 @@ This library is experimental. I'll be working on it more over the next few weeks
 npm install ts-nameof --save-dev
 ```
 
+May need to add a reference to this package's typescript definition file:
+
+```typescript
+// add this to a single definition file in your project where other references are located so
+// that you don't need to include it in every file that uses nameof
+
+/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
+```
+
 ## Example - Replacing in *.ts* files (with stream)
 
 1. Start with your TypeScript:
@@ -103,18 +112,6 @@ You can use `replaceInFiles` to replace in .ts files:
 ## Todo
 
 * JS map file support.
-
-## Note
-
-I am not sure why, but in some scenarios you might need to add a reference to this package's typescript definition:
-
-```typescript
-// add this to a single definition file in your project where you make other references
-
-/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
-```
-
-If someone can tell me what I'm doing wrong that makes this necessary that would be great. I thought TypeScript should resolve it automatically.
 
 ## Future
 

@@ -74,7 +74,7 @@ describe("StringIterator", () => {
         });
     });
 
-    describe("#isAtEnd()", () => {
+    describe("#canMoveNext()", () => {
         it("should be able to move to the next if not at the end", () => {
             const iterator = new StringIterator("a");
             assert.equal(iterator.canMoveNext(), true);
