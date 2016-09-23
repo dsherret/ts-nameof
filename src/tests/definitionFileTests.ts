@@ -21,4 +21,14 @@ function testFunc() {
     // es6 test
     const es6Result: NodeJS.ReadWriteStream = tsNameOfEs6();
     console.log(es6Result);
+
+    // null test
+    const nullTypedVar = null;
+    nameof(nullTypedVar);
+    nameof.full(nullTypedVar);
+
+    // undefined test
+    const undefinedTypedVar = undefined;
+    nameof(undefinedTypedVar);
+    nameof.full(undefinedTypedVar);
 }

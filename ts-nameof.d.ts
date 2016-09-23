@@ -9,8 +9,8 @@ declare module "ts-nameof" {
 }
 
 declare function nameof<T>(): string;
-declare function nameof(obj: Object): string;
+declare function nameof(obj: Object | null | undefined): string;
 declare namespace nameof {
     function full<T>(): string;
-    function full(obj: Object): string;
+    function full(obj: Object | null | undefined): string;
 }

@@ -36,6 +36,7 @@ May need to add a reference to this package's typescript definition file:
     nameof<MyInterface>();
     console.log(nameof<Array<MyInterface>>());
     nameof<MyNamespace.MyInnerInterface>();
+    nameof.full<MyNamespace.MyInnerInterface>();
     ```
 
 2. Pipe your *.ts* files to `tsNameof`:
@@ -69,6 +70,7 @@ console.log("console.log");
 "MyInterface";
 console.log("Array");
 "MyInnerInterface";
+"MyNamespace.MyInnerInterface";
 ```
 
 
