@@ -46,7 +46,7 @@ console.log("alert");
 console.log("window.alert");
 console.log( "window" );
 console.log(  "window" );
-console.log(nameof(nameof("clearTimeout")));
+console.log("nameof(nameof(clearTimeout))");
 `;
 
         runTest("GeneralTestFile.ts", expected);

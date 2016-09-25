@@ -3,7 +3,7 @@ import {ReplaceInfo} from "./ReplaceInfo";
 
 const searchingFunctionName = "nameof";
 const searchingFullPropertyName = "full";
-const validCharsInParens = /[A-Za-z0-9_\.\s\t]/;
+const validCharsInTypeArg = /[A-Za-z0-9_\.\s\t\(\)!,]/;
 
 export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     const startIndex = iterator.getCurrentIndex();
@@ -102,7 +102,7 @@ export function tryGetTypeArgText(iterator: StringIterator): { isValid: boolean;
             else if (iterator.getCurrentChar() === "<") {
                 angleBrackets++;
             }
-            else if (!validCharsInParens.test(iterator.getCurrentChar())) {
+            else if (!validCharsInTypeArg.test(iterator.getCurrentChar())) {
                 iterator.restoreLastState();
                 return { isValid: false };
             }
@@ -136,10 +136,18 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; tex
     iterator.saveState();
 
     if (iterator.getCurrentChar() === "(") {
+        let parens = 1;
         iterator.moveNext();
 
         while (iterator.canMoveNext()) {
             if (iterator.getCurrentChar() === ")") {
+                parens--;
+            }
+            else if (iterator.getCurrentChar() === "(") {
+                parens++;
+            }
+
+            if (parens === 0) {
                 iterator.moveNext();
                 iterator.clearLastState();
 
@@ -147,10 +155,6 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; tex
                     isValid: true,
                     text
                 };
-            }
-            else if (!validCharsInParens.test(iterator.getCurrentChar())) {
-                iterator.restoreLastState();
-                return { isValid: false };
             }
             else {
                 text += iterator.getCurrentChar();
