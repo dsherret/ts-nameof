@@ -31,6 +31,7 @@
                 "multiline": "never"
             }
         ],
-        "variable-name": false
+        "variable-name": false,
+        "curly": false
     }
 }
