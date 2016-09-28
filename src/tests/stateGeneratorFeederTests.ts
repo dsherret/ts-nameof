@@ -1,4 +1,5 @@
-﻿import * as assert from "assert";
+﻿/*
+import * as assert from "assert";
 import {StateGeneratorFeeder} from "./../StateGeneratorFeeder";
 import {StateGenerator} from "./../StateGenerator";
 
@@ -128,3 +129,4 @@ describe("StateGeneratorFeeder", () => {
         assertCurrentChar(stateGenerator.getCurrentChar(), "");
     });
 });
+*/

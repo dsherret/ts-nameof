@@ -1,4 +1,5 @@
-﻿import {StateGenerator} from "./StateGenerator";
+﻿/*
+import {StateGenerator} from "./StateGenerator";
 
 export class StateGeneratorFeeder {
     private readonly callbacks: ((state: boolean) => void)[] = [];
@@ -40,3 +41,4 @@ export class StateGeneratorFeeder {
         }
     }
 }
+*/

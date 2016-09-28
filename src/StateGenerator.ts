@@ -1,18 +1,8 @@
-﻿export abstract class StateGenerator {
-    protected chars = "";
+﻿import {CharStateInfo} from "./CharStateInfo";
 
-    abstract getNextState(): boolean;
-    abstract shouldGetNext(): boolean;
-
-    removeChar() {
-        this.chars = this.chars.substring(1);
-    }
-
-    feedChar(char: string) {
-        this.chars += char;
-    }
-
-    hasNext() {
-        return this.chars.length > 0;
-    }
+export abstract class StateGenerator {
+    abstract getNextState(info: CharStateInfo): boolean;
+    abstract get numberNextCharsRequired(): number;
+    abstract get numberPreviousCharsRequired(): number;
+    abstract get numberPreviousStatesRequired(): number;
 }

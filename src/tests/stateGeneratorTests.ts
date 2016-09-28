@@ -1,4 +1,5 @@
-﻿import * as assert from "assert";
+﻿/*
+import * as assert from "assert";
 import {StateGenerator} from "./../StateGenerator";
 
 class MockStateGenerator extends StateGenerator {
@@ -59,3 +60,4 @@ describe("StateGeneratorFeeder", () => {
         });
     });
 });
+*/
