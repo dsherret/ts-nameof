@@ -1,9 +1,9 @@
 ﻿import {StringIterator} from "./StringIterator";
 import {ReplaceInfo} from "./ReplaceInfo";
+import {validCharsInTypeArg, validCharsInParens} from "./config";
 
 const searchingFunctionName = "nameof";
 const searchingFullPropertyName = "full";
-const validCharsInTypeArg = /[A-Za-z0-9_\.\s\t\(\)!,]/;
 
 export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     const startIndex = iterator.getCurrentIndex();
@@ -20,29 +20,19 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
 
     iterator.passSpaces();
 
-    const typeArgTextResult = tryGetTypeArgText(iterator);
-
-    if (!typeArgTextResult.isValid) {
-        iterator.restoreLastState();
-        return null;
-    }
+    const typeArgText = tryGetTypeArgText(iterator);
 
     iterator.passSpaces();
 
-    const argTextResult = tryGetArgText(iterator);
-
-    if (!argTextResult.isValid) {
-        iterator.restoreLastState();
-        return null;
-    }
+    const argText = tryGetArgText(iterator);
 
     iterator.clearLastState();
 
     return {
         pos: startIndex,
         end: iterator.getCurrentIndex(),
-        argText: (argTextResult.text || "").trim(),
-        typeArgText: (typeArgTextResult.text || "").trim(),
+        argText: (argText || "").trim(),
+        typeArgText: (typeArgText || "").trim(),
         showFull
     };
 }
@@ -87,7 +77,7 @@ export function tryHandleFullProperty(iterator: StringIterator) {
     return true;
 }
 
-export function tryGetTypeArgText(iterator: StringIterator): { isValid: boolean; text?: string } {
+export function tryGetTypeArgText(iterator: StringIterator) {
     let text = "";
     iterator.saveState();
 
@@ -103,18 +93,14 @@ export function tryGetTypeArgText(iterator: StringIterator): { isValid: boolean;
                 angleBrackets++;
             }
             else if (!validCharsInTypeArg.test(iterator.getCurrentChar())) {
-                iterator.restoreLastState();
-                return { isValid: false };
+                return throwInvalidCharacterInTypeArg(iterator);
             }
 
             if (angleBrackets === 0) {
                 iterator.clearLastState();
                 iterator.moveNext();
 
-                return {
-                    isValid: true,
-                    text
-                };
+                return text;
             }
             else {
                 text += iterator.getCurrentChar();
@@ -123,15 +109,15 @@ export function tryGetTypeArgText(iterator: StringIterator): { isValid: boolean;
         }
 
         iterator.restoreLastState();
-        return { isValid: false };
+        return throwEndOfFile();
     }
     else {
         iterator.restoreLastState();
-        return { isValid: true };
+        return text;
     }
 }
 
-export function tryGetArgText(iterator: StringIterator): { isValid: boolean; text?: string; } {
+export function tryGetArgText(iterator: StringIterator) {
     let text = "";
     iterator.saveState();
 
@@ -146,15 +132,15 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; tex
             else if (iterator.getCurrentChar() === "(") {
                 parens++;
             }
+            else if (!validCharsInParens.test(iterator.getCurrentChar())) {
+                return throwInvalidCharacterInArg(iterator);
+            }
 
             if (parens === 0) {
                 iterator.moveNext();
                 iterator.clearLastState();
 
-                return {
-                    isValid: true,
-                    text
-                };
+                return text;
             }
             else {
                 text += iterator.getCurrentChar();
@@ -162,8 +148,30 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; tex
 
             iterator.moveNext();
         }
+
+        iterator.restoreLastState();
+        return throwEndOfFile();
     }
 
+    return throwInvalidCharacterInArg(iterator);
+}
+
+function throwEndOfFile(): never {
+    throw new Error("Invalid nameof at end of file.");
+}
+
+function throwInvalidCharacterInTypeArg(iterator: StringIterator): never {
+    const char = iterator.getCurrentChar();
     iterator.restoreLastState();
-    return { isValid: false };
+
+    throw new Error(`Invalid character in nameof type argument: ${char} -- ` +
+        `if this should be a valid character then please log an issue. If you wish, you can manually edit config.js in this package to allow the character.`);
+}
+
+function throwInvalidCharacterInArg(iterator: StringIterator): never {
+    const char = iterator.getCurrentChar();
+    iterator.restoreLastState();
+
+    throw new Error(`Invalid character in nameof argument: ${char} -- ` +
+        `if this should be a valid character then please log an issue. If you wish, you can manually edit config.js in this package to allow the character.`);
 }

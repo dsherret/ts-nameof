@@ -89,23 +89,6 @@ describe("handleNameOf", () => {
             });
         });
 
-        describe("finding a nameof with invalid type arg text", () => {
-            const iterator = new StringIterator("nameof<#>(argText)");
-            const result = handleNameOf(iterator);
-
-            it("should have a result of null", () => {
-                assert.equal(result, null);
-            });
-
-            it("should have the iterator at the beginning", () => {
-                assert.equal(iterator.getCurrentIndex(), 0);
-            });
-
-            it("should have the iterator with zero states", () => {
-                assert.equal(iterator.getNumberStatesForTesting(), 0);
-            });
-        });
-
         describe("finding a nameof with invalid function name", () => {
             const iterator = new StringIterator("name(argText)");
             const result = handleNameOf(iterator);
@@ -252,16 +235,12 @@ describe("handleNameOf", () => {
 
     describe("#tryGetTypeArgText()", () => {
         describe("finding angle brackets", () => {
-            const testText = "azAZ_.09!(), ";
+            const testText = "azAZ_.09!, ";
             const iterator = new StringIterator(`<${testText}>`);
-            const result = tryGetTypeArgText(iterator);
-
-            it("should be valid", () => {
-                assert.equal(result.isValid, true);
-            });
+            const resultText = tryGetTypeArgText(iterator);
 
             it("should have the text inside the angle brackets", () => {
-                assert.equal(result.text, testText);
+                assert.equal(resultText, testText);
             });
 
             it("should have the iterator at the end", () => {
@@ -275,14 +254,10 @@ describe("handleNameOf", () => {
 
         describe("finding angle brackets within angle brackets", () => {
             const iterator = new StringIterator("<Array<string>>");
-            const result = tryGetTypeArgText(iterator);
-
-            it("should be valid", () => {
-                assert.equal(result.isValid, true);
-            });
+            const resultText = tryGetTypeArgText(iterator);
 
             it("should have the text inside the angle brackets", () => {
-                assert.equal(result.text, "Array<string>");
+                assert.equal(resultText, "Array<string>");
             });
 
             it("should have the iterator at the end", () => {
@@ -296,10 +271,11 @@ describe("handleNameOf", () => {
 
         describe("finding start angle bracket, but invalid character", () => {
             const iterator = new StringIterator("<te#st>");
-            const result = tryGetTypeArgText(iterator);
 
-            it("should not be valid", () => {
-                assert.equal(result.isValid, false);
+            it("should error when getting the type arg text", () => {
+                assert.throws(() => {
+                    tryGetTypeArgText(iterator);
+                }, `Invalid character in nameof type argument: #`);
             });
 
             it("should have the iterator at the same location", () => {
@@ -313,10 +289,11 @@ describe("handleNameOf", () => {
 
         describe("finding start angle bracket, but not the end", () => {
             const iterator = new StringIterator("<te");
-            const result = tryGetTypeArgText(iterator);
 
-            it("should not be valid", () => {
-                assert.equal(result.isValid, false);
+            it("should error when getting to the end of the text", () => {
+                assert.throws(() => {
+                    tryGetTypeArgText(iterator);
+                }, `Invalid nameof at end of file.`);
             });
 
             it("should have the iterator at the same location", () => {
@@ -330,14 +307,10 @@ describe("handleNameOf", () => {
 
         describe("not finding angle brackets", () => {
             const iterator = new StringIterator("a<test>");
-            const result = tryGetTypeArgText(iterator);
+            const resultText = tryGetTypeArgText(iterator);
 
-            it("should be valid", () => {
-                assert.equal(result.isValid, true);
-            });
-
-            it("should not return any text", () => {
-                assert.equal(result.text, undefined);
+            it("should return empty text", () => {
+                assert.equal(resultText, "");
             });
 
             it("should have the iterator at the same location", () => {
@@ -354,16 +327,28 @@ describe("handleNameOf", () => {
         // todo: make the other tests like this (why didn't I do this before?)
         function runTryGetArgTextTests(opts: {
             iterator: StringIterator,
-            result: { isValid: boolean; text?: string; },
-            expected: { isValid: boolean; text?: string; currentIndex: number; }
+            expected: { errorMessage?: string; text?: string; currentIndex: number; }
         }) {
-            it(`should have the same result isValid`, () => {
-                assert.equal(opts.result.isValid, opts.expected.isValid);
-            });
+            if (typeof opts.expected.errorMessage === "string") {
+                it("should throw", () => {
+                    assert.throws(() => {
+                        tryGetArgText(opts.iterator);
+                    });
+                });
+            }
+            else {
+                let resultText: string;
 
-            it("should have the same result text", () => {
-                assert.equal(opts.result.text, opts.expected.text);
-            });
+                it("should not throw", () => {
+                    assert.doesNotThrow(() => {
+                        resultText = tryGetArgText(opts.iterator);
+                    });
+                });
+
+                it("should have the same result text", () => {
+                    assert.equal(resultText, opts.expected.text);
+                });
+            }
 
             it("should have the same iterator current index", () => {
                 assert.equal(opts.iterator.getCurrentIndex(), opts.expected.currentIndex);
@@ -374,16 +359,13 @@ describe("handleNameOf", () => {
             });
         }
 
-        describe("finding parens with text", () => {
-            const testText = "azAZ_.09!#, "; // can be anything
+        describe("finding parens with valid text", () => {
+            const testText = "azAZ_.09!, ";
             const iterator = new StringIterator(`(${testText})`);
-            const result = tryGetArgText(iterator);
 
             runTryGetArgTextTests({
                 iterator,
-                result,
                 expected: {
-                    isValid: true,
                     text: testText,
                     currentIndex: iterator.getLength()
                 }
@@ -392,13 +374,10 @@ describe("handleNameOf", () => {
 
         describe("finding parens without text", () => {
             const iterator = new StringIterator(`()`);
-            const result = tryGetArgText(iterator);
 
             runTryGetArgTextTests({
                 iterator,
-                result,
                 expected: {
-                    isValid: true,
                     text: "",
                     currentIndex: iterator.getLength()
                 }
@@ -407,13 +386,11 @@ describe("handleNameOf", () => {
 
         describe("finding start paren, but not the end", () => {
             const iterator = new StringIterator("(te");
-            const result = tryGetArgText(iterator);
 
             runTryGetArgTextTests({
                 iterator,
-                result,
                 expected: {
-                    isValid: false,
+                    errorMessage: "Invalid nameof at end of file.",
                     currentIndex: 0
                 }
             });
@@ -421,13 +398,11 @@ describe("handleNameOf", () => {
 
         describe("not finding parens", () => {
             const iterator = new StringIterator("a()");
-            const result = tryGetArgText(iterator);
 
             runTryGetArgTextTests({
                 iterator,
-                result,
                 expected: {
-                    isValid: false,
+                    errorMessage: "Invalid character in nameof argument: a",
                     currentIndex: 0
                 }
             });
@@ -435,13 +410,10 @@ describe("handleNameOf", () => {
 
         describe("finding multiple parens", () => {
             const iterator = new StringIterator("(one(two))");
-            const result = tryGetArgText(iterator);
 
             runTryGetArgTextTests({
                 iterator,
-                result,
                 expected: {
-                    isValid: true,
                     text: "one(two)",
                     currentIndex: iterator.getLength()
                 }
