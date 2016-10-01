@@ -1,6 +1,10 @@
 ﻿console.log(nameof(alert));
 console.log(nameof(window.alert));
 console.log(nameof.full(window.alert));
+console.log(nameof.full(window   .alert));
 console.log( nameof( window ) );
 console.log(  nameof (window) );
 console.log(nameof(nameof(nameof(clearTimeout))));
+console.log(nameof<MyInterface>(i => i.prop));
+console.log(nameof<MyInterface>(function(i) { return i.prop; }));
+console.log(nameof<MyInterface>(function(i) { return i.prop }));

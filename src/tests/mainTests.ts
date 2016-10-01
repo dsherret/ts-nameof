@@ -37,16 +37,20 @@ describe("replaceInFiles()", () => {
     describe("general file", () => {
         it("should have the correct number of characters", () => {
             // because an IDE might auto-format the code, this makes sure that hasn't happened
-            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.ts"), "utf-8").replace(/\r?\n/g, "\n").length, 221);
+            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.ts"), "utf-8").replace(/\r?\n/g, "\n").length, 442);
         });
 
         const expected =
 `console.log("alert");
 console.log("alert");
 console.log("window.alert");
+console.log("window.alert");
 console.log( "window" );
 console.log(  "window" );
 console.log("nameof(nameof(clearTimeout))");
+console.log("prop");
+console.log("prop");
+console.log("prop");
 `;
 
         runTest("GeneralTestFile.ts", expected);
@@ -75,6 +79,7 @@ console.log("Array");
         const expected =
 `"window";
 // nameof(window);
+"window";
 /* nameof(window);
 nameof(window);
 */

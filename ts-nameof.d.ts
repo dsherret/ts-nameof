@@ -8,7 +8,7 @@ declare module "ts-nameof" {
     export = func;
 }
 
-declare function nameof<T>(): string;
+declare function nameof<T>(func?: (obj: T) => void): string;
 declare function nameof(obj: Object | null | undefined): string;
 declare namespace nameof {
     function full<T>(): string;

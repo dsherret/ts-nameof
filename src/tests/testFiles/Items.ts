@@ -1,4 +1,5 @@
 ﻿interface MyInterface {
+    prop: string;
 }
 
 namespace MyNamespace {

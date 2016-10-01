@@ -5,16 +5,20 @@ import {testReplaceInfo} from "./testReplaceInfo";
 
 describe("handleNameOf", () => {
     describe("#handleNameOf()", () => {
-        describe("finding a nameof with a type arg and arg text", () => {
-            const iterator = new StringIterator("nameof<typeArg>(argText)");
+        function runHandleNameOfTests(opts: {
+            iterator: StringIterator,
+            expected: { typeArgText: string; argText: string; showFull?: boolean; }
+        }) {
+            const {iterator} = opts;
+            const {typeArgText, argText, showFull = false} = opts.expected;
             const result = handleNameOf(iterator);
 
             testReplaceInfo(result!, {
                 pos: 0,
                 end: iterator.getLength(),
-                typeArgText: "typeArg",
-                argText: "argText",
-                showFull: false
+                typeArgText,
+                argText,
+                showFull: showFull
             });
 
             it("should have the iterator at the end", () => {
@@ -23,69 +27,56 @@ describe("handleNameOf", () => {
 
             it("should have the iterator with zero states", () => {
                 assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        }
+
+        describe("finding a nameof with a type arg and arg text", () => {
+            const iterator = new StringIterator("nameof<typeArg>(argText)");
+
+            runHandleNameOfTests({
+                iterator,
+                expected: {
+                    typeArgText: "typeArg",
+                    argText: "argText"
+                }
             });
         });
 
         describe("finding a nameof with a type arg and arg text with spaces", () => {
             const iterator = new StringIterator("nameof   <  typeArg  >  (  argText  )");
-            const result = handleNameOf(iterator);
 
-            testReplaceInfo(result!, {
-                pos: 0,
-                end: iterator.getLength(),
-                typeArgText: "typeArg",
-                argText: "argText",
-                showFull: false
-            });
-
-            it("should have the iterator at the end", () => {
-                assert.equal(iterator.getCurrentIndex(), iterator.getLength());
-            });
-
-            it("should have the iterator with zero states", () => {
-                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            runHandleNameOfTests({
+                iterator,
+                expected: {
+                    typeArgText: "typeArg",
+                    argText: "argText"
+                }
             });
         });
 
         describe("finding a nameof.full with a type arg and arg text", () => {
             const iterator = new StringIterator("nameof.full<typeArg>(argText)");
-            const result = handleNameOf(iterator);
 
-            testReplaceInfo(result!, {
-                pos: 0,
-                end: iterator.getLength(),
-                typeArgText: "typeArg",
-                argText: "argText",
-                showFull: true
-            });
-
-            it("should have the iterator at the end", () => {
-                assert.equal(iterator.getCurrentIndex(), iterator.getLength());
-            });
-
-            it("should have the iterator with zero states", () => {
-                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            runHandleNameOfTests({
+                iterator,
+                expected: {
+                    typeArgText: "typeArg",
+                    argText: "argText",
+                    showFull: true
+                }
             });
         });
 
         describe("finding a nameof with a type arg and arg text with spaces", () => {
             const iterator = new StringIterator("nameof  .  full  <  typeArg  >  (  argText  )");
-            const result = handleNameOf(iterator);
 
-            testReplaceInfo(result!, {
-                pos: 0,
-                end: iterator.getLength(),
-                typeArgText: "typeArg",
-                argText: "argText",
-                showFull: true
-            });
-
-            it("should have the iterator at the end", () => {
-                assert.equal(iterator.getCurrentIndex(), iterator.getLength());
-            });
-
-            it("should have the iterator with zero states", () => {
-                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            runHandleNameOfTests({
+                iterator,
+                expected: {
+                    typeArgText: "typeArg",
+                    argText: "argText",
+                    showFull: true
+                }
             });
         });
 
@@ -451,6 +442,42 @@ describe("handleNameOf", () => {
                 iterator,
                 expected: {
                     text: "one(two)",
+                    currentIndex: iterator.getLength()
+                }
+            });
+        });
+
+        describe("finding arrow function", () => {
+            const iterator = new StringIterator("(t => t.someProperty)");
+
+            runTryGetArgTextTests({
+                iterator,
+                expected: {
+                    text: "t => t.someProperty",
+                    currentIndex: iterator.getLength()
+                }
+            });
+        });
+
+        describe("finding arrow function with parenthesis", () => {
+            const iterator = new StringIterator("((t) => t.someProperty)");
+
+            runTryGetArgTextTests({
+                iterator,
+                expected: {
+                    text: "(t) => t.someProperty",
+                    currentIndex: iterator.getLength()
+                }
+            });
+        });
+
+        describe("finding function expression", () => {
+            const iterator = new StringIterator("(function(t) { return t.someProperty; })");
+
+            runTryGetArgTextTests({
+                iterator,
+                expected: {
+                    text: "function(t) { return t.someProperty; }",
                     currentIndex: iterator.getLength()
                 }
             });

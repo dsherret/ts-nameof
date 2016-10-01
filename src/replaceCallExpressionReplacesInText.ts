@@ -5,18 +5,18 @@ export function replaceCallExpressionReplacesInText(callExpressionReplaces: Repl
         let text: string;
         const currentReplace = callExpressionReplaces[i];
 
-        if (currentReplace.typeArgText) {
+        if (currentReplace.argText.length > 0) {
+            text = currentReplace.argText;
+        }
+        else {
             text = currentReplace.typeArgText;
             const bracketIndex = text.indexOf("<");
             if (bracketIndex > 0) {
                 text = text.substring(0, bracketIndex);
             }
         }
-        else {
-            text = currentReplace.argText;
-        }
 
-        const newText = currentReplace.showFull ? `"${text}"` : `"${text.substr(text.lastIndexOf(".") + 1).trim()}"`;
+        const newText = (currentReplace.showFull ? `"${text}"` : `"${getParenText(text)}"`).replace(/ /g, "");
         const offset = newText.length - (currentReplace.end - currentReplace.pos);
 
         data = data.substring(0, currentReplace.pos) + newText + data.substring(currentReplace.end);
@@ -28,4 +28,21 @@ export function replaceCallExpressionReplacesInText(callExpressionReplaces: Repl
     }
 
     return data;
+}
+
+function getParenText(text: string) {
+    const startIndex = text.lastIndexOf(".") + 1;
+    let endIndex = text.length;
+    const lastSemiColonIndex = text.lastIndexOf(";");
+    const lastBraceIndex = text.lastIndexOf("}");
+
+    if (lastSemiColonIndex > 0) {
+        endIndex = lastSemiColonIndex;
+    }
+
+    if (lastBraceIndex > 0 && lastBraceIndex < endIndex) {
+        endIndex = lastBraceIndex;
+    }
+
+    return text.substring(startIndex, endIndex);
 }

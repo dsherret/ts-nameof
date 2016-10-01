@@ -8,20 +8,17 @@
 
 [`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
 
-This library is experimental. I'll be working on it more over the next few weeks.
-
 ```
 npm install ts-nameof --save-dev
 ```
 
-May need to add a reference to this package's typescript definition file:
+You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
 
 ```typescript
-// add this to a single definition file in your project where other references are located so
-// that you don't need to include it in every file that uses nameof
-
 /// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
 ```
+
+Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
 
 ## Example - Replacing in *.ts* files (with stream)
 
@@ -37,6 +34,7 @@ May need to add a reference to this package's typescript definition file:
     console.log(nameof<Array<MyInterface>>());
     nameof<MyNamespace.MyInnerInterface>();
     nameof.full<MyNamespace.MyInnerInterface>();
+    nameof<MyInterface>(o => o.prop);
     ```
 
 2. Pipe your *.ts* files to `tsNameof`:
@@ -71,20 +69,13 @@ console.log("console.log");
 console.log("Array");
 "MyInnerInterface";
 "MyNamespace.MyInnerInterface";
+"prop";
 ```
 
 
 ## Example - Replacing in *.js* files (using `replaceInFiles`)
 
 1. Start with your TypeScript:
-
-    ```typescript
-    // src/MyFile.ts
-    var myVariable = "";
-
-    nameof(myVariable);
-    nameof(window.alert);
-    ```
 
 2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*).
 
@@ -94,16 +85,6 @@ console.log("Array");
     var replaceInFiles = require("ts-nameof").replaceInFiles;
     replaceInFiles(["./dist/**/*.js"]);
     ```
-
-After step 3 *dist/MyFile.js* will contain the following code:
-
-```javascript
-// dist/MyFile.js
-var myVariable = "";
-
-"myVariable";
-"alert";
-```
 
 ## Example - Replacing in *.ts* files (using `replaceInFiles`)
 
