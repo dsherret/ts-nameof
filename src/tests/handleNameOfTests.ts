@@ -18,7 +18,7 @@ describe("handleNameOf", () => {
                 end: iterator.getLength(),
                 typeArgText,
                 argText,
-                showFull: showFull
+                showFull
             });
 
             it("should have the iterator at the end", () => {
