@@ -24,14 +24,19 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
 
     iterator.passSpaces();
 
-    const argText = tryGetArgText(iterator);
+    const argResult = tryGetArgText(iterator);
+
+    if (!argResult.isValid) {
+        iterator.restoreLastState();
+        return null;
+    }
 
     iterator.clearLastState();
 
     return {
         pos: startIndex,
         end: iterator.getCurrentIndex(),
-        argText: (argText || "").trim(),
+        argText: (argResult.argText || "").trim(),
         typeArgText: (typeArgText || "").trim(),
         showFull
     };
@@ -117,7 +122,7 @@ export function tryGetTypeArgText(iterator: StringIterator) {
     }
 }
 
-export function tryGetArgText(iterator: StringIterator) {
+export function tryGetArgText(iterator: StringIterator): { isValid: boolean; argText?: string; } {
     let text = "";
     iterator.saveState();
 
@@ -140,7 +145,10 @@ export function tryGetArgText(iterator: StringIterator) {
                 iterator.moveNext();
                 iterator.clearLastState();
 
-                return text;
+                return {
+                    isValid: true,
+                    argText: text
+                };
             }
             else {
                 text += iterator.getCurrentChar();
@@ -153,7 +161,10 @@ export function tryGetArgText(iterator: StringIterator) {
         return throwEndOfFile();
     }
 
-    return throwInvalidCharacterInArg(iterator);
+    iterator.restoreLastState();
+    return {
+        isValid: false
+    };
 }
 
 function throwEndOfFile(): never {

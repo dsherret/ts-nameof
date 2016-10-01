@@ -89,8 +89,25 @@ describe("handleNameOf", () => {
             });
         });
 
-        describe("finding a nameof with invalid function name", () => {
+        describe("finding a nameof with a shorter function name", () => {
             const iterator = new StringIterator("name(argText)");
+            const result = handleNameOf(iterator);
+
+            it("should have a result of null", () => {
+                assert.equal(result, null);
+            });
+
+            it("should have the iterator at the beginning", () => {
+                assert.equal(iterator.getCurrentIndex(), 0);
+            });
+
+            it("should have the iterator with zero states", () => {
+                assert.equal(iterator.getNumberStatesForTesting(), 0);
+            });
+        });
+
+        describe("finding a nameof that matches, but has more text in the function name", () => {
+            const iterator = new StringIterator("nameoft(argText)");
             const result = handleNameOf(iterator);
 
             it("should have a result of null", () => {
@@ -327,7 +344,7 @@ describe("handleNameOf", () => {
         // todo: make the other tests like this (why didn't I do this before?)
         function runTryGetArgTextTests(opts: {
             iterator: StringIterator,
-            expected: { errorMessage?: string; text?: string; currentIndex: number; }
+            expected: { errorMessage?: string; isValid?: boolean; text?: string; currentIndex: number; }
         }) {
             if (typeof opts.expected.errorMessage === "string") {
                 it("should throw", () => {
@@ -337,16 +354,23 @@ describe("handleNameOf", () => {
                 });
             }
             else {
-                let resultText: string;
+                let resultText: string | undefined;
+                let isValid: boolean;
 
                 it("should not throw", () => {
                     assert.doesNotThrow(() => {
-                        resultText = tryGetArgText(opts.iterator);
+                        const result = tryGetArgText(opts.iterator);
+                        resultText = result.argText;
+                        isValid = result.isValid;
                     });
                 });
 
                 it("should have the same result text", () => {
                     assert.equal(resultText, opts.expected.text);
+                });
+
+                it("should have the same isValid", () => {
+                    assert.equal(isValid, typeof opts.expected.isValid === "boolean" ? opts.expected.isValid : true);
                 });
             }
 
@@ -368,6 +392,18 @@ describe("handleNameOf", () => {
                 expected: {
                     text: testText,
                     currentIndex: iterator.getLength()
+                }
+            });
+        });
+
+        describe("finding parens with invalid text", () => {
+            const iterator = new StringIterator(`(#)`);
+
+            runTryGetArgTextTests({
+                iterator,
+                expected: {
+                    errorMessage: "Invalid character in nameof argument: #",
+                    currentIndex: 0
                 }
             });
         });
@@ -402,7 +438,7 @@ describe("handleNameOf", () => {
             runTryGetArgTextTests({
                 iterator,
                 expected: {
-                    errorMessage: "Invalid character in nameof argument: a",
+                    isValid: false,
                     currentIndex: 0
                 }
             });
