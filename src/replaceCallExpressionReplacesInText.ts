@@ -5,15 +5,13 @@ export function replaceCallExpressionReplacesInText(callExpressionReplaces: Repl
         let text: string;
         const currentReplace = callExpressionReplaces[i];
 
-        if (currentReplace.argText.length > 0) {
+        if (currentReplace.argText.length > 0)
             text = currentReplace.argText;
-        }
         else {
             text = currentReplace.typeArgText;
             const bracketIndex = text.indexOf("<");
-            if (bracketIndex > 0) {
+            if (bracketIndex > 0)
                 text = text.substring(0, bracketIndex);
-            }
         }
 
         const newText = (currentReplace.showFull ? `"${text}"` : `"${getParenText(text)}"`).replace(/ /g, "");

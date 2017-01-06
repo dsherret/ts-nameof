@@ -7,7 +7,7 @@ describe("replaceInFiles()", () => {
     function runTest(fileName: string, expectedContents: string) {
         fileName = path.join(__dirname, "testFiles", fileName);
 
-        before((done) => {
+        before((done: MochaDone) => {
             replaceInFiles([fileName], () => done());
         });
 
@@ -20,7 +20,7 @@ describe("replaceInFiles()", () => {
     describe("glob support", () => {
         const fileName = path.join(__dirname, "testFiles/globFolder/MyGlobTestFile.js");
 
-        before((done) => {
+        before((done: MochaDone) => {
             replaceInFiles([path.join(__dirname, "testFiles/globFolder/**/*.js")], () => done());
         });
 
@@ -101,6 +101,7 @@ nameof(window);
 'nameof(window);';
 '\\'\\"nameof(window);';
 "window";
+\`\${() => { "console"; }}\`;
 `;
         runTest("StringsTestFile.ts", expected);
     });

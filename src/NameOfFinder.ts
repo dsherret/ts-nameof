@@ -25,13 +25,13 @@ export class NameOfFinder {
 
                     if (foundIndex != null) {
                         foundIndexes.push(foundIndex);
+                        continue;
                     }
                 }
             }
 
-            if (this.iterator.canMoveNext()) {
+            if (this.iterator.canMoveNext())
                 this.iterator.moveNext();
-            }
         }
 
         return foundIndexes;
@@ -42,17 +42,17 @@ export class NameOfFinder {
     }
 
     private handleStringChar() {
-        if (this.isCurrentStringChar()) {
-            const lastStringChar = this.getLastStringCharOnStack();
-            const currentChar = this.iterator.getCurrentChar();
+        if (!this.isCurrentStringChar())
+            return;
 
-            if (currentChar === lastStringChar) {
-                this.stringCharStack.pop();
-            }
-            else {
-                this.stringCharStack.push(currentChar === "{" ? "}" : currentChar);
-            }
-        }
+        const lastStringChar = this.getLastStringCharOnStack();
+        const currentChar = this.iterator.getCurrentChar();
+        const isBrace = currentChar === "}" || currentChar === "{";
+
+        if ((!isBrace && currentChar === lastStringChar) || (lastStringChar === "{" && currentChar === "}"))
+            this.stringCharStack.pop();
+        else
+            this.stringCharStack.push(currentChar);
     }
 
     private isCurrentStringChar() {
@@ -60,33 +60,28 @@ export class NameOfFinder {
         const currentChar = this.iterator.getCurrentChar();
         const lastStringChar = this.getLastStringCharOnStack();
 
-        if (lastChar === "\\") {
+        if (lastChar === "\\")
             return false;
-        }
-        else if (lastStringChar == null) {
+        else if (lastStringChar == null)
             return currentChar === "`" || currentChar === "'" || currentChar === "\"";
-        }
-        else if (lastStringChar === "`" && lastChar === "$" && currentChar === "{") {
+        else if (lastStringChar === "`" && lastChar === "$" && currentChar === "{")
             return true;
-        }
-        else if (lastStringChar === "}" && currentChar === "}") {
+        else if (lastStringChar === "{" && currentChar === "{")
             return true;
-        }
-        else {
+        else if (lastStringChar === "{" && currentChar === "}")
+            return true;
+        else
             return currentChar === lastStringChar;
-        }
     }
 
     private isInString() {
-        return this.stringCharStack.length > 0 && this.getLastStringCharOnStack() !== "}";
+        return this.stringCharStack.length > 0 && this.getLastStringCharOnStack() !== "{";
     }
 
     private getLastStringCharOnStack(): string | null {
-        if (this.stringCharStack.length > 0) {
+        if (this.stringCharStack.length > 0)
             return this.stringCharStack[this.stringCharStack.length - 1];
-        }
-        else {
+        else
             return null;
-        }
     }
 }

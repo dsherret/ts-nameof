@@ -9,7 +9,7 @@ describe("stream()", () => {
         fileName = path.join(__dirname, "testFiles", fileName);
         let contents = "";
 
-        before((done) => {
+        before((done: MochaDone) => {
             fs.createReadStream(fileName)
                 .pipe(tsNameof())
                 .on("data", (buffer: Buffer) => {
@@ -45,7 +45,7 @@ describe("stream()", () => {
 `;
         let contents = "";
 
-        before((done) => {
+        before((done: MochaDone) => {
             gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.ts"))
                 .pipe(tsNameof())
                 .on("data", (chunk: { contents: Buffer; }) => {

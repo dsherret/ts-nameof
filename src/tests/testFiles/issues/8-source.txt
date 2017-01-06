@@ -1,0 +1,31 @@
+﻿import CodeBlockWriter from "code-block-writer";
+import {expect} from "chai";
+import {FunctionDefinition, InterfaceMethodDefinition, ClassMethodDefinition} from "./../../definitions";
+import {FunctionBodyWriter} from "./../../writers";
+import {WriteFlags} from "./../../WriteFlags";
+import * as mocks from "./mocks";
+
+describe(nameof(FunctionBodyWriter), () => {
+    function createObjects() {
+        const writer = new CodeBlockWriter();
+        const defWriter = new FunctionBodyWriter(writer);
+        return {writer, defWriter};
+    }
+
+    describe(nameof<FunctionBodyWriter>(w => w.write), () => {
+
+        it(`should not write out the function body if ${nameof(WriteFlags.HideFunctionBodies)} is set`, () => {
+            const def = new FunctionDefinition();
+            const {writer, defWriter} = createObjects();
+            defWriter.write(def, WriteFlags.HideFunctionBodies);
+            expect(writer.toString()).to.equal(";");
+        });
+
+        it(`should not write out the function body if it's an ${nameof(InterfaceMethodDefinition)}`, () => {
+            const def = new InterfaceMethodDefinition();
+            const {writer, defWriter} = createObjects();
+            defWriter.write(def, WriteFlags.None);
+            expect(writer.toString()).to.equal(";");
+        });
+    });
+});

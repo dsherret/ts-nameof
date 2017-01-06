@@ -26,7 +26,7 @@ gulp.task("typescript", ["clean-scripts"], function() {
 });
 
 gulp.task("copy-test-files", ["clean-scripts"], function () {
-    return gulp.src("./src/tests/testFiles/**/*.{js,ts}")
+    return gulp.src("./src/tests/testFiles/**/*.{js,ts,txt}")
         .pipe(gulp.dest("./dist/tests/testFiles"));
 });
 
