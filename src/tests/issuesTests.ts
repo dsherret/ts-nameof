@@ -22,7 +22,12 @@ describe("replaceInFiles()", () => {
         return path.join(__dirname, "testFiles", relativeFilePath);
     }
 
-    describe("issue 8", () => {
-        runTest("issues/8-source.txt", "issues/8-expected.txt");
-    });
+    function runIssueTest(issueNumber: number) {
+        describe(`issue ${issueNumber}`, () => {
+            runTest(`issues/${issueNumber}-source.txt`, `issues/${issueNumber}-expected.txt`);
+        });
+    }
+
+    runIssueTest(8);
+    runIssueTest(11);
 });

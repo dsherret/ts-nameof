@@ -1,0 +1,11 @@
+﻿class Test {
+    private x: Test;
+    public y: Test;
+    public z: string;
+
+    constructor() {
+        nameof(this.x);
+        nameof(this.x.y);
+        nameof.full(this.x.y.z);
+    }
+}
