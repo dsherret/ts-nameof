@@ -4,6 +4,7 @@
 /obj
 /temp
 /bin
+/src
 *.v12.suo
 *.csproj
 *.csproj.user

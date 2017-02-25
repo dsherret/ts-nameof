@@ -24,7 +24,7 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
 
     iterator.passSpaces();
 
-    const argResult = tryGetArgText(iterator);
+    const argResult = tryGetArgs(iterator);
 
     if (!argResult.isValid) {
         iterator.restoreLastState();
@@ -36,7 +36,7 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     return {
         pos: startIndex,
         end: iterator.getCurrentIndex(),
-        argText: (argResult.argText || "").trim(),
+        args: argResult.args,
         typeArgText: (typeArgText || "").trim(),
         showFull
     };
@@ -122,7 +122,8 @@ export function tryGetTypeArgText(iterator: StringIterator) {
     }
 }
 
-export function tryGetArgText(iterator: StringIterator): { isValid: boolean; argText?: string; } {
+export function tryGetArgs(iterator: StringIterator): { isValid: boolean; args: string[]; } {
+    const args: string[] = [];
     let text = "";
     iterator.saveState();
 
@@ -137,6 +138,12 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; arg
             else if (iterator.getCurrentChar() === "(") {
                 parens++;
             }
+            else if (parens === 1 && iterator.getCurrentChar() === ",") {
+                args.push(text);
+                text = "";
+                iterator.moveNext();
+                continue;
+            }
             else if (!validCharsInParens.test(iterator.getCurrentChar())) {
                 return throwInvalidCharacterInArg(iterator);
             }
@@ -145,9 +152,12 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; arg
                 iterator.moveNext();
                 iterator.clearLastState();
 
+                if (text.length > 0)
+                    args.push(text);
+
                 return {
                     isValid: true,
-                    argText: text
+                    args: args.map(a => a.trim())
                 };
             }
             else {
@@ -162,8 +172,10 @@ export function tryGetArgText(iterator: StringIterator): { isValid: boolean; arg
     }
 
     iterator.restoreLastState();
+
     return {
-        isValid: false
+        isValid: false,
+        args: []
     };
 }
 

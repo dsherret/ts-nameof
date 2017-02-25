@@ -12,7 +12,7 @@ describe("NameOfFinder", () => {
             describe("nameof: 0", () => {
                 testReplaceInfo(indexes[0], {
                     typeArgText: "",
-                    argText: "str",
+                    args: ["str"],
                     pos: 0,
                     end: 11,
                     showFull: false
@@ -21,7 +21,7 @@ describe("NameOfFinder", () => {
             describe("nameof: 1", () => {
                 testReplaceInfo(indexes[1], {
                     typeArgText: "",
-                    argText: "t",
+                    args: ["t"],
                     pos: 12,
                     end: 21,
                     showFull: false

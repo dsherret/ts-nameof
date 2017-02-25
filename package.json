@@ -43,6 +43,6 @@
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
     "tslint": "^3.13.0",
-    "typescript": "^2.1.4"
+    "typescript": "^2.2.1"
   }
 }

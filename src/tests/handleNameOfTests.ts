@@ -1,23 +1,23 @@
 ﻿import * as assert from "assert";
 import {StringIterator} from "./../StringIterator";
-import {handleNameOf, tryHandleFunctionName, tryHandleFullProperty, tryGetTypeArgText, tryGetArgText} from "./../handleNameOf";
+import {handleNameOf, tryHandleFunctionName, tryHandleFullProperty, tryGetTypeArgText, tryGetArgs} from "./../handleNameOf";
 import {testReplaceInfo} from "./testReplaceInfo";
 
 describe("handleNameOf", () => {
     describe("#handleNameOf()", () => {
         function runHandleNameOfTests(opts: {
             iterator: StringIterator,
-            expected: { typeArgText: string; argText: string; showFull?: boolean; }
+            expected: { typeArgText: string; args?: string[]; showFull?: boolean; }
         }) {
             const {iterator} = opts;
-            const {typeArgText, argText, showFull = false} = opts.expected;
+            const {typeArgText, args = [], showFull = false} = opts.expected;
             const result = handleNameOf(iterator);
 
             testReplaceInfo(result!, {
                 pos: 0,
                 end: iterator.getLength(),
                 typeArgText,
-                argText,
+                args,
                 showFull
             });
 
@@ -37,7 +37,7 @@ describe("handleNameOf", () => {
                 iterator,
                 expected: {
                     typeArgText: "typeArg",
-                    argText: "argText"
+                    args: ["argText"]
                 }
             });
         });
@@ -49,7 +49,7 @@ describe("handleNameOf", () => {
                 iterator,
                 expected: {
                     typeArgText: "typeArg",
-                    argText: "argText"
+                    args: ["argText"]
                 }
             });
         });
@@ -61,7 +61,7 @@ describe("handleNameOf", () => {
                 iterator,
                 expected: {
                     typeArgText: "typeArg",
-                    argText: "argText",
+                    args: ["argText"],
                     showFull: true
                 }
             });
@@ -74,7 +74,7 @@ describe("handleNameOf", () => {
                 iterator,
                 expected: {
                     typeArgText: "typeArg",
-                    argText: "argText",
+                    args: ["argText"],
                     showFull: true
                 }
             });
@@ -331,33 +331,33 @@ describe("handleNameOf", () => {
         });
     });
 
-    describe("#tryGetArgText()", () => {
+    describe("#tryGetArgs()", () => {
         // todo: make the other tests like this (why didn't I do this before?)
-        function runTryGetArgTextTests(opts: {
+        function runTryGetArgsTests(opts: {
             iterator: StringIterator,
-            expected: { errorMessage?: string; isValid?: boolean; text?: string; currentIndex: number; }
+            expected: { errorMessage?: string; isValid?: boolean; texts?: string[]; currentIndex: number; }
         }) {
             if (typeof opts.expected.errorMessage === "string") {
                 it("should throw", () => {
                     assert.throws(() => {
-                        tryGetArgText(opts.iterator);
+                        tryGetArgs(opts.iterator);
                     });
                 });
             }
             else {
-                let resultText: string | undefined;
+                let resultTexts: string[] | undefined;
                 let isValid: boolean;
 
                 it("should not throw", () => {
                     assert.doesNotThrow(() => {
-                        const result = tryGetArgText(opts.iterator);
-                        resultText = result.argText;
+                        const result = tryGetArgs(opts.iterator);
+                        resultTexts = result.args;
                         isValid = result.isValid;
                     });
                 });
 
                 it("should have the same result text", () => {
-                    assert.equal(resultText, opts.expected.text);
+                    assert.deepEqual(resultTexts, opts.expected.texts || []);
                 });
 
                 it("should have the same isValid", () => {
@@ -375,13 +375,13 @@ describe("handleNameOf", () => {
         }
 
         describe("finding parens with valid text", () => {
-            const testText = "azAZ_.09!, ";
+            const testText = "azAZ_.09!(,) ";
             const iterator = new StringIterator(`(${testText})`);
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: testText,
+                    texts: [testText.trim()],
                     currentIndex: iterator.getLength()
                 }
             });
@@ -390,7 +390,7 @@ describe("handleNameOf", () => {
         describe("finding parens with invalid text", () => {
             const iterator = new StringIterator(`(#)`);
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
                     errorMessage: "Invalid character in nameof argument: #",
@@ -402,10 +402,10 @@ describe("handleNameOf", () => {
         describe("finding parens without text", () => {
             const iterator = new StringIterator(`()`);
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: "",
+                    texts: [],
                     currentIndex: iterator.getLength()
                 }
             });
@@ -414,7 +414,7 @@ describe("handleNameOf", () => {
         describe("finding start paren, but not the end", () => {
             const iterator = new StringIterator("(te");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
                     errorMessage: "Invalid nameof at end of file.",
@@ -426,7 +426,7 @@ describe("handleNameOf", () => {
         describe("not finding parens", () => {
             const iterator = new StringIterator("a()");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
                     isValid: false,
@@ -438,10 +438,22 @@ describe("handleNameOf", () => {
         describe("finding multiple parens", () => {
             const iterator = new StringIterator("(one(two))");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: "one(two)",
+                    texts: ["one(two)"],
+                    currentIndex: iterator.getLength()
+                }
+            });
+        });
+
+        describe("finding multiple params", () => {
+            const iterator = new StringIterator("(param1, param2, (param,param))");
+
+            runTryGetArgsTests({
+                iterator,
+                expected: {
+                    texts: ["param1", "param2", "(param,param)"],
                     currentIndex: iterator.getLength()
                 }
             });
@@ -450,10 +462,10 @@ describe("handleNameOf", () => {
         describe("finding arrow function", () => {
             const iterator = new StringIterator("(t => t.someProperty)");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: "t => t.someProperty",
+                    texts: ["t => t.someProperty"],
                     currentIndex: iterator.getLength()
                 }
             });
@@ -462,10 +474,10 @@ describe("handleNameOf", () => {
         describe("finding arrow function with parenthesis", () => {
             const iterator = new StringIterator("((t) => t.someProperty)");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: "(t) => t.someProperty",
+                    texts: ["(t) => t.someProperty"],
                     currentIndex: iterator.getLength()
                 }
             });
@@ -474,10 +486,10 @@ describe("handleNameOf", () => {
         describe("finding function expression", () => {
             const iterator = new StringIterator("(function(t) { return t.someProperty; })");
 
-            runTryGetArgTextTests({
+            runTryGetArgsTests({
                 iterator,
                 expected: {
-                    text: "function(t) { return t.someProperty; }",
+                    texts: ["function(t) { return t.someProperty; }"],
                     currentIndex: iterator.getLength()
                 }
             });
