@@ -25,7 +25,6 @@ Make sure to add that to a single definition file in your project where other re
 It takes a file like this:
 
 ```typescript
-// src/MyFile.ts
 console.log(nameof(console));
 console.log(nameof(console.log));
 console.log(nameof.full(console.log));
