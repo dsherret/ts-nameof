@@ -65,7 +65,7 @@ console.log("Array");               // console.log(nameof<Array<MyInterface>>())
 "prop";                             // nameof<MyInterface>(o => o.prop);
 ```
 
-## Example - Replacing in *.ts* files (with stream)
+## Recommended Build Option - Replacing in *.ts* files (with stream)
 
 1. Pipe your *.ts* files to `tsNameof`:
 
@@ -88,7 +88,7 @@ console.log("Array");               // console.log(nameof<Array<MyInterface>>())
     gulp typescript
     ```
 
-## Example - Replacing in *.js* files (using `replaceInFiles`)
+## Alternate Build Option 1 - Replacing in *.js* files (using `replaceInFiles`)
 
 1. Start with your TypeScript:
 
@@ -101,7 +101,7 @@ console.log("Array");               // console.log(nameof<Array<MyInterface>>())
     replaceInFiles(["./dist/**/*.js"]);
     ```
 
-## Example - Replacing in *.ts* files (using `replaceInFiles`)
+## Alternate Build Option 2 - Replacing in *.ts* files (using `replaceInFiles`)
 
 You can use `replaceInFiles` to replace in .ts files:
 
