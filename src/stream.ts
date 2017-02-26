@@ -1,7 +1,5 @@
 ﻿import * as through from "through2";
-import {NameOfFinder} from "./NameOfFinder";
-import {StringIterator} from "./StringIterator";
-import {replaceCallExpressionReplacesInText} from "./replaceCallExpressionReplacesInText";
+import {replaceInText} from "./replaceInText";
 
 type GulpChunk = { contents: Buffer; };
 
@@ -10,7 +8,7 @@ export function stream() {
         let err: any = null;
 
         try {
-            let result = getReplacedText(getContentsAsString(chunk));
+            let result = replaceInText(getContentsAsString(chunk));
 
             if (result.replaced) {
                 chunk = getNewBuffer(chunk, result.fileText!);
@@ -23,17 +21,6 @@ export function stream() {
     }
 
     return through.obj(transform);
-}
-
-function getReplacedText(fileText: string): { fileText?: string, replaced: boolean } {
-    const finder = new NameOfFinder(new StringIterator(fileText));
-    const indexes = finder.indexOfAll();
-
-    if (indexes.length === 0) {
-        return { replaced: false };
-    }
-
-    return { fileText: replaceCallExpressionReplacesInText(indexes, fileText), replaced: true };
 }
 
 function getContentsAsString(chunk: Buffer | GulpChunk) {

@@ -11,6 +11,6 @@ declare module "ts-nameof" {
 declare function nameof<T>(func?: (obj: T) => void): string;
 declare function nameof(obj: Object | null | undefined): string;
 declare namespace nameof {
-    function full<T>(): string;
-    function full(obj: Object | null | undefined): string;
+    function full<T>(periodIndex?: number): string;
+    function full(obj: Object | null | undefined, periodIndex?: number): string;
 }

@@ -20,24 +20,54 @@ You may need to add a reference to this package's typescript definition file in 
 
 Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
 
+## What does this do?
+
+It takes a file like this:
+
+```typescript
+// src/MyFile.ts
+console.log(nameof(console));
+console.log(nameof(console.log));
+console.log(nameof.full(console.log));
+console.log(nameof.full(window.alert.length, 1));
+console.log(nameof.full(window.alert.length, 2));
+console.log(nameof.full(window.alert.length, -1));
+console.log(nameof.full(window.alert.length, -2));
+console.log(nameof.full(window.alert.length, -3));
+
+nameof<MyInterface>();
+console.log(nameof<Array<MyInterface>>());
+nameof<MyNamespace.MyInnerInterface>();
+nameof.full<MyNamespace.MyInnerInterface>();
+nameof.full<MyNamespace.MyInnerInterface>(1);
+nameof.full<Array<MyInterface>>();
+nameof<MyInterface>(o => o.prop);
+```
+
+And outputs this (minus the comments):
+
+```typescript
+console.log("console");             // console.log(nameof(console));
+console.log("log");                 // console.log(nameof(console.log));
+console.log("console.log");         // console.log(nameof.full(console.log));
+console.log("alert.length");        // console.log(nameof.full(window.alert.length, 1));
+console.log("length");              // console.log(nameof.full(window.alert.length, 2));
+console.log("length");              // console.log(nameof.full(window.alert.length, -1));
+console.log("alert.length");        // console.log(nameof.full(window.alert.length, -2));
+console.log("window.alert.length"); // console.log(nameof.full(window.alert.length, -3));
+
+"MyInterface";                      // nameof<MyInterface>();
+console.log("Array");               // console.log(nameof<Array<MyInterface>>());
+"MyInnerInterface";                 // nameof<MyNamespace.MyInnerInterface>();
+"MyNamespace.MyInnerInterface";     // nameof.full<MyNamespace.MyInnerInterface>();
+"MyInnerInterface";                 // nameof.full<MyNamespace.MyInnerInterface>(1);
+"Array";                            // nameof.full<Array<MyInterface>>();
+"prop";                             // nameof<MyInterface>(o => o.prop);
+```
+
 ## Example - Replacing in *.ts* files (with stream)
 
-1. Start with your TypeScript:
-
-    ```typescript
-    // src/MyFile.ts
-    console.log(nameof(console));
-    console.log(nameof(console.log));
-    console.log(nameof.full(console.log));
-
-    nameof<MyInterface>();
-    console.log(nameof<Array<MyInterface>>());
-    nameof<MyNamespace.MyInnerInterface>();
-    nameof.full<MyNamespace.MyInnerInterface>();
-    nameof<MyInterface>(o => o.prop);
-    ```
-
-2. Pipe your *.ts* files to `tsNameof`:
+1. Pipe your *.ts* files to `tsNameof`:
 
     ```javascript
     var gulp = require("gulp");
@@ -52,26 +82,11 @@ Make sure to add that to a single definition file in your project where other re
     });
     ```
 
-3. Compile:
+2. Compile:
 
     ```bash
     gulp typescript
     ```
-
-After step 3, *dist/MyFile.js* will contain the following code:
-
-```javascript
-console.log("console");
-console.log("log");
-console.log("console.log");
-
-"MyInterface";
-console.log("Array");
-"MyInnerInterface";
-"MyNamespace.MyInnerInterface";
-"prop";
-```
-
 
 ## Example - Replacing in *.js* files (using `replaceInFiles`)
 
@@ -100,4 +115,5 @@ You can use `replaceInFiles` to replace in .ts files:
 
 ## Future
 
-Ideally this would be a plugin for the TypeScript emitter. Unfortunately that isn't availble yet, but it will be a smooth transition once that's supported.
+Ideally this would be a plugin for the TypeScript emitter. Unfortunately that isn't available yet, but there is some work on
+this in the [transformationApi](https://github.com/dsherret/ts-nameof/tree/transformationApi) branch for when this happens.
