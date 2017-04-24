@@ -1,22 +1,26 @@
 ﻿import {StringIterator} from "./StringIterator";
 
 export function handleComment(iterator: StringIterator) {
-    if (isOpenCommentChar(iterator)) {
-        while (iterator.canMoveNext()) {
-            if (isCloseCommentChar(iterator)) {
-                iterator.moveNext();
-                break;
-            }
-            else {
-                iterator.moveNext();
-            }
-        }
-    }
-    else if (isCommentChar(iterator)) {
-        while (iterator.canMoveNext() && iterator.getLastChar() !== "\n") {
+    if (isOpenCommentChar(iterator))
+        handleOpenCommentChar(iterator);
+    else if (isCommentChar(iterator))
+        handleCommentChar(iterator);
+}
+
+function handleOpenCommentChar(iterator: StringIterator) {
+    while (iterator.canMoveNext()) {
+        if (isCloseCommentChar(iterator)) {
             iterator.moveNext();
+            break;
         }
+        else
+            iterator.moveNext();
     }
+}
+
+function handleCommentChar(iterator: StringIterator) {
+    while (iterator.canMoveNext() && iterator.getLastChar() !== "\n")
+        iterator.moveNext();
 }
 
 function isOpenCommentChar(iterator: StringIterator) {

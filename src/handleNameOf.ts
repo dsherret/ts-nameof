@@ -15,15 +15,10 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     }
 
     iterator.passSpaces();
-
     const showFull = tryHandleFullProperty(iterator);
-
     iterator.passSpaces();
-
     const typeArgText = tryGetTypeArgText(iterator);
-
     iterator.passSpaces();
-
     const argResult = tryGetArgs(iterator);
 
     if (!argResult.isValid) {
@@ -91,15 +86,12 @@ export function tryGetTypeArgText(iterator: StringIterator) {
         iterator.moveNext();
 
         while (iterator.canMoveNext()) {
-            if (iterator.getCurrentChar() === ">") {
+            if (iterator.getCurrentChar() === ">")
                 angleBrackets--;
-            }
-            else if (iterator.getCurrentChar() === "<") {
+            else if (iterator.getCurrentChar() === "<")
                 angleBrackets++;
-            }
-            else if (!validCharsInTypeArg.test(iterator.getCurrentChar())) {
+            else if (!validCharsInTypeArg.test(iterator.getCurrentChar()))
                 return throwInvalidCharacterInTypeArg(iterator);
-            }
 
             if (angleBrackets === 0) {
                 iterator.clearLastState();
@@ -132,21 +124,18 @@ export function tryGetArgs(iterator: StringIterator): { isValid: boolean; args: 
         iterator.moveNext();
 
         while (iterator.canMoveNext()) {
-            if (iterator.getCurrentChar() === ")") {
+            if (iterator.getCurrentChar() === ")")
                 parens--;
-            }
-            else if (iterator.getCurrentChar() === "(") {
+            else if (iterator.getCurrentChar() === "(")
                 parens++;
-            }
             else if (parens === 1 && iterator.getCurrentChar() === ",") {
                 args.push(text);
                 text = "";
                 iterator.moveNext();
                 continue;
             }
-            else if (!validCharsInParens.test(iterator.getCurrentChar())) {
+            else if (!validCharsInParens.test(iterator.getCurrentChar()))
                 return throwInvalidCharacterInArg(iterator);
-            }
 
             if (parens === 0) {
                 iterator.moveNext();
@@ -160,9 +149,8 @@ export function tryGetArgs(iterator: StringIterator): { isValid: boolean; args: 
                     args: args.map(a => a.trim())
                 };
             }
-            else {
+            else
                 text += iterator.getCurrentChar();
-            }
 
             iterator.moveNext();
         }

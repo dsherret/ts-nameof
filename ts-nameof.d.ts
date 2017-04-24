@@ -3,6 +3,7 @@ declare module "ts-nameof" {
         (): NodeJS.ReadWriteStream;
         replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
         replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+        replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
     }
     var func: Api;
     export = func;
