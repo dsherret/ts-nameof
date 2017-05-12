@@ -43,7 +43,7 @@ nameof.full<Array<MyInterface>>();
 nameof<MyInterface>(o => o.prop);
 ```
 
-And outputs this (minus the comments):
+And outputs the identifiers as strings. In this case the output will be this minus the comments:
 
 ```typescript
 console.log("console");             // console.log(nameof(console));
@@ -64,7 +64,7 @@ console.log("Array");               // console.log(nameof<Array<MyInterface>>())
 "prop";                             // nameof<MyInterface>(o => o.prop);
 ```
 
-## Recommended Build Option - Replacing in *.ts* files (with stream)
+## Build Option - Replacing in *.ts* files (with stream or gulp)
 
 1. Pipe your *.ts* files to `tsNameof`:
 
@@ -86,6 +86,10 @@ console.log("Array");               // console.log(nameof<Array<MyInterface>>())
     ```bash
     gulp typescript
     ```
+
+## Build Option - Webpack
+
+Follow the instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader).
 
 ## Alternate Build Option 1 - Replacing in *.js* files (using `replaceInFiles`)
 

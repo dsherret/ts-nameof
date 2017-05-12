@@ -1,6 +1,6 @@
 {
   "name": "ts-nameof",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "nameof in TypeScript",
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
@@ -43,6 +43,6 @@
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
     "tslint": "^3.13.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.3.2"
   }
 }

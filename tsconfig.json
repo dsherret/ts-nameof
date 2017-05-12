@@ -4,12 +4,9 @@
         "module": "commonjs",
         "declaration": false,
         "sourceMap": false,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
+        "strict": true,
         "removeComments": false,
         "experimentalDecorators": true,
-        "strictNullChecks": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true
     },
