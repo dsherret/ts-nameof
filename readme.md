@@ -25,43 +25,47 @@ Make sure to add that to a single definition file in your project where other re
 It takes a file like this:
 
 ```typescript
-console.log(nameof(console));
-console.log(nameof(console.log));
-console.log(nameof.full(console.log));
-console.log(nameof.full(window.alert.length, 1));
-console.log(nameof.full(window.alert.length, 2));
-console.log(nameof.full(window.alert.length, -1));
-console.log(nameof.full(window.alert.length, -2));
-console.log(nameof.full(window.alert.length, -3));
+nameof(console);
+nameof(console.log);
+nameof.full(console.log);
+nameof.full(window.alert.length, 1);
+nameof.full(window.alert.length, 2);
+nameof.full(window.alert.length, -1);
+nameof.full(window.alert.length, -2);
+nameof.full(window.alert.length, -3);
 
 nameof<MyInterface>();
-console.log(nameof<Array<MyInterface>>());
+nameof<Array<MyInterface>>();
 nameof<MyNamespace.MyInnerInterface>();
 nameof.full<MyNamespace.MyInnerInterface>();
 nameof.full<MyNamespace.MyInnerInterface>(1);
 nameof.full<Array<MyInterface>>();
 nameof<MyInterface>(o => o.prop);
+nameof.full<MyInterface>(o => o.prop.prop2);
+nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
 And outputs the identifiers as strings. In this case the output will be this minus the comments:
 
 ```typescript
-console.log("console");             // console.log(nameof(console));
-console.log("log");                 // console.log(nameof(console.log));
-console.log("console.log");         // console.log(nameof.full(console.log));
-console.log("alert.length");        // console.log(nameof.full(window.alert.length, 1));
-console.log("length");              // console.log(nameof.full(window.alert.length, 2));
-console.log("length");              // console.log(nameof.full(window.alert.length, -1));
-console.log("alert.length");        // console.log(nameof.full(window.alert.length, -2));
-console.log("window.alert.length"); // console.log(nameof.full(window.alert.length, -3));
+"console";             // nameof(console);
+"log";                 // nameof(console.log);
+"console.log";         // nameof.full(console.log);
+"alert.length";        // nameof.full(window.alert.length, 1);
+"length";              // nameof.full(window.alert.length, 2);
+"length";              // nameof.full(window.alert.length, -1);
+"alert.length";        // nameof.full(window.alert.length, -2);
+"window.alert.length"; // nameof.full(window.alert.length, -3);
 
 "MyInterface";                      // nameof<MyInterface>();
-console.log("Array");               // console.log(nameof<Array<MyInterface>>());
+"Array";                            // nameof<Array<MyInterface>>();
 "MyInnerInterface";                 // nameof<MyNamespace.MyInnerInterface>();
 "MyNamespace.MyInnerInterface";     // nameof.full<MyNamespace.MyInnerInterface>();
 "MyInnerInterface";                 // nameof.full<MyNamespace.MyInnerInterface>(1);
 "Array";                            // nameof.full<Array<MyInterface>>();
 "prop";                             // nameof<MyInterface>(o => o.prop);
+"prop.prop2";                       // nameof.full<MyInterface>(o => o.prop.prop2);
+"prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
 ## Build Option - Replacing in *.ts* files (with stream or gulp)
