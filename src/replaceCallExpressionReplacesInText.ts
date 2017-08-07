@@ -67,34 +67,38 @@ function getPeriodIndexArgIndex(currentReplace: ReplaceInfo) {
 }
 
 function getFullText(text: string, periodIndexText: string) {
-    if (periodIndexText.length === 0)
+    return getRawText().replace(/!/g, "");
+
+    function getRawText() {
+        if (periodIndexText.length === 0)
+            return text;
+
+        const periodIndex = parseInt(periodIndexText, 10);
+        if (isNaN(periodIndex))
+            throw new Error(`periodIndex parameter "${periodIndexText}" of nameof.full must be a number literal (ex. 1, -1, 2, etc.).`);
+
+        if (periodIndex > 0) {
+            let currentDotIndex = -1;
+            for (let i = 0; i < periodIndex; i++) {
+                currentDotIndex = text.indexOf(".", currentDotIndex + 1);
+                if (currentDotIndex === -1)
+                    throw new Error(`Value of periodIndex parameter "${periodIndex}" of nameof.full must not exceed the number of periods in the text.`);
+            }
+
+            text = text.substring(currentDotIndex + 1);
+        }
+        else if (periodIndex < 0) {
+            let currentDotIndex = text.length;
+            for (let i = 0; i > periodIndex; i--) {
+                currentDotIndex = text.lastIndexOf(".", currentDotIndex - 1);
+                if (currentDotIndex === -1 && i !== periodIndex + 1)
+                    throw new Error(`Absolute value of negative periodIndex parameter "${periodIndex}" of nameof.full must not exceed the number of periods in the text + 1.`);
+            }
+            text = text.substring(currentDotIndex + 1);
+        }
+
         return text;
-
-    const periodIndex = parseInt(periodIndexText, 10);
-    if (isNaN(periodIndex))
-        throw new Error(`periodIndex parameter "${periodIndexText}" of nameof.full must be a number literal (ex. 1, -1, 2, etc.).`);
-
-    if (periodIndex > 0) {
-        let currentDotIndex = -1;
-        for (let i = 0; i < periodIndex; i++) {
-            currentDotIndex = text.indexOf(".", currentDotIndex + 1);
-            if (currentDotIndex === -1)
-                throw new Error(`Value of periodIndex parameter "${periodIndex}" of nameof.full must not exceed the number of periods in the text.`);
-        }
-
-        text = text.substring(currentDotIndex + 1);
     }
-    else if (periodIndex < 0) {
-        let currentDotIndex = text.length;
-        for (let i = 0; i > periodIndex; i--) {
-            currentDotIndex = text.lastIndexOf(".", currentDotIndex - 1);
-            if (currentDotIndex === -1 && i !== periodIndex + 1)
-                throw new Error(`Absolute value of negative periodIndex parameter "${periodIndex}" of nameof.full must not exceed the number of periods in the text + 1.`);
-        }
-        text = text.substring(currentDotIndex + 1);
-    }
-
-    return text;
 }
 
 function getFunctionText(text: string) {
