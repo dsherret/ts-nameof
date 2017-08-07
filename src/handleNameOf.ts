@@ -146,7 +146,7 @@ export function tryGetArgs(iterator: StringIterator): { isValid: boolean; args: 
 
                 return {
                     isValid: true,
-                    args: args.map(a => a.trim())
+                    args: args.map(a => a.trim()).filter(a => a.length > 0)
                 };
             }
             else

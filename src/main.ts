@@ -4,8 +4,6 @@ import {getFileNamesFromGlobs} from "./getFileNamesFromGlobs";
 import {stream} from "./stream";
 import {replaceInText} from "./replaceInText";
 
-// todo: cleanup
-
 interface Api {
     (): NodeJS.ReadWriteStream;
     replaceInFiles(fileNames: string[], opts?: { encoding: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
