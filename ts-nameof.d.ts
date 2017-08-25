@@ -1,8 +1,9 @@
 declare module "ts-nameof" {
     interface Api {
-        (): NodeJS.ReadWriteStream;
-        replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
-        replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+        // the any types are actually node.js types, but I don't know a good way of making this work with web projects (see issue #22)
+        (): any; // actually: NodeJS.ReadWriteStream
+        replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
+        replaceInFiles(fileNames: string[], onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
         replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
     }
     var func: Api;
