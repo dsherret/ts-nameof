@@ -1,5 +1,9 @@
 ﻿# Using ts-nameof with Jest
 
+Thanks to [@Kukks](https://github.com/Kukks) for contributing these instructions.
+
+---
+
 If you are using Jest for unit tests, you most likely have `ts-jest` in your project already.
 
 In addition to the standard `ts-jest` configuration, we will need to wrap their preprocessor script in a custom script to make nameof work in jest.

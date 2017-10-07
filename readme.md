@@ -76,10 +76,10 @@ Follow any of these instructions:
 * Webpack - Use and follow instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
 * [Jest](setup/jest.md)
 * [Custom](setup/custom.md)
-
-Want more support? Open an issue.
+* Others - Open an [issue](issues).
 
 ## Todo
+
 * JS map file support.
 
 ## Future
