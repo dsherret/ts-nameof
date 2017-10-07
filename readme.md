@@ -68,96 +68,18 @@ And outputs the identifiers as strings. In this case the output will be this min
 "prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
-## Build Option - Replacing in *.ts* files (with stream or gulp)
+## Setup
 
-1. Pipe your *.ts* files to `tsNameof`:
+Follow any of these instructions:
 
-    ```javascript
-    var gulp = require("gulp");
-    var ts = require("gulp-typescript");
-    var tsNameof = require("ts-nameof");
+* [Gulp / Streams](setup/stream.md)
+* Webpack - Use and follow instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
+* [Jest](setup/jest.md)
+* [Custom](setup/custom.md)
 
-    gulp.task("typescript", function() {
-        gulp.src("src/**/*.ts")
-            .pipe(tsNameof())
-            .pipe(ts())
-            .pipe(gulp.dest("dist"));
-    });
-    ```
+Want more support? Open an issue.
 
-2. Compile:
-
-    ```bash
-    gulp typescript
-    ```
-
-## Build Option - Webpack
-
-Follow the instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader).
-
-## Alternate Build Option 1 - Replacing in *.js* files (using `replaceInFiles`)
-
-1. Start with your TypeScript:
-
-2. Compile your TypeScript to JavaScript (this example compiles *.ts* files in */src* to */dist*).
-
-3. Run replace in files:
-
-    ```javascript
-    var replaceInFiles = require("ts-nameof").replaceInFiles;
-    replaceInFiles(["./dist/**/*.js"]);
-    ```
-
-## Alternate Build Option 2 - Replacing in *.ts* files (using `replaceInFiles`)
-
-You can use `replaceInFiles` to replace in .ts files:
-
-1. Copy your .ts files to a build folder. This is necessary so you don't overwrite your original source files.
-2. Run `replaceInFiles` on these files.
-3. Compile the resultant typescript files.
-
-## Jest Integration
-If you are using Jest for unit tests, you most likely have `ts-jest` in your project already. In addition to the standard `ts-jest` configuration, we will need to wrap their preprocessor script in our own to make nameof work in jest.
-1. In package.json replace:
-```
-  "jest": {
-		...
-		"transform": {
-			"^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-			...
-		}
-	}
-```
-with:
-```
-  "jest": {
-		...
-		"transform": {
-			"^.+\\.(ts|tsx)$": "<rootDir>/jest-preprocessor.js",
-			...
-		}
-	}
-```
-2. Create preprocessor.js in your root folder
-```
-const nameof = require('ts-nameof');
-const tsJest = require('ts-jest/preprocessor.js');
-Object.defineProperty(exports, "__esModule", { value: true });
-
-function process(src, filename, config, options) {
-  const replaceResult = nameof.replaceInText(src);
-  if (replaceResult.replaced) {
-    return tsJest.process(replaceResult.fileText,filename,config, options);
-  }
-  return tsJest.process(src,filename,config, options);
-};
-
-exports.getCacheKey = tsJest.getCacheKey;
-
-exports.process = process;
-
-```
-  ## Todo
+## Todo
 * JS map file support.
 
 ## Future
