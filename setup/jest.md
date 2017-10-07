@@ -1,6 +1,6 @@
 ﻿# Using ts-nameof with Jest
 
-Thanks to [@Kukks](https://github.com/Kukks) for contributing these instructions.
+Thanks to [@Kukks](https://github.com/Kukks) for contributing these instructions!
 
 ---
 
@@ -8,7 +8,7 @@ If you are using Jest for unit tests, you most likely have `ts-jest` in your pro
 
 In addition to the standard `ts-jest` configuration, we will need to wrap their preprocessor script in a custom script to make nameof work in jest.
 
-1. In **package.json** replace...
+1. In *package.json* replace...
 
 ```
 "jest": {
@@ -32,7 +32,7 @@ In addition to the standard `ts-jest` configuration, we will need to wrap their 
 }
 ```
 
-2. Create **preprocessor.js** or similar file:
+2. Create *preprocessor.js* or similar file:
 
 ```
 const nameof = require('ts-nameof');

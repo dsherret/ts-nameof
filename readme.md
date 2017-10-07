@@ -76,7 +76,7 @@ Follow any of these instructions:
 * Webpack - Use and follow instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
 * [Jest](setup/jest.md)
 * [Custom](setup/custom.md)
-* Others - Open an [issue](issues).
+* Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
 
 ## Todo
 
