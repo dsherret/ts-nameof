@@ -113,6 +113,7 @@ nameof(window);
 "\\"nameof(window);";
 'nameof(window);';
 '\\'\\"nameof(window);';
+"C:\\\\";
 "window";
 \`\${() => { "console"; }}\`;
 `;

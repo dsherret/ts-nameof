@@ -60,7 +60,7 @@ export class NameOfFinder {
         const currentChar = this.iterator.getCurrentChar();
         const lastStringChar = this.getLastStringCharOnStack();
 
-        if (lastChar === "\\")
+        if (lastChar === "\\" && this.iterator.getSecondLastChar() !== "\\")
             return false;
         else if (lastStringChar == null)
             return currentChar === "`" || currentChar === "'" || currentChar === "\"";

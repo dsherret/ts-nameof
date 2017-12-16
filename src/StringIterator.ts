@@ -79,6 +79,10 @@
         return this.currentIndex === 0 ? null : this.text[this.currentIndex - 1];
     }
 
+    getSecondLastChar() {
+        return this.currentIndex <= 1 ? null : this.text[this.currentIndex - 2];
+    }
+
     getLength() {
         return this.text.length;
     }
