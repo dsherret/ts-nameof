@@ -1,10 +1,15 @@
 /node_modules
 /.vscode
+/.vs
+/.git
 *.js.map
 /obj
 /temp
 /bin
 /src
+/dist/tests
+/coverage
+/setup
 *.v12.suo
 *.csproj
 *.csproj.user
