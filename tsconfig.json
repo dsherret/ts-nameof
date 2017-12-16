@@ -8,7 +8,9 @@
         "removeComments": false,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
     },
     "compileOnSave": false
 }

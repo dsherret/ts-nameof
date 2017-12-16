@@ -46,7 +46,7 @@ function doReplaceInFiles(fileNames: string[], encoding: string) {
     fileNames.forEach(fileName => {
         promises.push(new Promise<void>((resolve, reject) => {
             let contents = "";
-            fs.createReadStream(fileName)
+            fs.createReadStream(fileName, { encoding })
                 .pipe(stream())
                 .on("error", /* istanbul ignore next */ (e: any) => {
                     reject(e);
