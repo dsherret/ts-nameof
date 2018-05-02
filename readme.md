@@ -73,7 +73,8 @@ And outputs the identifiers as strings. In this case the output will be this min
 Follow any of these instructions:
 
 * [Gulp / Streams](setup/stream.md)
-* Webpack - Use and follow instructions at [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
+* Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
+* FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
 * [Jest](setup/jest.md)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
