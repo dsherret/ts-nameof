@@ -4,4 +4,4 @@ node_js:
 script:
     - npm run test-ci
 before_script:
-    - gulp tslint
+    - npm run lint
