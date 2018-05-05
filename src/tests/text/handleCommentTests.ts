@@ -1,6 +1,5 @@
 ﻿import * as assert from "assert";
-import {StringIterator} from "./../StringIterator";
-import {handleComment} from "./../handleComment";
+import { StringIterator, handleComment } from "../../text";
 
 describe("handleComment()", () => {
     it("should iterate while in a double shash comment going to the end of the iterator", () => {

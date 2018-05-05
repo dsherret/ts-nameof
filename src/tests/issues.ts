@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {replaceInText} from "./../main";
+import { replaceInText } from "../main";
 
 describe("issues", () => {
     function runTest(text: string, expected: string) {

@@ -2,7 +2,7 @@
 import * as assert from "assert";
 import * as fs from "fs";
 import * as tsNameof from "../main";
-import {getTestFilePath} from "./getTestFilePath";
+import { getTestFilePath } from "./getTestFilePath";
 
 describe("stream()", () => {
     function runTest(fileName: string, expectedContents: string) {

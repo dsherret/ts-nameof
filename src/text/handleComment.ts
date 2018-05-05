@@ -1,4 +1,4 @@
-﻿import {StringIterator} from "./StringIterator";
+﻿import { StringIterator } from "./StringIterator";
 
 export function handleComment(iterator: StringIterator) {
     if (isOpenCommentChar(iterator))

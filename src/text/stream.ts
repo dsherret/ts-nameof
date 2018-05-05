@@ -1,5 +1,5 @@
 ﻿import * as through from "through2";
-import {replaceInText} from "./replaceInText";
+import { replaceInText } from "./replaceInText";
 
 type GulpChunk = { contents: Buffer; };
 

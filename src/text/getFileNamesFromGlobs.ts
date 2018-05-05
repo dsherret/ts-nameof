@@ -1,5 +1,4 @@
 ﻿import * as glob from "glob";
-import {Promise} from "es6-promise";
 
 export function getFileNamesFromGlobs(globs: string[]) {
     const promises = globs.map(g => getFileNamesFromGlob(g));

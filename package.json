@@ -5,12 +5,13 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "npm run copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test": "npm run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
     "test-ci": "npm run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "rimraf dist && tsc",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "lint": "tslint src/**/*.ts",
-    "do-publish": "npm run lint && npm run test && npm run build && npm publish"
+    "do-publish": "npm run lint && npm run test && npm run build && npm publish",
+    "maintain-barrels": "barrel-maintainer src"
   },
   "repository": {
     "type": "git",
@@ -44,7 +45,6 @@
     "definition": "ts-nameof.d.ts"
   },
   "dependencies": {
-    "es6-promise": "^3.2.1",
     "glob": "^7.0.6",
     "through2": "^2.0.1"
   },
@@ -53,6 +53,7 @@
     "@types/mocha": "^5.2.0",
     "@types/node": "^10.0.4",
     "@types/through2": "^2.0.33",
+    "barrel-maintainer": "^1.2.11",
     "copyfiles": "^2.0.0",
     "coveralls": "^2.11.6",
     "gulp": "^3.9.1",

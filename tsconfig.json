@@ -15,5 +15,8 @@
         "rootDir": "./src",
         "outDir": "./dist"
     },
-    "compileOnSave": false
+    "compileOnSave": false,
+    "exclude": [
+        "lib"
+    ]
 }

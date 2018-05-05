@@ -1,4 +1,4 @@
-﻿import {ReplaceInfo} from "./ReplaceInfo";
+﻿import { ReplaceInfo } from "./ReplaceInfo";
 
 export function replaceCallExpressionReplacesInText(callExpressionReplaces: ReplaceInfo[], data: string) {
     for (let i = 0; i < callExpressionReplaces.length; i++) {

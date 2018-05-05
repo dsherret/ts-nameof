@@ -1,7 +1,6 @@
 ﻿import * as assert from "assert";
-import {NameOfFinder} from "./../NameOfFinder";
-import {StringIterator} from "./../StringIterator";
-import {testReplaceInfo} from "./testReplaceInfo";
+import { NameOfFinder, StringIterator } from "../../text";
+import { testReplaceInfo } from "./testReplaceInfo";
 
 describe("NameOfFinder", () => {
     describe("#indexOfAll", () => {

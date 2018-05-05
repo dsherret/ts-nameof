@@ -1,4 +1,5 @@
-﻿/* tslint:disable */
+﻿/// <reference path="../ts-nameof.d.ts" />
+/* tslint:disable */
 /* istanbul ignore next */
 import tsNameOf = require("ts-nameof");
 import * as tsNameOfEs6 from "ts-nameof";

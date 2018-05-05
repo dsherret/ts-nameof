@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {StringIterator} from "./../StringIterator";
+import {StringIterator} from "../../text";
 
 describe("StringIterator", () => {
     describe("#restoreLastState()", () => {

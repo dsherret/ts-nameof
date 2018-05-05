@@ -1,8 +1,5 @@
 import * as fs from "fs";
-import {Promise} from "es6-promise";
-import {getFileNamesFromGlobs} from "./getFileNamesFromGlobs";
-import {stream} from "./stream";
-import {replaceInText} from "./replaceInText";
+import { getFileNamesFromGlobs, stream, replaceInText } from "./text";
 
 interface Api {
     (): NodeJS.ReadWriteStream;

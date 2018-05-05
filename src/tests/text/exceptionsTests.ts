@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {replaceInText} from "./../replaceInText";
+import { replaceInText } from "../../text";
 
 describe("periodIndex", () => {
     it("should throw when the periodIndex is not a number literal", () => {

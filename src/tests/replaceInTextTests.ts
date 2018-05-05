@@ -1,5 +1,5 @@
 ﻿import * as assert from "assert";
-import {replaceInText} from "./../main";
+import { replaceInText } from "./../main";
 
 // todo: most other test cases are tested elsewhere, but should eventually be consolidated here
 describe("replaceInText()", () => {

@@ -1,6 +1,6 @@
-﻿import {StringIterator} from "./StringIterator";
-import {ReplaceInfo} from "./ReplaceInfo";
-import {validCharsInTypeArg, validCharsInParens} from "./config";
+﻿import { StringIterator } from "./StringIterator";
+import { ReplaceInfo } from "./ReplaceInfo";
+import { validCharsInTypeArg, validCharsInParens } from "../config";
 
 const searchingFunctionName = "nameof";
 const searchingFullPropertyName = "full";

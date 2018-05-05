@@ -1,7 +1,7 @@
-﻿import {ReplaceInfo} from "./ReplaceInfo";
-import {StringIterator} from "./StringIterator";
-import {handleNameOf} from "./handleNameOf";
-import {handleComment} from "./handleComment";
+﻿import { ReplaceInfo } from "./ReplaceInfo";
+import { StringIterator } from "./StringIterator";
+import { handleNameOf } from "./handleNameOf";
+import { handleComment } from "./handleComment";
 
 export class NameOfFinder {
     private stringCharStack: string[] = [];
