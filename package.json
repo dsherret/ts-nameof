@@ -26,6 +26,20 @@
     "url": "https://github.com/dsherret/ts-nameof/issues"
   },
   "homepage": "https://github.com/dsherret/ts-nameof#readme",
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "include": [
+      "src/**/*.ts",
+      "!src/tests/**/*.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
   "typescript": {
     "definition": "ts-nameof.d.ts"
   },
@@ -45,6 +59,7 @@
     "mocha": "^2.3.3",
     "nyc": "^11.7.1",
     "rimraf": "^2.6.2",
+    "source-map-support": "^0.5.5",
     "ts-node": "^6.0.2",
     "tslint": "^3.13.0",
     "typescript": "^2.8.3"

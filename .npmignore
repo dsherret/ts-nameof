@@ -2,7 +2,7 @@
 /.vscode
 /.vs
 /.git
-*.js.map
+/.nyc_output
 /obj
 /temp
 /bin
@@ -11,13 +11,15 @@
 /coverage
 /setup
 /temp
+*.js.map
 *.v12.suo
 *.csproj
 *.csproj.user
 *.sln
-gulpfile.js
 .travis.yml
 .gitignore
+CHANGELOG.md
+gulpfile.js
 tsconfig.json
 tslint.json
 typings.json
