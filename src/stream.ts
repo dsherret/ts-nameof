@@ -4,32 +4,28 @@ import {replaceInText} from "./replaceInText";
 type GulpChunk = { contents: Buffer; };
 
 export function stream() {
-    function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
-        let err: any = null;
-
-        try {
-            let result = replaceInText(getContentsAsString(chunk));
-
-            if (result.replaced) {
-                chunk = getNewBuffer(chunk, result.fileText!);
-            }
-        } catch (e) {
-            err = e;
-        }
-
-        callback(err, chunk);
-    }
-
     return through.obj(transform);
 }
 
+function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
+    let err: any = null;
+
+    try {
+        const result = replaceInText(getContentsAsString(chunk));
+        if (result.replaced)
+            chunk = getNewBuffer(chunk, result.fileText!);
+    } catch (e) {
+        err = e;
+    }
+
+    callback(err, chunk);
+}
+
 function getContentsAsString(chunk: Buffer | GulpChunk) {
-    if (isGulpChunk(chunk)) {
+    if (isGulpChunk(chunk))
         return chunk.contents.toString();
-    }
-    else {
+    else
         return chunk.toString();
-    }
 }
 
 function getNewBuffer(chunk: Buffer | GulpChunk, newText: string): Buffer | GulpChunk {
@@ -37,9 +33,8 @@ function getNewBuffer(chunk: Buffer | GulpChunk, newText: string): Buffer | Gulp
         chunk.contents = new Buffer(newText);
         return chunk;
     }
-    else {
+    else
         return new Buffer(newText);
-    }
 }
 
 function isGulpChunk(chunk: Buffer | GulpChunk): chunk is GulpChunk {

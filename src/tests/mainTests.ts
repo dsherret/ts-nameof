@@ -37,7 +37,7 @@ describe("replaceInFiles()", () => {
     describe("general file", () => {
         it("should have the correct number of characters", () => {
             // because an IDE might auto-format the code, this makes sure that hasn't happened
-            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.ts"), "utf-8").replace(/\r?\n/g, "\n").length, 1122);
+            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.txt"), "utf-8").replace(/\r?\n/g, "\n").length, 1122);
         });
 
         const expected =
@@ -66,7 +66,7 @@ console.log("MyNamespace.MyInnerInterface");
 console.log("MyInnerInterface");
 `;
 
-        runTest("GeneralTestFile.ts", expected);
+        runTest("GeneralTestFile.txt", expected);
     });
 
     describe("interface file", () => {
@@ -78,14 +78,14 @@ console.log("Array");
 "MyNamespace.MyInnerInterface";
 `;
 
-        runTest("InterfaceTestFile.ts", expected);
+        runTest("InterfaceTestFile.txt", expected);
     });
 
     describe("single statement test file", () => {
         const expected =
 `"window";
 `;
-        runTest("SingleStatementTestFile.ts", expected);
+        runTest("SingleStatementTestFile.txt", expected);
     });
 
     describe("comments test file", () => {
@@ -98,7 +98,7 @@ nameof(window);
 */
 "window";
 `;
-        runTest("CommentsTestFile.ts", expected);
+        runTest("CommentsTestFile.txt", expected);
     });
 
     describe("strings test file", () => {
@@ -117,7 +117,7 @@ nameof(window);
 "window";
 \`\${() => { "console"; }}\`;
 `;
-        runTest("StringsTestFile.ts", expected);
+        runTest("StringsTestFile.txt", expected);
     });
 
     describe("replaceInText", () => {

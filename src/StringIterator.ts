@@ -10,17 +10,15 @@
     }
 
     restoreLastState() {
-        if (this.stateStack.length === 0) {
+        if (this.stateStack.length === 0)
             throw new Error("Cannot restore a state that hasn't been saved.");
-        }
 
         this.currentIndex = this.stateStack.pop()!;
     }
 
     clearLastState() {
-        if (this.stateStack.length === 0) {
+        if (this.stateStack.length === 0)
             throw new Error("Cannot clear a state that hasn't been saved.");
-        }
 
         this.stateStack.pop();
     }
@@ -30,9 +28,8 @@
     }
 
     passSpaces() {
-        while (this.canMoveNext() && (this.getCurrentChar() === " " || this.getCurrentChar() === "\t")) {
+        while (this.canMoveNext() && (this.getCurrentChar() === " " || this.getCurrentChar() === "\t"))
             this.moveNext();
-        }
     }
 
     canMoveNext() {
@@ -40,9 +37,8 @@
     }
 
     moveNext() {
-        if (!this.canMoveNext()) {
+        if (!this.canMoveNext())
             throw new Error("Cannot move next if at the end of the string.");
-        }
 
         this.currentIndex++;
     }
@@ -52,9 +48,8 @@
     }
 
     getCurrentChar() {
-        if (this.currentIndex === this.getLength()) {
+        if (this.currentIndex === this.getLength())
             throw new Error("Cannot get the current character at the end of a string.");
-        }
 
         return this.text[this.currentIndex];
     }
@@ -65,9 +60,8 @@
         while (currentIndex >= 0) {
             const char = this.text[currentIndex];
 
-            if (!/[\s\r\n\t]/.test(char)) {
+            if (!/[\s\r\n\t]/.test(char))
                 break;
-            }
 
             currentIndex--;
         }

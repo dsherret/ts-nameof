@@ -29,14 +29,14 @@ describe("stream()", () => {
         const expected =
 `"window";
 `;
-        runTest("StreamTestFile.ts", expected);
+        runTest("StreamTestFile.txt", expected);
     });
 
     describe("stream no nameof test file", () => {
         const expected =
 `console.log("");
 `;
-        runTest("StreamNoNameofTestFile.ts", expected);
+        runTest("StreamNoNameofTestFile.txt", expected);
     });
 
     describe("gulp test file", () => {
@@ -46,7 +46,7 @@ describe("stream()", () => {
         let contents = "";
 
         before((done: MochaDone) => {
-            gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.ts"))
+            gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.txt"))
                 .pipe(tsNameof())
                 .on("data", (chunk: { contents: Buffer; }) => {
                     contents += chunk.contents.toString();

@@ -14,3 +14,9 @@
 *.csproj
 *.csproj.user
 *.sln
+gulpfile.js
+.travis.yml
+.gitignore
+tsconfig.json
+tslint.json
+typings.json

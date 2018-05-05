@@ -32,6 +32,10 @@
     "through2": "^2.0.1"
   },
   "devDependencies": {
+    "@types/gulp": "^4.0.5",
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^10.0.4",
+    "@types/through2": "^2.0.33",
     "coveralls": "^2.11.6",
     "del": "^2.0.2",
     "gulp": "^3.9.1",
@@ -43,6 +47,6 @@
     "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
     "tslint": "^3.13.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.8.3"
   }
 }

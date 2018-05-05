@@ -34,7 +34,7 @@ function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encoding?: str
     });
 }
 
-let api: Api = stream as Api;
+let api: Api = stream as any as Api;
 api.replaceInFiles = replaceInFiles;
 api.replaceInText = replaceInText;
 
