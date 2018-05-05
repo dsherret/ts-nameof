@@ -1,4 +1,4 @@
-﻿import CodeBlockWriter from "code-block-writer";
+import CodeBlockWriter from "code-block-writer";
 import {expect} from "chai";
 import {FunctionDefinition, InterfaceMethodDefinition, ClassMethodDefinition} from "./../../definitions";
 import {FunctionBodyWriter} from "./../../writers";

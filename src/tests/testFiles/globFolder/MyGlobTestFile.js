@@ -1,1 +1,1 @@
-﻿console.log(nameof(console));
+console.log(nameof(console));

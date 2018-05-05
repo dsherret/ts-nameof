@@ -5,9 +5,12 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "gulp test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "gulp typescript",
-    "pre-publish": "gulp tslint && gulp test"
+    "test": "npm run copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test-ci": "npm run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "build": "rimraf dist && tsc",
+    "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
+    "lint": "tslint src/**/*.ts",
+    "do-publish": "npm run lint && npm run test && npm run build && npm publish"
   },
   "repository": {
     "type": "git",
@@ -36,16 +39,13 @@
     "@types/mocha": "^5.2.0",
     "@types/node": "^10.0.4",
     "@types/through2": "^2.0.33",
+    "copyfiles": "^2.0.0",
     "coveralls": "^2.11.6",
-    "del": "^2.0.2",
     "gulp": "^3.9.1",
-    "gulp-istanbul": "^0.10.3",
-    "gulp-mocha": "^2.2.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-tslint": "^5.0.0",
-    "gulp-typescript": "^2.13.3",
     "mocha": "^2.3.3",
+    "nyc": "^11.7.1",
+    "rimraf": "^2.6.2",
+    "ts-node": "^6.0.2",
     "tslint": "^3.13.0",
     "typescript": "^2.8.3"
   }

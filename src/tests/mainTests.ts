@@ -1,11 +1,11 @@
 ﻿import * as assert from "assert";
-import * as path from "path";
 import * as fs from "fs";
-import {replaceInFiles, replaceInText} from "./../main";
+import {replaceInFiles, replaceInText} from "../main";
+import {getTestFilePath} from "./getTestFilePath";
 
 describe("replaceInFiles()", () => {
     function runTest(fileName: string, expectedContents: string) {
-        fileName = path.join(__dirname, "testFiles", fileName);
+        fileName = getTestFilePath(fileName);
 
         before((done: MochaDone) => {
             replaceInFiles([fileName], () => done());
@@ -18,10 +18,10 @@ describe("replaceInFiles()", () => {
     }
 
     describe("glob support", () => {
-        const fileName = path.join(__dirname, "testFiles/globFolder/MyGlobTestFile.js");
+        const fileName = getTestFilePath("globFolder/MyGlobTestFile.js");
 
         before((done: MochaDone) => {
-            replaceInFiles([path.join(__dirname, "testFiles/globFolder/**/*.js")], () => done());
+            replaceInFiles([getTestFilePath("globFolder/**/*.js")], () => done());
         });
 
         it("should replace in MyGlobTestFile.js", () => {
@@ -37,7 +37,7 @@ describe("replaceInFiles()", () => {
     describe("general file", () => {
         it("should have the correct number of characters", () => {
             // because an IDE might auto-format the code, this makes sure that hasn't happened
-            assert.equal(fs.readFileSync(path.join(__dirname, "../../src/tests/testFiles/GeneralTestFile.txt"), "utf-8").replace(/\r?\n/g, "\n").length, 1122);
+            assert.equal(fs.readFileSync(getTestFilePath("GeneralTestFile.txt"), "utf-8").replace(/\r?\n/g, "\n").length, 1121);
         });
 
         const expected =
@@ -66,7 +66,9 @@ console.log("MyNamespace.MyInnerInterface");
 console.log("MyInnerInterface");
 `;
 
-        runTest("GeneralTestFile.txt", expected);
+        describe("file modifying test", () => {
+            runTest("GeneralTestFile.txt", expected);
+        });
     });
 
     describe("interface file", () => {

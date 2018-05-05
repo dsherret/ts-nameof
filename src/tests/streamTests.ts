@@ -1,12 +1,12 @@
 ﻿import * as gulp from "gulp";
 import * as assert from "assert";
-import * as path from "path";
 import * as fs from "fs";
-import * as tsNameof from "./../main";
+import * as tsNameof from "../main";
+import {getTestFilePath} from "./getTestFilePath";
 
 describe("stream()", () => {
     function runTest(fileName: string, expectedContents: string) {
-        fileName = path.join(__dirname, "testFiles", fileName);
+        fileName = getTestFilePath(fileName);
         let contents = "";
 
         before((done: MochaDone) => {
@@ -46,7 +46,7 @@ describe("stream()", () => {
         let contents = "";
 
         before((done: MochaDone) => {
-            gulp.src(path.join(__dirname, "testFiles", "StreamTestFile.txt"))
+            gulp.src(getTestFilePath("StreamTestFile.txt"))
                 .pipe(tsNameof())
                 .on("data", (chunk: { contents: Buffer; }) => {
                     contents += chunk.contents.toString();

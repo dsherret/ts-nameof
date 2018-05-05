@@ -1,5 +1,7 @@
 language: node_js
 node_js:
-    - "4.1"
+    - "4.8"
+script:
+    - npm run test-ci
 before_script:
     - gulp tslint

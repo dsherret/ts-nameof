@@ -1,1 +1,1 @@
-﻿nameof(window);
+nameof(window);

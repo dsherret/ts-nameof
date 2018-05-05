@@ -1,8 +1,9 @@
-﻿/*istanbul ignore next*/
+﻿/* tslint:disable */
+/* istanbul ignore next */
 import tsNameOf = require("ts-nameof");
 import * as tsNameOfEs6 from "ts-nameof";
 
-/*istanbul ignore next*/
+/* istanbul ignore next */
 function testFunc() {
     const result: NodeJS.ReadWriteStream = tsNameOfEs6();
     console.log(result);

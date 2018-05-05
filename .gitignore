@@ -11,3 +11,5 @@
 /coverage
 /.vs
 /dist
+/.nyc_output
+/temp

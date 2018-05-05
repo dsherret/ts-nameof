@@ -10,6 +10,7 @@
 /dist/tests
 /coverage
 /setup
+/temp
 *.v12.suo
 *.csproj
 *.csproj.user

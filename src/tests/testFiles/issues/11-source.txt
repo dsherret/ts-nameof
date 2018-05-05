@@ -1,4 +1,4 @@
-﻿class Test {
+class Test {
     private x: Test;
     public y: Test;
     public z: string;

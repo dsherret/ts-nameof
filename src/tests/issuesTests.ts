@@ -1,7 +1,8 @@
 ﻿import * as assert from "assert";
 import * as path from "path";
 import * as fs from "fs";
-import {replaceInFiles} from "./../main";
+import {replaceInFiles} from "../main";
+import {getTestFilePath} from "./getTestFilePath";
 
 describe("replaceInFiles()", () => {
     function runTest(fileName: string, expectedFileName: string) {
@@ -16,10 +17,6 @@ describe("replaceInFiles()", () => {
             const expectedContents = fs.readFileSync(getTestFilePath(expectedFileName), "utf-8");
             assert.equal(data.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
         });
-    }
-
-    function getTestFilePath(relativeFilePath: string) {
-        return path.join(__dirname, "testFiles", relativeFilePath);
     }
 
     function runIssueTest(issueNumber: number) {
