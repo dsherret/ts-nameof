@@ -6,7 +6,7 @@ import * as tsNameOfEs6 from "ts-nameof";
 
 /* istanbul ignore next */
 function testFunc() {
-    const result: NodeJS.ReadWriteStream = tsNameOfEs6();
+    const result: NodeJS.ReadWriteStream = tsNameOf.stream();
     console.log(result);
     tsNameOf.replaceInFiles(["test"]);
     tsNameOf.replaceInFiles(["test"], (err) => {
@@ -21,7 +21,7 @@ function testFunc() {
     });
 
     // es6 test
-    const es6Result: NodeJS.ReadWriteStream = tsNameOfEs6();
+    const es6Result: NodeJS.ReadWriteStream = tsNameOfEs6.stream();
     console.log(es6Result);
 
     // null test

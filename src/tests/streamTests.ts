@@ -11,7 +11,7 @@ describe("stream()", () => {
 
         before((done: MochaDone) => {
             fs.createReadStream(fileName)
-                .pipe(tsNameof())
+                .pipe(tsNameof.stream())
                 .on("data", (buffer: Buffer) => {
                     contents += buffer.toString();
                 })
@@ -47,7 +47,7 @@ describe("stream()", () => {
 
         before((done: MochaDone) => {
             gulp.src(getTestFilePath("StreamTestFile.txt"))
-                .pipe(tsNameof())
+                .pipe(tsNameof.stream())
                 .on("data", (chunk: { contents: Buffer; }) => {
                     contents += chunk.contents.toString();
                 })

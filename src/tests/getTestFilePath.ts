@@ -1,3 +1,4 @@
+/* barrel:ignore */
 import * as path from "path";
 
 export function getTestFilePath(...paths: string[]) {

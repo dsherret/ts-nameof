@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import { getFileNamesFromGlobs, stream, replaceInText } from "./text";
+import { transformerFactory } from "./transformation";
 
 interface Api {
-    (): NodeJS.ReadWriteStream;
+    stream(): NodeJS.ReadWriteStream;
     replaceInFiles(fileNames: string[], opts?: { encoding: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
     replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
     replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
@@ -31,7 +32,8 @@ function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encoding?: str
     });
 }
 
-let api: Api = stream as any as Api;
+let api: Api = transformerFactory as any as Api;
+api.stream = stream;
 api.replaceInFiles = replaceInFiles;
 api.replaceInText = replaceInText;
 
