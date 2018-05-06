@@ -2,6 +2,7 @@ import * as ts from "typescript";
 
 const NAMEOF_NAME = "nameof";
 const NAMEOF_FULL_NAME = "full";
+const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
 const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
     return file => visitSourceFile(file, context) as ts.SourceFile;
@@ -28,7 +29,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
 
         function getLiteral(str: string | undefined) {
             if (str == null || str.trim().length === 0)
-                return throwError(`Could not resolve string from expression: ${node.getText(sourceFile)}`);
+                return throwError(`Could not resolve string from expression: ${getNodeText(node)}`);
 
             return ts.createLiteral(str);
         }
@@ -69,7 +70,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
             if (countExpr == null)
                 return 0;
             if (ts.isNumericLiteral(countExpr) || ts.isPrefixUnaryExpression(countExpr)) {
-                const result = parseInt(countExpr.getText(sourceFile), 10);
+                const result = parseInt(getNodeText(countExpr), 10);
                 if (!isNaN(result))
                     return result;
             }
@@ -88,13 +89,13 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
         if (ts.isFunctionExpression(arg))
             return getFunctionExpressionParts(arg);
 
-        return [arg.getText(sourceFile)];
+        return [getNodeText(arg)];
     }
 
     function getTypeArgumentParts(typeArg: ts.TypeNode) {
         if (ts.isQualifiedName(typeArg))
             return getQualifiedNameParts(typeArg);
-        return [typeArg.getText(sourceFile)];
+        return [getNodeText(typeArg)];
     }
 
     function getFunctionExpressionParts(func: ts.FunctionExpression) {
@@ -106,7 +107,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
                     return statement.expression;
             }
 
-            return throwError(`Cound not find return statement with an expression in function expression: ${func.body.getText(sourceFile)}`);
+            return throwError(`Cound not find return statement with an expression in function expression: ${getNodeText(func.body)}`);
         }
     }
 
@@ -120,7 +121,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
         if (ts.isElementAccessExpression(body))
             return getElementAccessExpressionParts(body).slice(1);
         else
-            return throwError(`Unexpected function text: ${body.getText(sourceFile)}`);
+            return throwError(`Unexpected function text: ${getNodeText(body)}`);
     }
 
     function getElementAccessExpressionParts(elementAccessExpr: ts.ElementAccessExpression): string[] {
@@ -128,7 +129,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
             return addArgTextToArray([...getElementAccessExpressionParts(elementAccessExpr.expression)]);
         if (ts.isPropertyAccessExpression(elementAccessExpr.expression))
             return addArgTextToArray([...getPropertyAccessExpressionParts(elementAccessExpr.expression)]);
-        return addArgTextToArray([elementAccessExpr.expression.getText()]);
+        return addArgTextToArray([getNodeText(elementAccessExpr.expression)]);
 
         function addArgTextToArray(items: string[]) {
             items[items.length - 1] += getArgumentExpression();
@@ -138,20 +139,20 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
         function getArgumentExpression() {
             if (elementAccessExpr.argumentExpression == null)
                 return "";
-            return `[${elementAccessExpr.argumentExpression.getText(sourceFile)}]`;
+            return `[${getNodeText(elementAccessExpr.argumentExpression)}]`;
         }
     }
 
     function getQualifiedNameParts(name: ts.QualifiedName): string[] {
         if (ts.isQualifiedName(name.left))
-            return [...getQualifiedNameParts(name.left), name.right.getText(sourceFile)];
-        return [name.left.getText(sourceFile), name.right.getText(sourceFile)];
+            return [...getQualifiedNameParts(name.left), getNodeText(name.right)];
+        return [getNodeText(name.left), getNodeText(name.right)];
     }
 
     function getPropertyAccessExpressionParts(pae: ts.PropertyAccessExpression): string[] {
         if (ts.isPropertyAccessExpression(pae.expression))
-            return [...getPropertyAccessExpressionParts(pae.expression), pae.name.getText(sourceFile)];
-        return [pae.expression.getText(sourceFile), pae.name.getText(sourceFile)];
+            return [...getPropertyAccessExpressionParts(pae.expression), getNodeText(pae.name)];
+        return [getNodeText(pae.expression), getNodeText(pae.name)];
     }
 
     function isNameof(node: ts.Node): node is ts.CallExpression {
@@ -178,6 +179,10 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
 
     function throwError(message: string): never {
         throw new Error(`[ts-nameof]: ${message}`);
+    }
+
+    function getNodeText(node: ts.Node) {
+        return printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
     }
 }
 
