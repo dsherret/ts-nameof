@@ -37,9 +37,9 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
 
     function getNameofAsString(node: ts.CallExpression) {
         if (node.arguments != null && node.arguments.length > 0)
-            return getLastPart(getArgumentParts(node.arguments[0]));
+            return getLastPart(getNodeParts(node.arguments[0]));
         else if (node.typeArguments != null && node.typeArguments.length > 0)
-            return getLastPart(getTypeArgumentParts(node.typeArguments[0]));
+            return getLastPart(getNodeParts(node.typeArguments[0]));
         return undefined;
 
         function getLastPart(parts: string[]) {
@@ -48,20 +48,26 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
     }
 
     function getNameofFullAsString(node: ts.CallExpression) {
-        if (node.arguments != null && node.arguments.length > 0 && !ts.isNumericLiteral(node.arguments[0]))
-            return getPartsAsString(getArgumentParts(node.arguments[0]), getCount(node.arguments[1]));
+        if (node.arguments != null && shouldUseArguments())
+            return getPartsAsString(getNodeParts(node.arguments[0]), getCount(node.arguments[1]));
         if (node.typeArguments != null && node.typeArguments.length > 0)
-            return getPartsAsString(getTypeArgumentParts(node.typeArguments[0]), getCount(node.arguments == null ? undefined : node.arguments[0]));
+            return getPartsAsString(getNodeParts(node.typeArguments[0]), getCount(node.arguments == null ? undefined : node.arguments[0]));
         return undefined;
 
         function getPartsAsString(parts: string[], count: number) {
             return getSubParts().join(".");
 
             function getSubParts() {
-                if (count > 0)
+                if (count > 0) {
+                    if (count > parts.length - 1)
+                        return throwError(`Count of ${count} was larger than max count of ${parts.length - 1} for ${getNodeText(node)}`);
                     return parts.slice(count);
-                if (count < 0)
+                }
+                if (count < 0) {
+                    if (Math.abs(count) > parts.length)
+                        return throwError(`Count of ${count} was larger than max count of ${parts.length * -1} for ${getNodeText(node)}`);
                     return parts.slice(parts.length + count);
+                }
                 return parts;
             }
         }
@@ -75,53 +81,54 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
                     return result;
             }
 
-            return 0;
+            return throwError(`Expected count to be a number, but was: ${getNodeText(countExpr)}`);
+        }
+
+        function shouldUseArguments() {
+            if (node.arguments == null || node.arguments.length === 0)
+                return false;
+            if (node.typeArguments == null || node.typeArguments.length === 0)
+                return true;
+
+            return ts.isFunctionLike(node.arguments[0]);
         }
     }
 
-    function getArgumentParts(arg: ts.Expression) {
-        if (ts.isPropertyAccessExpression(arg))
-            return getPropertyAccessExpressionParts(arg);
-        if (ts.isElementAccessExpression(arg))
-            return getElementAccessExpressionParts(arg);
-        if (ts.isArrowFunction(arg))
-            return getArrowFunctionParts(arg);
-        if (ts.isFunctionExpression(arg))
-            return getFunctionExpressionParts(arg);
-
-        return [getNodeText(arg)];
+    function getNodeParts(node: ts.Expression | ts.TypeNode | ts.EntityName): string[] {
+        if (ts.isPropertyAccessExpression(node))
+            return getPropertyAccessExpressionParts(node);
+        if (ts.isElementAccessExpression(node))
+            return getElementAccessExpressionParts(node);
+        if (ts.isArrowFunction(node))
+            return getArrowFunctionParts(node);
+        if (ts.isFunctionExpression(node))
+            return getFunctionExpressionParts(node);
+        if (ts.isNonNullExpression(node))
+            return getNodeParts(node.expression);
+        if (ts.isQualifiedName(node))
+            return getQualifiedNameParts(node);
+        if (ts.isTypeReferenceNode(node))
+            return getNodeParts(node.typeName);
+        return [getNodeText(node)];
     }
 
-    function getTypeArgumentParts(typeArg: ts.TypeNode) {
-        if (ts.isQualifiedName(typeArg))
-            return getQualifiedNameParts(typeArg);
-        return [getNodeText(typeArg)];
+    function getFunctionExpressionParts(func: ts.FunctionExpression): string[] {
+        return getNodeParts(getReturnStatementExpressionFromBlock(func.body)).slice(1);
     }
 
-    function getFunctionExpressionParts(func: ts.FunctionExpression) {
-        return getFunctionParts(getReturnStatementExpression());
+    function getArrowFunctionParts(func: ts.ArrowFunction): string[] {
+        if (ts.isBlock(func.body))
+            return getNodeParts(getReturnStatementExpressionFromBlock(func.body)).slice(1);
+        return getNodeParts(func.body).slice(1);
+    }
 
-        function getReturnStatementExpression() {
-            for (const statement of func.body.statements) {
-                if (ts.isReturnStatement(statement) && statement.expression != null)
-                    return statement.expression;
-            }
-
-            return throwError(`Cound not find return statement with an expression in function expression: ${getNodeText(func.body)}`);
+    function getReturnStatementExpressionFromBlock(block: ts.Block) {
+        for (const statement of block.statements) {
+            if (ts.isReturnStatement(statement) && statement.expression != null)
+                return statement.expression;
         }
-    }
 
-    function getArrowFunctionParts(func: ts.ArrowFunction) {
-        return getFunctionParts(func.body);
-    }
-
-    function getFunctionParts(body: ts.ConciseBody | ts.Expression) {
-        if (ts.isPropertyAccessExpression(body))
-            return getPropertyAccessExpressionParts(body).slice(1);
-        if (ts.isElementAccessExpression(body))
-            return getElementAccessExpressionParts(body).slice(1);
-        else
-            return throwError(`Unexpected function text: ${getNodeText(body)}`);
+        return throwError(`Cound not find return statement with an expression in function expression: ${getNodeText(block)}`);
     }
 
     function getElementAccessExpressionParts(elementAccessExpr: ts.ElementAccessExpression): string[] {
@@ -129,7 +136,7 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
             return addArgTextToArray([...getElementAccessExpressionParts(elementAccessExpr.expression)]);
         if (ts.isPropertyAccessExpression(elementAccessExpr.expression))
             return addArgTextToArray([...getPropertyAccessExpressionParts(elementAccessExpr.expression)]);
-        return addArgTextToArray([getNodeText(elementAccessExpr.expression)]);
+        return addArgTextToArray([...getNodeParts(elementAccessExpr.expression)]);
 
         function addArgTextToArray(items: string[]) {
             items[items.length - 1] += getArgumentExpression();
@@ -139,20 +146,20 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
         function getArgumentExpression() {
             if (elementAccessExpr.argumentExpression == null)
                 return "";
-            return `[${getNodeText(elementAccessExpr.argumentExpression)}]`;
+            return `[${getNodeParts(elementAccessExpr.argumentExpression).join(".")}]`;
         }
     }
 
     function getQualifiedNameParts(name: ts.QualifiedName): string[] {
         if (ts.isQualifiedName(name.left))
-            return [...getQualifiedNameParts(name.left), getNodeText(name.right)];
-        return [getNodeText(name.left), getNodeText(name.right)];
+            return [...getQualifiedNameParts(name.left), ...getNodeParts(name.right)];
+        return [...getNodeParts(name.left), ...getNodeParts(name.right)];
     }
 
     function getPropertyAccessExpressionParts(pae: ts.PropertyAccessExpression): string[] {
         if (ts.isPropertyAccessExpression(pae.expression))
-            return [...getPropertyAccessExpressionParts(pae.expression), getNodeText(pae.name)];
-        return [getNodeText(pae.expression), getNodeText(pae.name)];
+            return [...getPropertyAccessExpressionParts(pae.expression), ...getNodeParts(pae.name)];
+        return [...getNodeParts(pae.expression), ...getNodeParts(pae.name)];
     }
 
     function isNameof(node: ts.Node): node is ts.CallExpression {

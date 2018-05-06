@@ -10,7 +10,6 @@
 /dist/tests
 /coverage
 /setup
-/temp
 *.js.map
 *.v12.suo
 *.csproj

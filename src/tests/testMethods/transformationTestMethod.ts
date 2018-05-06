@@ -4,6 +4,15 @@ import * as ts from "typescript";
 import { transformerFactory } from "../../transformation";
 
 export function runTest(text: string, expected: string) {
+    const results = run(text);
+    assert.equal(results[0].fileText.trim(), expected.trim());
+}
+
+export function runThrowTest(text: string) {
+    assert.throws(() => run(text));
+}
+
+function run(text: string) {
     const results: { fileName: string; fileText: string; }[] = [];
     const compilerOptions: ts.CompilerOptions = {
         strictNullChecks: true,
@@ -32,6 +41,5 @@ export function runTest(text: string, expected: string) {
     };
     const program = ts.createProgram(["/file.ts"], compilerOptions, host);
     program.emit(undefined, (fileName, fileText) => results.push({ fileName, fileText }), undefined, false, transformers);
-
-    assert.equal(results[0].fileText.trim(), expected.trim());
+    return results;
 }

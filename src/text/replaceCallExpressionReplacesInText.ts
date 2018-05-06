@@ -7,7 +7,7 @@ export function replaceCallExpressionReplacesInText(callExpressionReplaces: Repl
         const text = getReplaceInfoText(currentReplace, periodIndexArgIndex);
         const newText = (currentReplace.showFull
             ? `"${getFullText(text, getPeriodIndexArgText(currentReplace, periodIndexArgIndex))}"`
-            : `"${text.substring(text.lastIndexOf(".") + 1)}"`).replace(/ /g, "");
+            : `"${text.substring(text.lastIndexOf(".") + 1)}"`).replace(/ /g, "").replace(/!/g, "");
         const offset = newText.length - (currentReplace.end - currentReplace.pos);
 
         data = data.substring(0, currentReplace.pos) + newText + data.substring(currentReplace.end);
