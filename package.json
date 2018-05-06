@@ -9,7 +9,7 @@
     "build": "rimraf dist && tsc",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "lint": "tslint src/**/*.ts",
-    "do-publish": "npm run lint && npm run test && npm run build && npm publish",
+    "dopublish": "npm run lint && npm run test && npm run build && npm publish",
     "maintain-barrels": "barrel-maintainer src"
   },
   "repository": {
