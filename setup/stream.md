@@ -9,7 +9,7 @@
 
     gulp.task("typescript", function() {
         gulp.src("src/**/*.ts")
-            .pipe(tsNameof())
+            .pipe(tsNameof.stream())
             .pipe(ts())
             .pipe(gulp.dest("dist"));
     });
