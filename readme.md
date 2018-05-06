@@ -20,6 +20,18 @@ You may need to add a reference to this package's typescript definition file in 
 
 Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
 
+## Setup
+
+Follow any of these instructions:
+
+* [Typescript Transformation API](setup/transformation-api.md) - Highly recommended.
+* [Gulp / Streams](setup/stream.md)
+* Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
+* FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
+* [Jest](setup/jest.md)
+* [Custom](setup/custom.md)
+* Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
+
 ## What does this do?
 
 It takes a file like this:
@@ -68,22 +80,6 @@ And outputs the identifiers as strings. In this case the output will be this min
 "prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
-## Setup
+## Unsupported
 
-Follow any of these instructions:
-
-* [Gulp / Streams](setup/stream.md)
-* Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
-* FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
-* [Jest](setup/jest.md)
-* [Custom](setup/custom.md)
-* Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
-
-## Todo
-
-* JS map file support.
-
-## Future
-
-Ideally this would be a plugin for the TypeScript emitter. Unfortunately that isn't available yet, but there is some work on
-this in the [transformationApi](https://github.com/dsherret/ts-nameof/tree/transformationApi) branch for when this happens.
+* JS map file support does not work unless using the [Transformation API](setup/transformation-api.md). If you need map file support, then please follow the instructions for using the transformation API.
