@@ -24,7 +24,7 @@ Make sure to add that to a single definition file in your project where other re
 
 Follow any of these instructions:
 
-* [Typescript Transformation API](setup/transformation-api.md) - Highly recommended.
+* [TypeScript Transformation API](setup/transformation-api.md) - Highly recommended.
 * [Gulp / Streams](setup/stream.md)
 * Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
 * FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
