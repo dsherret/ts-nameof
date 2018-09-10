@@ -16,6 +16,10 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
             it("should get the result of a property access expression with null assertion operators", () => {
                 runTest(`nameof(myObj!.prop!);`, `"prop";`);
             });
+
+            it("should get the result of an identifier with a dollar sign", () => {
+                runTest(`nameof(myObj.$prop);`, `"$prop";`);
+            });
         });
 
         describe("type parameter", () => {
@@ -25,6 +29,10 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
 
             it("should get the result of a fully qualified name", () => {
                 runTest(`nameof<This.Is.A.Test>();`, `"Test";`);
+            });
+
+            it("should get an identifier with a dollar sign", () => {
+                runTest(`nameof<Test$>();`, `"Test$";`);
             });
         });
 
