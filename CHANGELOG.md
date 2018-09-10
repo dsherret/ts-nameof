@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/dsherret/ts-nameof/compare/v1.0.0...v1.0.1) (2018-09-10)
+
+
+### Bug Fixes
+
+* Support dollar sign for text transformation. ([48bc34c](https://github.com/dsherret/ts-nameof/commit/48bc34c))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/dsherret/ts-nameof/compare/v0.10.3...v1.0.0) (2018-05-06)
 
