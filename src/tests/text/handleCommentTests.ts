@@ -9,11 +9,11 @@ describe("handleComment()", () => {
         assert.equal(iterator.getCurrentIndex(), iterator.getLength());
     });
 
-    it("should iterate while in a double shash comment going to the start of the next line", () => {
+    it("should iterate while in a double shash comment going to the end of the current line", () => {
         const iterator = new StringIterator("// comment\nsecond line");
         iterator.moveNext();
         handleComment(iterator);
-        assert.equal(iterator.getCurrentChar(), "s");
+        assert.equal(iterator.getCurrentChar(), "\n");
     });
 
     it("should iterate while in a slash star comment to the close of the comment", () => {

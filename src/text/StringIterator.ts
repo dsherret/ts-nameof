@@ -47,6 +47,14 @@
         return this.currentIndex;
     }
 
+    isPreviousEscape() {
+        // example: "\\" would be a count of 2 and false while "\\\" would be a count of 3 and true
+        let i = this.currentIndex;
+        while (i > 0 && this.text[i - 1] === "\\")
+            i--;
+        return (this.currentIndex - i) % 2 === 1;
+    }
+
     getCurrentChar() {
         if (this.currentIndex === this.getLength())
             throw new Error("Cannot get the current character at the end of a string.");
@@ -66,15 +74,21 @@
             currentIndex--;
         }
 
-        return currentIndex < 0 ? null : this.text[currentIndex];
+        return currentIndex < 0 ? undefined : this.text[currentIndex];
+    }
+
+    peekNextChar() {
+        if (this.currentIndex + 1 >= this.getLength())
+            return undefined;
+        return this.text[this.currentIndex + 1];
     }
 
     getLastChar() {
-        return this.currentIndex === 0 ? null : this.text[this.currentIndex - 1];
+        return this.currentIndex === 0 ? undefined : this.text[this.currentIndex - 1];
     }
 
     getSecondLastChar() {
-        return this.currentIndex <= 1 ? null : this.text[this.currentIndex - 2];
+        return this.currentIndex <= 1 ? undefined : this.text[this.currentIndex - 2];
     }
 
     getLength() {

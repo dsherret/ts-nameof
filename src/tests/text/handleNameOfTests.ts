@@ -83,8 +83,8 @@ describe("handleNameOf", () => {
             const iterator = new StringIterator("name(argText)");
             const result = handleNameOf(iterator);
 
-            it("should have a result of null", () => {
-                assert.equal(result, null);
+            it("should have a result of undefined", () => {
+                assert.equal(result, undefined);
             });
 
             it("should have the iterator at the beginning", () => {
@@ -100,8 +100,8 @@ describe("handleNameOf", () => {
             const iterator = new StringIterator("nameoft(argText)");
             const result = handleNameOf(iterator);
 
-            it("should have a result of null", () => {
-                assert.equal(result, null);
+            it("should have a result of undefined", () => {
+                assert.equal(result, undefined);
             });
 
             it("should have the iterator at the beginning", () => {

@@ -106,11 +106,12 @@ nameof(window);
     describe("strings test file", () => {
         const expected =
 `"window";
-\`nameof(window);
+const t = /\`/g;
+\`nameof(window); /
 $\{"window"\}
 $\{ "alert" \}
 nameof(window);
-\`;
+\`; //test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';

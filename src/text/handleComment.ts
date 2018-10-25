@@ -19,7 +19,7 @@ function handleOpenCommentChar(iterator: StringIterator) {
 }
 
 function handleCommentChar(iterator: StringIterator) {
-    while (iterator.canMoveNext() && iterator.getLastChar() !== "\n")
+    while (iterator.canMoveNext() && iterator.getCurrentChar() !== "\n")
         iterator.moveNext();
 }
 

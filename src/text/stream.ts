@@ -8,7 +8,7 @@ export function stream() {
 }
 
 function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
-    let err: any = null;
+    let err: any = undefined;
 
     try {
         const result = replaceInText(getContentsAsString(chunk));
