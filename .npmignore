@@ -10,6 +10,7 @@
 /dist/tests
 /coverage
 /setup
+/lib
 *.js.map
 *.v12.suo
 *.csproj
