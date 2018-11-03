@@ -84,3 +84,14 @@ And outputs the identifiers as strings. In this case the output will be this min
 ## Unsupported
 
 * JS map file support does not work unless using the [Transformation API](setup/transformation-api.md). If you need map file support, then please follow the instructions for using the transformation API.
+
+## Development
+
+```
+# setup
+yarn install
+# running tests
+yarn run test
+# linting
+yarn run lint
+```
