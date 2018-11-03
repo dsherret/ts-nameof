@@ -52,7 +52,7 @@
     "@types/mocha": "^5.2.0",
     "@types/node": "^10.0.4",
     "@types/through2": "^2.0.33",
-    "barrel-maintainer": "^1.2.11",
+    "barrel-maintainer": "^1.5.0",
     "copyfiles": "^2.0.0",
     "coveralls": "^2.11.6",
     "gulp": "^3.9.1",

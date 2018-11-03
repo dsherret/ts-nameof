@@ -4,7 +4,7 @@ const NAMEOF_NAME = "nameof";
 const NAMEOF_FULL_NAME = "full";
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
-const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
+export const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
     return file => visitSourceFile(file, context) as ts.SourceFile;
 };
 
@@ -192,5 +192,3 @@ function visitSourceFile(sourceFile: ts.SourceFile, context: ts.TransformationCo
         return printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
     }
 }
-
-export { transformerFactory };

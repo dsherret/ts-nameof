@@ -1,4 +1,4 @@
-﻿import { runTestOnAllMethods } from "./testMethods";
+﻿import { runTestOnAllMethods } from "./helpers";
 
 runTestOnAllMethods(doTestsForMethod);
 
@@ -182,6 +182,70 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
             it("should throw when the function doesn't have a period", () => {
                 runThrowsTest(`nameof.full<MyInterface>(i => i);`);
             });
+        });
+    });
+
+    describe("general", () => {
+        it("should replace handling comments", () => {
+            const input = `
+nameof(window);
+// nameof(window);
+nameof(window);
+/* nameof(window);
+nameof(window);
+*/
+nameof(window);
+`;
+            const expected = `
+"window";
+// nameof(window);
+"window";
+/* nameof(window);
+nameof(window);
+*/
+"window";
+`;
+            runTest(input, expected);
+        });
+
+        it("should replace handling strings", () => {
+            const input = `
+nameof(window);
+const t = /\`/g;
+\`nameof(window); /
+\${nameof(window)}
+\${nameof(alert)}
+nameof(window);
+\`; //test
+"nameof(window);";
+"\\"nameof(window);";
+'nameof(window);';
+'\\'\\"nameof(window);';
+"C:\\\\";
+nameof(window);
+\`\${() => {
+    nameof(console);
+}}\`;
+`;
+            const expected = `
+"window";
+const t = /\`/g;
+\`nameof(window); /
+$\{"window"\}
+$\{"alert"\}
+nameof(window);
+\`; //test
+"nameof(window);";
+"\\"nameof(window);";
+'nameof(window);';
+'\\'\\"nameof(window);';
+"C:\\\\";
+"window";
+\`\${() => {
+    "console";
+}}\`;
+`;
+            runTest(input, expected);
         });
     });
 }

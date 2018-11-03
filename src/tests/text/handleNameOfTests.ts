@@ -1,6 +1,6 @@
 ﻿import * as assert from "assert";
 import { StringIterator, handleNameOf, tryHandleFunctionName, tryHandleFullProperty, tryGetTypeArgText, tryGetArgs } from "../../text";
-import { testReplaceInfo } from "./testReplaceInfo";
+import { testReplaceInfo } from "./helpers";
 
 describe("handleNameOf", () => {
     describe("#handleNameOf()", () => {

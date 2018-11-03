@@ -1,8 +1,8 @@
 ﻿import * as gulp from "gulp";
 import * as assert from "assert";
 import * as fs from "fs";
-import * as tsNameof from "../main";
-import { getTestFilePath } from "./getTestFilePath";
+import * as tsNameof from "../../main";
+import { getTestFilePath } from "./helpers";
 
 describe("stream()", () => {
     function runTest(fileName: string, expectedContents: string) {

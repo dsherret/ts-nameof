@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import * as fs from "fs";
-import { replaceInFiles, replaceInText } from "../../main";
-import { getTestFilePath } from "../getTestFilePath";
+import { replaceInFiles } from "../../main";
+import { getTestFilePath } from "./helpers";
 
 describe("replaceInFiles()", () => {
     function runTest(fileName: string, expectedContents: string) {
@@ -68,72 +68,6 @@ console.log("MyInnerInterface");
 
         describe("file modifying test", () => {
             runTest("GeneralTestFile.txt", expected);
-        });
-    });
-
-    describe("interface file", () => {
-        const expected =
-`"MyInterface";
-console.log("MyInterface");
-console.log("Array");
-"MyInnerInterface";
-"MyNamespace.MyInnerInterface";
-`;
-
-        runTest("InterfaceTestFile.txt", expected);
-    });
-
-    describe("single statement test file", () => {
-        const expected =
-`"window";
-`;
-        runTest("SingleStatementTestFile.txt", expected);
-    });
-
-    describe("comments test file", () => {
-        const expected =
-`"window";
-// nameof(window);
-"window";
-/* nameof(window);
-nameof(window);
-*/
-"window";
-`;
-        runTest("CommentsTestFile.txt", expected);
-    });
-
-    describe("strings test file", () => {
-        const expected =
-`"window";
-const t = /\`/g;
-\`nameof(window); /
-$\{"window"\}
-$\{ "alert" \}
-nameof(window);
-\`; //test
-"nameof(window);";
-"\\"nameof(window);";
-'nameof(window);';
-'\\'\\"nameof(window);';
-"C:\\\\";
-"window";
-\`\${() => { "console"; }}\`;
-`;
-        runTest("StringsTestFile.txt", expected);
-    });
-
-    describe("replaceInText", () => {
-        it("should not replace when no nameof", () => {
-            const result = replaceInText("some random text with no nameof in it");
-            assert.equal(result.replaced, false);
-            assert.equal(result.fileText, undefined);
-        });
-
-        it("should replace when there was a nameof", () => {
-            const result = replaceInText("describe(nameof(myTest), () => {});");
-            assert.equal(result.replaced, true);
-            assert.equal(result.fileText, `describe("myTest", () => {});`);
         });
     });
 });

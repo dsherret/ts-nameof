@@ -1,7 +1,7 @@
 ﻿import * as assert from "assert";
 import * as fs from "fs";
 import { replaceInFiles } from "../../main";
-import { getTestFilePath } from "../getTestFilePath";
+import { getTestFilePath } from "./helpers";
 
 describe("replaceInFiles()", () => {
     function runTest(fileName: string, expectedFileName: string) {
