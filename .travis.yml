@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-    - "4.8"
+    - "6"
 script:
-    - npm run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - yarn run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 before_script:
-    - npm run lint
+    - yarn run lint

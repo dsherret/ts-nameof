@@ -5,11 +5,11 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "npm run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test": "yarn run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
     "build": "rimraf dist && tsc",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "lint": "tslint src/**/*.ts",
-    "dopublish": "npm run lint && npm run test && npm run build && npm publish",
+    "dopublish": "yarn run lint && npm run test && yarn run build && npm publish",
     "maintain-barrels": "barrel-maintainer src"
   },
   "repository": {
