@@ -8,7 +8,7 @@ interface Api {
     replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
 }
 
-let api: Api = transformerFactory as any as Api;
+const api: Api = transformerFactory as any as Api;
 api.stream = stream;
 api.replaceInFiles = replaceInFiles;
 api.replaceInText = replaceInText;

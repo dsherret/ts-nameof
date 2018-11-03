@@ -1,14 +1,16 @@
 ﻿import * as through from "through2";
 import { replaceInText } from "./replaceInText";
 
-type GulpChunk = { contents: Buffer; };
+interface GulpChunk {
+    contents: Buffer;
+}
 
 export function stream() {
     return through.obj(transform);
 }
 
 function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
-    let err: any = undefined;
+    let err: any;
 
     try {
         const result = replaceInText(getContentsAsString(chunk));

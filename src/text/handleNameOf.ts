@@ -40,7 +40,7 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | undefined 
 export function tryHandleFunctionName(iterator: StringIterator) {
     iterator.saveState();
 
-    for (let char of searchingFunctionName) {
+    for (const char of searchingFunctionName) {
         if (!iterator.canMoveNext() || iterator.getCurrentChar() !== char) {
             iterator.restoreLastState();
             return false;
@@ -64,7 +64,7 @@ export function tryHandleFullProperty(iterator: StringIterator) {
     iterator.moveNext();
     iterator.passSpaces();
 
-    for (let char of searchingFullPropertyName) {
+    for (const char of searchingFullPropertyName) {
         if (!iterator.canMoveNext() || iterator.getCurrentChar() !== char) {
             iterator.restoreLastState();
             return false;

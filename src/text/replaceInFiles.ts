@@ -42,7 +42,7 @@ function doReplaceInFiles(fileNames: string[], encoding: string) {
                     contents += buffer.toString();
                 })
                 .on("finish", () => {
-                    fs.writeFile(fileName, contents, (writeErr) => {
+                    fs.writeFile(fileName, contents, writeErr => {
                         /* istanbul ignore if */
                         if (writeErr) {
                             reject(writeErr);

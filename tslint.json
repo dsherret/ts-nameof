@@ -1,5 +1,5 @@
 {
-    "extends": "tslint:latest",
+    "extends": "tslint:recommended",
     "rules": {
         "align": [
             true,
@@ -32,6 +32,8 @@
             }
         ],
         "variable-name": false,
-        "curly": false
+        "curly": false,
+        "array-type": false,
+        "arrow-parens": [true, "ban-single-arg-parens"]
     }
 }
