@@ -211,11 +211,12 @@ nameof(window);
         it("should replace handling strings", () => {
             const input = `
 nameof(window);
+const t = /\`/g;
 \`nameof(window); /
 \${nameof(window)}
 \${nameof(alert)}
 nameof(window);
-\`;
+\`; //test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';
@@ -228,11 +229,12 @@ nameof(window);
 `;
             const expected = `
 "window";
+const t = /\`/g;
 \`nameof(window); /
 $\{"window"\}
 $\{"alert"\}
 nameof(window);
-\`;
+\`; //test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';
