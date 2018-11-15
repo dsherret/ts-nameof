@@ -5,22 +5,22 @@ interface GulpChunk {
     contents: Buffer;
 }
 
-export function stream() {
+export function stream(isTsxFile: boolean) {
     return through.obj(transform);
-}
 
-function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
-    let err: any;
+    function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
+        let err: any;
 
-    try {
-        const result = replaceInText(getContentsAsString(chunk));
-        if (result.replaced)
-            chunk = getNewBuffer(chunk, result.fileText!);
-    } catch (e) {
-        err = e;
+        try {
+            const result = replaceInText(getContentsAsString(chunk), isTsxFile);
+            if (result.replaced)
+                chunk = getNewBuffer(chunk, result.fileText!);
+        } catch (e) {
+            err = e;
+        }
+
+        callback(err, chunk);
     }
-
-    callback(err, chunk);
 }
 
 function getContentsAsString(chunk: Buffer | GulpChunk) {

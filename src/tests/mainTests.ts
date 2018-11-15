@@ -247,5 +247,11 @@ nameof(window);
 `;
             runTest(input, expected);
         });
+
+        it("should handle division operators", () => {
+            const input = `const t = 2 / 1;\nnameof(testing);`;
+            const expected = `const t = 2 / 1;\n"testing";`;
+            runTest(input, expected);
+        });
     });
 }

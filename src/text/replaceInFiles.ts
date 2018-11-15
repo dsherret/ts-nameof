@@ -34,7 +34,7 @@ function doReplaceInFiles(fileNames: string[], encoding: string) {
         promises.push(new Promise<void>((resolve, reject) => {
             let contents = "";
             fs.createReadStream(fileName, { encoding })
-                .pipe(stream())
+                .pipe(stream(fileName.toLowerCase().endsWith("tsx")))
                 .on("error", /* istanbul ignore next */ (e: any) => {
                     reject(e);
                 })
