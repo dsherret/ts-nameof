@@ -5,13 +5,13 @@ import { validCharsInTypeArg, validCharsInParens } from "../config";
 const searchingFunctionName = "nameof";
 const searchingFullPropertyName = "full";
 
-export function handleNameOf(iterator: StringIterator): ReplaceInfo | undefined {
+export function handleNameOf(iterator: StringIterator): ReplaceInfo | null {
     const startIndex = iterator.getCurrentIndex();
     iterator.saveState();
 
     if (!tryHandleFunctionName(iterator)) {
         iterator.restoreLastState();
-        return undefined;
+        return null;
     }
 
     iterator.passSpaces();
@@ -23,7 +23,7 @@ export function handleNameOf(iterator: StringIterator): ReplaceInfo | undefined 
 
     if (!argResult.isValid) {
         iterator.restoreLastState();
-        return undefined;
+        return null;
     }
 
     iterator.clearLastState();
