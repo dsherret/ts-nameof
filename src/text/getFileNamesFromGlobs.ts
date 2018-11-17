@@ -1,6 +1,6 @@
 ﻿import * as glob from "glob";
 
-export function getFileNamesFromGlobs(globs: string[]) {
+export function getFileNamesFromGlobs(globs: ReadonlyArray<string>) {
     const promises = globs.map(g => getFileNamesFromGlob(g));
 
     return Promise.all(promises).then(values => values.reduce((a, b) => a.concat(b), []));

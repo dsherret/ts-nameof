@@ -4,9 +4,9 @@ import { stream } from "./stream";
 
 type OnFinishedCallback = (err?: NodeJS.ErrnoException) => void;
 
-export function replaceInFiles(fileNames: string[], onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encoding?: string } | OnFinishedCallback, onFinishedParam?: OnFinishedCallback): void {
+export function replaceInFiles(fileNames: ReadonlyArray<string>, onFinished?: OnFinishedCallback): void;
+export function replaceInFiles(fileNames: ReadonlyArray<string>, opts?: { encoding?: string }, onFinished?: OnFinishedCallback): void;
+export function replaceInFiles(fileNames: ReadonlyArray<string>, optsOrOnFinished?: { encoding?: string } | OnFinishedCallback, onFinishedParam?: OnFinishedCallback): void {
     const opts = { encoding: "utf8" };
     let onFinished: OnFinishedCallback;
 
@@ -27,7 +27,7 @@ export function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encodin
     });
 }
 
-function doReplaceInFiles(fileNames: string[], encoding: string) {
+function doReplaceInFiles(fileNames: ReadonlyArray<string>, encoding: string) {
     const promises: Promise<void>[] = [];
 
     fileNames.forEach(fileName => {
