@@ -24,14 +24,17 @@ Make sure to add that to a single definition file in your project where other re
 
 Follow any of these instructions:
 
-* [TypeScript Transformation API](setup/transformation-api.md) - Highly recommended.
-* [Gulp / Streams](setup/stream.md)
-* Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
-* FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
+* [Webpack](setup/webpack.md)
+* [Gulp](setup/gulp.md)
+* [FuseBox](setup/fusebox.md)
 * [Jest](setup/jest.md)
-* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
+* [TypeScript Transformation API](setup/transformation-api.md)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
+
+Todo (this needs v2 support):
+
+* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 
 ## What does this do?
 

@@ -19,5 +19,5 @@ You can also use the `replaceInText` function to replace occurrences of `nameof`
 
 ```javascript
 var replaceInText = require("ts-nameof").replaceInText;
-var replacedText = replaceInText("nameof(test);");
+var replacedText = replaceInText("filename.ts", "nameof(test);");
 ```

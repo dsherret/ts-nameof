@@ -35,15 +35,15 @@ In addition to the standard `ts-jest` configuration, we will need to wrap their 
 2. Create *preprocessor.js* or similar file:
 
 ```
-const nameof = require('ts-nameof');
+const tsNameof = require('ts-nameof');
 const tsJest = require('ts-jest/preprocessor.js');
 Object.defineProperty(exports, "__esModule", { value: true });
 
 function process(src, filename, config, options) {
-    const replaceResult = nameof.replaceInText(src);
+    const replaceResult = tsNameof.replaceInText(filename, src);
     if (replaceResult.replaced)
-        return tsJest.process(replaceResult.fileText,filename,config, options);
-    return tsJest.process(src,filename,config, options);
+        return tsJest.process(replaceResult.fileText, filename, config, options);
+    return tsJest.process(src, filename, config, options);
 }
 
 exports.getCacheKey = tsJest.getCacheKey;
