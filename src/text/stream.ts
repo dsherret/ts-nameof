@@ -1,18 +1,22 @@
 ﻿import * as through from "through2";
 import { replaceInText } from "./replaceInText";
+import { throwError } from "../utils";
 
 interface GulpChunk {
     contents: Buffer;
 }
 
-export function stream(isTsxFile: boolean) {
+export function stream(fileName: string) {
+    if (arguments.length !== 1)
+        throwError("stream expects a single fileName argument.");
+
     return through.obj(transform);
 
     function transform(chunk: Buffer | GulpChunk, encoding: string, callback: (error: any, file: Buffer | GulpChunk) => void) {
         let err: any;
 
         try {
-            const result = replaceInText(getContentsAsString(chunk), isTsxFile);
+            const result = replaceInText(fileName, getContentsAsString(chunk, encoding));
             if (result.replaced)
                 chunk = getNewBuffer(chunk, result.fileText!);
         } catch (e) {
@@ -23,9 +27,9 @@ export function stream(isTsxFile: boolean) {
     }
 }
 
-function getContentsAsString(chunk: Buffer | GulpChunk) {
+function getContentsAsString(chunk: Buffer | GulpChunk, encoding: string) {
     if (isGulpChunk(chunk))
-        return chunk.contents.toString();
+        return chunk.contents.toString(encoding);
     else
         return chunk.toString();
 }

@@ -2,10 +2,10 @@ declare module "ts-nameof" {
     interface Api {
         // these types are any because I don't know a good way of making this work with web projects (see issue #22)
         (): any; // actually: ts.TransformerFactory<ts.SourceFile>
-        stream(): any; // actually: NodeJS.ReadWriteStream
+        stream(fileName: string): any; // actually: NodeJS.ReadWriteStream
         replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
         replaceInFiles(fileNames: string[], onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
-        replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
+        replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; };
     }
     var func: Api;
     export = func;

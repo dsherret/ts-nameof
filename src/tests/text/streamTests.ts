@@ -11,7 +11,7 @@ describe("stream()", () => {
 
         before((done: MochaDone) => {
             fs.createReadStream(fileName)
-                .pipe(tsNameof.stream())
+                .pipe(tsNameof.stream(fileName))
                 .on("data", (buffer: Buffer) => {
                     contents += buffer.toString();
                 })
@@ -24,6 +24,10 @@ describe("stream()", () => {
             assert.equal(contents.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
         });
     }
+
+    it("should throw when providing no arguments", () => {
+        assert.throws(() => (tsNameof.stream as any)());
+    });
 
     describe("stream test file", () => {
         const expected =
@@ -46,8 +50,9 @@ describe("stream()", () => {
         let contents = "";
 
         before((done: MochaDone) => {
-            gulp.src(getTestFilePath("StreamTestFile.txt"))
-                .pipe(tsNameof.stream())
+            const fileName = "StreamTestFile.txt";
+            gulp.src(getTestFilePath(fileName))
+                .pipe(tsNameof.stream(fileName))
                 .on("data", (chunk: { contents: Buffer; }) => {
                     contents += chunk.contents.toString();
                 })

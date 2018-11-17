@@ -2,15 +2,29 @@ import * as assert from "assert";
 import { replaceInText } from "../../main";
 
 describe("replaceInText", () => {
+    it("should throw when providing no arguments", () => {
+        assert.throws(() => (replaceInText as any)());
+    });
+
+    it("should throw when providing one argument", () => {
+        assert.throws(() => (replaceInText as any)("const t = 5;"));
+    });
+
     it("should not replace when no nameof", () => {
-        const result = replaceInText("some random text with no nameof in it");
+        const result = replaceInText("file.ts", "some random text with no nameof in it");
         assert.equal(result.replaced, false);
         assert.equal(result.fileText, undefined);
     });
 
     it("should replace when there was a nameof", () => {
-        const result = replaceInText("describe(nameof(myTest), () => {});");
+        const result = replaceInText("file.ts", "describe(nameof(myTest), () => {});");
         assert.equal(result.replaced, true);
         assert.equal(result.fileText, `describe("myTest", () => {});`);
+    });
+
+    it("should replace when there was a nameof in tsx file", () => {
+        const result = replaceInText("file.tsx", "const t = <div t={nameof(t)} />;");
+        assert.equal(result.replaced, true);
+        assert.equal(result.fileText, `const t = <div t={"t"} />;`);
     });
 });

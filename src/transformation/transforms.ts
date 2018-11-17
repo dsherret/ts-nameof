@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { throwError } from "./common";
+import { throwError } from "../utils";
 import { isNameof, isNameofFull } from "./checks";
 
 const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
