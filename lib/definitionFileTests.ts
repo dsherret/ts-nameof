@@ -7,8 +7,6 @@ import { IsExactType, assert } from "conditional-type-checks";
 
 /* istanbul ignore next */
 function testFunc() {
-    const result: NodeJS.ReadWriteStream = tsNameOf.stream("file.ts");
-    console.log(result);
     tsNameOf.replaceInFiles(["test"]);
     tsNameOf.replaceInFiles(["test"], (err) => {
         const e: NodeJS.ErrnoException | undefined = err;
@@ -28,8 +26,8 @@ function testFunc() {
     assert<IsExactType<typeof replaceInTextResult.replaced, boolean>>(true);
 
     // es6 test
-    const es6Result: NodeJS.ReadWriteStream = tsNameOfEs6.stream("file.ts");
-    console.log(es6Result);
+    const es6Result = tsNameOfEs6.replaceInText("file.ts", "");
+    console.log(es6Result.replaced);
 
     // null test
     const nullTypedVar = null;

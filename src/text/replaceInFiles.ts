@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { getFileNamesFromGlobs } from "./getFileNamesFromGlobs";
-import { stream } from "./stream";
+import { replaceInText } from "./replaceInText";
 
 type OnFinishedCallback = (err?: NodeJS.ErrnoException) => void;
 
@@ -32,17 +32,17 @@ function doReplaceInFiles(fileNames: ReadonlyArray<string>, encoding: string) {
 
     fileNames.forEach(fileName => {
         promises.push(new Promise<void>((resolve, reject) => {
-            let contents = "";
-            fs.createReadStream(fileName, { encoding })
-                .pipe(stream(fileName))
-                .on("error", /* istanbul ignore next */ (e: any) => {
-                    reject(e);
-                })
-                .on("data", (buffer: Buffer) => {
-                    contents += buffer.toString();
-                })
-                .on("finish", () => {
-                    fs.writeFile(fileName, contents, writeErr => {
+            fs.readFile(fileName, { encoding }, (err, fileText) => {
+                /* istanbul ignore if */
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                const result = replaceInText(fileName, fileText);
+
+                if (result.replaced) {
+                    fs.writeFile(fileName, result.fileText!, writeErr => {
                         /* istanbul ignore if */
                         if (writeErr) {
                             reject(writeErr);
@@ -51,7 +51,11 @@ function doReplaceInFiles(fileNames: ReadonlyArray<string>, encoding: string) {
 
                         resolve();
                     });
-                });
+                }
+                else {
+                    resolve();
+                }
+            });
         }));
     });
 

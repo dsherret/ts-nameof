@@ -18,7 +18,7 @@ module.exports = {
           options: {
             getCustomTransformers: () => ({ before: [tsNameof] })
           }
-        }],
+        }]
       }
     ]
   }
