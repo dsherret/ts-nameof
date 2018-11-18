@@ -18,7 +18,8 @@
   },
   "keywords": [
     "typescript",
-    "code"
+    "transformer",
+    "custom-transformer"
   ],
   "author": "David Sherret",
   "license": "MIT",
