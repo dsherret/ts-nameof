@@ -2,12 +2,8 @@ import * as assert from "assert";
 import { replaceInText } from "../../main";
 
 describe("replaceInText", () => {
-    it("should throw when providing no arguments", () => {
-        assert.throws(() => (replaceInText as any)());
-    });
-
-    it("should throw when providing one argument", () => {
-        assert.throws(() => (replaceInText as any)("const t = 5;"));
+    it("should unofficially maintain backwards compatibility when providing one argument", () => {
+        assert.equal((replaceInText as any)("nameof(window);").fileText, `"window";`);
     });
 
     it("should not replace when no nameof", () => {

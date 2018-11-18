@@ -1,10 +1,12 @@
 ﻿import * as ts from "typescript";
 import { visitNode } from "../transformation";
-import { throwError } from "../utils";
 
 export function replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; } {
-    if (arguments.length !== 2)
-        throwError("replaceInText expects two arguments—a file name and file text.");
+    // unofficial backwards compatibility for this method
+    if (arguments.length === 1) {
+        fileText = fileName;
+        fileName = "/file.tsx"; // assume tsx
+    }
 
     const sourceFile = ts.createSourceFile(fileName, fileText, ts.ScriptTarget.Latest, false);
     let finalText = "";
