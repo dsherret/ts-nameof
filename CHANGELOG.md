@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/dsherret/ts-nameof/compare/v1.0.4...v2.0.0) (2018-11-18)
+
+
+### Features
+
+* [#35](https://github.com/dsherret/ts-nameof/issues/35) - Use the TypeScript ast for everything ([696ca8c](https://github.com/dsherret/ts-nameof/commit/696ca8c))
+
+
+### BREAKING CHANGES
+
+* `.stream()` removed from API. `replaceInText` expects the file name as the first parameter.
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/dsherret/ts-nameof/compare/v1.0.3...v1.0.4) (2018-11-15)
 
