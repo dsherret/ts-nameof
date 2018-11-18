@@ -8,8 +8,20 @@ export function runTest(text: string, expected: string) {
     assert.equal(results[0].fileText.trim(), expected.trim());
 }
 
-export function runThrowTest(text: string) {
-    assert.throws(() => run(text));
+export function runThrowTest(text: string, expectedMessage?: string) {
+    if (expectedMessage != null)
+        expectedMessage = "[ts-nameof]: " + expectedMessage;
+
+    // for some reason, assert.throws was not working
+    try {
+        run(text);
+    } catch (ex) {
+        if (expectedMessage != null)
+            assert.equal((ex as any).message, expectedMessage);
+        return;
+    }
+
+    throw new Error("Expected to throw");
 }
 
 function run(text: string) {

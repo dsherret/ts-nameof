@@ -3,11 +3,10 @@
 /* istanbul ignore next */
 import tsNameOf = require("ts-nameof");
 import * as tsNameOfEs6 from "ts-nameof";
+import { IsExactType, assert } from "conditional-type-checks";
 
 /* istanbul ignore next */
 function testFunc() {
-    const result: NodeJS.ReadWriteStream = tsNameOf.stream();
-    console.log(result);
     tsNameOf.replaceInFiles(["test"]);
     tsNameOf.replaceInFiles(["test"], (err) => {
         const e: NodeJS.ErrnoException | undefined = err;
@@ -20,9 +19,15 @@ function testFunc() {
         console.log(e);
     });
 
+    // replaceInText
+    const replaceInTextResult = tsNameOf.replaceInText("fileName.ts", "const t = 5;")
+    console.log(replaceInTextResult);
+    assert<IsExactType<typeof replaceInTextResult.fileText, string | undefined>>(true);
+    assert<IsExactType<typeof replaceInTextResult.replaced, boolean>>(true);
+
     // es6 test
-    const es6Result: NodeJS.ReadWriteStream = tsNameOfEs6.stream();
-    console.log(es6Result);
+    const es6Result = tsNameOfEs6.replaceInText("file.ts", "");
+    console.log(es6Result.replaced);
 
     // null test
     const nullTypedVar = null;

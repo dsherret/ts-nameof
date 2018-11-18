@@ -6,7 +6,7 @@ const testMethods = [
     { name: "transformation", ...transformationTestMethod }
 ];
 
-export function runTestOnAllMethods(runTest: (method: (text: string, expected: string) => void, throwTestMethod: (text: string) => void) => void) {
+export function runTestOnAllMethods(runTest: (method: (text: string, expected: string) => void, throwTestMethod: (text: string, expectedMessage?: string) => void) => void) {
     for (const testMethod of testMethods) {
         describe(testMethod.name, () => {
             runTest(testMethod.runTest, testMethod.runThrowTest);

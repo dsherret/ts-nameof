@@ -12,6 +12,8 @@
 npm install ts-nameof --save-dev
 ```
 
+**VERSION 2 BREAKING CHANGE:** Please re-read the instructions for setting up ts-nameof when upgrading to version 2. Most instructions use the typescript compiler API's transformation API now.
+
 You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
 
 ```typescript
@@ -24,14 +26,17 @@ Make sure to add that to a single definition file in your project where other re
 
 Follow any of these instructions:
 
-* [TypeScript Transformation API](setup/transformation-api.md) - Highly recommended.
-* [Gulp / Streams](setup/stream.md)
-* Webpack - Use [https://github.com/Kukks/ts-nameof-loader](https://github.com/Kukks/ts-nameof-loader)
-* FuseBox - Use [https://github.com/samppis/ts-nameof-fusebox-plugin](https://github.com/samppis/ts-nameof-fusebox-plugin)
-* [Jest](setup/jest.md)
-* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
+* [Webpack](setup/webpack.md)
+* [Gulp](setup/gulp.md)
+* [FuseBox](setup/fusebox.md)
+* [TypeScript Transformation API](setup/transformation-api.md)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
+
+These instructions need updating to use the transformation API, but will still work in the meantime:
+
+* [Jest](setup/jest.md)
+* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 
 ## What does this do?
 
@@ -80,10 +85,6 @@ And outputs the identifiers as strings. In this case the output will be this min
 "prop.prop2";                       // nameof.full<MyInterface>(o => o.prop.prop2);
 "prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
-
-## Unsupported
-
-* JS map file support does not work unless using the [Transformation API](setup/transformation-api.md). If you need map file support, then please follow the instructions for using the transformation API.
 
 ## Development
 

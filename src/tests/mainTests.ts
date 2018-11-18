@@ -2,7 +2,7 @@
 
 runTestOnAllMethods(doTestsForMethod);
 
-function doTestsForMethod(runTest: (text: string, expected: string) => void, runThrowsTest: (text: string) => void) {
+function doTestsForMethod(runTest: (text: string, expected: string) => void, runThrowsTest: (text: string, expectedMessage?: string) => void) {
     describe("nameof", () => {
         describe("argument", () => {
             it("should get the result of an identifier", () => {
@@ -61,6 +61,10 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
 
             it("should throw when the function doesn't have a period", () => {
                 runThrowsTest(`nameof<MyInterface>(i => i);`);
+            });
+
+            it("should throw when the function doesn't have a return statement", () => {
+                runThrowsTest(`nameof<MyInterface>(i => { i; });`, "Cound not find return statement with an expression in function expression: {\n    i;\n}");
             });
         });
     });
@@ -211,11 +215,12 @@ nameof(window);
         it("should replace handling strings", () => {
             const input = `
 nameof(window);
+const t = /\`/g;
 \`nameof(window); /
 \${nameof(window)}
 \${nameof(alert)}
 nameof(window);
-\`;
+\`; //test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';
@@ -228,11 +233,12 @@ nameof(window);
 `;
             const expected = `
 "window";
+const t = /\`/g;
 \`nameof(window); /
 $\{"window"\}
 $\{"alert"\}
 nameof(window);
-\`;
+\`; //test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';
@@ -243,6 +249,12 @@ nameof(window);
     "console";
 }}\`;
 `;
+            runTest(input, expected);
+        });
+
+        it("should handle division operators", () => {
+            const input = `const t = 2 / 1;\nnameof(testing);`;
+            const expected = `const t = 2 / 1;\n"testing";`;
             runTest(input, expected);
         });
     });

@@ -1,15 +1,15 @@
-import { stream, replaceInText, replaceInFiles } from "./text";
+import * as ts from "typescript";
+import { replaceInText, replaceInFiles } from "./text";
 import { transformerFactory } from "./transformation";
 
 interface Api {
-    stream(): NodeJS.ReadWriteStream;
+    (): ts.TransformerFactory<ts.SourceFile>;
     replaceInFiles(fileNames: string[], opts?: { encoding: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
     replaceInFiles(fileNames: string[], onFinished?: (err?: NodeJS.ErrnoException) => void): void;
-    replaceInText(fileText: string): { fileText?: string; replaced: boolean; };
+    replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; };
 }
 
 const api: Api = transformerFactory as any as Api;
-api.stream = stream;
 api.replaceInFiles = replaceInFiles;
 api.replaceInText = replaceInText;
 

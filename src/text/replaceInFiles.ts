@@ -1,12 +1,12 @@
 import * as fs from "fs";
 import { getFileNamesFromGlobs } from "./getFileNamesFromGlobs";
-import { stream } from "./stream";
+import { replaceInText } from "./replaceInText";
 
 type OnFinishedCallback = (err?: NodeJS.ErrnoException) => void;
 
-export function replaceInFiles(fileNames: string[], onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: string[], opts?: { encoding?: string }, onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encoding?: string } | OnFinishedCallback, onFinishedParam?: OnFinishedCallback): void {
+export function replaceInFiles(fileNames: ReadonlyArray<string>, onFinished?: OnFinishedCallback): void;
+export function replaceInFiles(fileNames: ReadonlyArray<string>, opts?: { encoding?: string }, onFinished?: OnFinishedCallback): void;
+export function replaceInFiles(fileNames: ReadonlyArray<string>, optsOrOnFinished?: { encoding?: string } | OnFinishedCallback, onFinishedParam?: OnFinishedCallback): void {
     const opts = { encoding: "utf8" };
     let onFinished: OnFinishedCallback;
 
@@ -27,22 +27,22 @@ export function replaceInFiles(fileNames: string[], optsOrOnFinished?: { encodin
     });
 }
 
-function doReplaceInFiles(fileNames: string[], encoding: string) {
+function doReplaceInFiles(fileNames: ReadonlyArray<string>, encoding: string) {
     const promises: Promise<void>[] = [];
 
     fileNames.forEach(fileName => {
         promises.push(new Promise<void>((resolve, reject) => {
-            let contents = "";
-            fs.createReadStream(fileName, { encoding })
-                .pipe(stream())
-                .on("error", /* istanbul ignore next */ (e: any) => {
-                    reject(e);
-                })
-                .on("data", (buffer: Buffer) => {
-                    contents += buffer.toString();
-                })
-                .on("finish", () => {
-                    fs.writeFile(fileName, contents, writeErr => {
+            fs.readFile(fileName, { encoding }, (err, fileText) => {
+                /* istanbul ignore if */
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                const result = replaceInText(fileName, fileText);
+
+                if (result.replaced) {
+                    fs.writeFile(fileName, result.fileText!, writeErr => {
                         /* istanbul ignore if */
                         if (writeErr) {
                             reject(writeErr);
@@ -51,7 +51,11 @@ function doReplaceInFiles(fileNames: string[], encoding: string) {
 
                         resolve();
                     });
-                });
+                }
+                else {
+                    resolve();
+                }
+            });
         }));
     });
 
