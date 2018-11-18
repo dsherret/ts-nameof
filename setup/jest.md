@@ -2,9 +2,12 @@
 
 Thanks to [@Kukks](https://github.com/Kukks) for contributing these instructions!
 
+Note: A solution that uses the transformation api would work much faster. If you know how to configure this using the transform, then contributing
+those updated instructions would be appreciated.
+
 ---
 
-If you are using Jest for unit tests, you most likely have `ts-jest` in your project already.
+If you are using [jest](https://jestjs.io/) for unit tests, you most likely have `ts-jest` in your project already.
 
 In addition to the standard `ts-jest` configuration, we will need to wrap their preprocessor script in a custom script to make nameof work in jest.
 

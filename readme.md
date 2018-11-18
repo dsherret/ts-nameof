@@ -29,11 +29,14 @@ Follow any of these instructions:
 * [Webpack](setup/webpack.md)
 * [Gulp](setup/gulp.md)
 * [FuseBox](setup/fusebox.md)
-* [Jest](setup/jest.md)
 * [TypeScript Transformation API](setup/transformation-api.md)
-* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
+
+These instructions need updating to use the transformation API, but will still work in the meantime:
+
+* [Jest](setup/jest.md)
+* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 
 ## What does this do?
 
@@ -82,10 +85,6 @@ And outputs the identifiers as strings. In this case the output will be this min
 "prop.prop2";                       // nameof.full<MyInterface>(o => o.prop.prop2);
 "prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
-
-## Unsupported
-
-* JS map file support does not work unless using the [Transformation API](setup/transformation-api.md). If you need map file support, then please follow the instructions for using the transformation API.
 
 ## Development
 
