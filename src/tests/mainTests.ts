@@ -2,7 +2,7 @@
 
 runTestOnAllMethods(doTestsForMethod);
 
-function doTestsForMethod(runTest: (text: string, expected: string) => void, runThrowsTest: (text: string) => void) {
+function doTestsForMethod(runTest: (text: string, expected: string) => void, runThrowsTest: (text: string, expectedMessage?: string) => void) {
     describe("nameof", () => {
         describe("argument", () => {
             it("should get the result of an identifier", () => {
@@ -61,6 +61,10 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
 
             it("should throw when the function doesn't have a period", () => {
                 runThrowsTest(`nameof<MyInterface>(i => i);`);
+            });
+
+            it("should throw when the function doesn't have a return statement", () => {
+                runThrowsTest(`nameof<MyInterface>(i => { i; });`, "Cound not find return statement with an expression in function expression: {\n    i;\n}");
             });
         });
     });
