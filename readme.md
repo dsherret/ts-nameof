@@ -31,12 +31,9 @@ Follow any of these instructions:
 * [FuseBox](setup/fusebox.md)
 * [Jest](setup/jest.md)
 * [TypeScript Transformation API](setup/transformation-api.md)
+* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
-
-Todo (this needs v2 support):
-
-* Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 
 ## What does this do?
 
