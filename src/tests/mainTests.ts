@@ -59,6 +59,11 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
                 runTest(`nameof<MyInterface>(i => i.prop1.prop2);`, `"prop2";`);
             });
 
+            it("should get from the return statement", () => {
+                // no reason for people to do this, but don't bother complaining
+                runTest(`nameof<MyInterface>(i => { console.log('test'); return i.prop1.prop2; });`, `"prop2";`);
+            });
+
             it("should throw when the function doesn't have a period", () => {
                 runThrowsTest(`nameof<MyInterface>(i => i);`);
             });
