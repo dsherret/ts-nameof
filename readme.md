@@ -14,6 +14,8 @@ npm install ts-nameof --save-dev
 
 **VERSION 2 BREAKING CHANGE:** Please re-read the instructions for setting up ts-nameof when upgrading to version 2. Most instructions use the typescript compiler API's transformation API now.
 
+## Declaring global `nameof` function
+
 You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
 
 ```typescript
@@ -22,7 +24,7 @@ You may need to add a reference to this package's typescript definition file in 
 
 Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
 
-## Setup
+## Build Setup
 
 Follow any of these instructions:
 
