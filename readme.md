@@ -31,7 +31,7 @@ Follow any of these instructions:
 * [Webpack](setup/webpack.md)
 * [Gulp](setup/gulp.md)
 * [FuseBox](setup/fusebox.md)
-* [TypeScript Transformation API](setup/transformation-api.md)
+* [tsc](setup/tsc.md)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
 

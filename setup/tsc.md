@@ -1,6 +1,6 @@
-# Using ts-nameof with the TypeScript Transformation API
+# Using ts-nameof with tsc
 
-Transformation plugins are currently not supported by `tsc`. Please go and upvote [this issue](https://github.com/Microsoft/TypeScript/issues/14419) on TypeScript's issue tracker.
+Transformation plugins are currently not supported by `tsc` alone. Please go and upvote [this issue](https://github.com/Microsoft/TypeScript/issues/14419) on TypeScript's issue tracker.
 
 In the meantime, this is possible using [ttypescript](https://github.com/cevek/ttypescript) thanks to [@cevek](https://github.com/cevek)!
 
