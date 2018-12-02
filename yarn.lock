@@ -3083,6 +3083,20 @@ ts-simple-ast@17.0.0:
     tslib "^1.9.0"
     typescript "^3.0.1"
 
+ts-simple-ast@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-19.0.0.tgz#bd420a3a2463bf7ea72a6806d1b9d4488f6d488d"
+  dependencies:
+    "@dsherret/to-absolute-glob" "^2.0.2"
+    code-block-writer "^7.2.2"
+    fs-extra "^7.0.0"
+    glob-parent "^3.1.0"
+    globby "^8.0.1"
+    is-negated-glob "^1.0.0"
+    multimatch "^2.1.0"
+    tslib "^1.9.0"
+    typescript "^3.0.1"
+
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"

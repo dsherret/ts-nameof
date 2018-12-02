@@ -21,4 +21,6 @@
 CHANGELOG.md
 mocha.opts
 tsconfig.json
+tsconfig.scripts.json
 tslint.json
+tslint.scripts.json

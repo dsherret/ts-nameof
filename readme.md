@@ -97,4 +97,6 @@ yarn install
 yarn run test
 # linting
 yarn run lint
+# creating declaration file
+yarn run create-declaration-file
 ```

@@ -15,6 +15,7 @@
         ],
         "no-bitwise": false,
         "no-empty": false,
+        "no-namespace": false,
         "no-string-literal": false,
         "ordered-imports": false,
         "one-line": [
