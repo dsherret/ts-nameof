@@ -2,7 +2,7 @@
 import { visitNode } from "../transformation";
 
 export function replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; } {
-    // unofficial backwards compatibility for this method
+    // unofficial pre-2.0 backwards compatibility for this method
     if (arguments.length === 1) {
         fileText = fileName;
         fileName = "/file.tsx"; // assume tsx
@@ -23,13 +23,15 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
 
     function forEachChild(node: ts.Node) {
         const result = visitNode(node, sourceFile);
-        if (result === node) {
+        const wasTransformed = result !== node;
+
+        if (!wasTransformed) {
             ts.forEachChild(node, forEachChild);
             return;
         }
 
         finalText += fileText.substring(lastPos, node.getStart(sourceFile));
-        finalText += `"${(result as ts.Identifier).text}"`;
+        finalText += `"${(result as ts.StringLiteral).text}"`;
         lastPos = node.getEnd();
     }
 }
