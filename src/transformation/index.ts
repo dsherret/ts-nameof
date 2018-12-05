@@ -1,3 +1,3 @@
 export * from "./checks";
 export * from "./transformerFactory";
-export * from "./transforms";
+export * from "./visitNode";

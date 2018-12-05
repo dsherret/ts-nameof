@@ -41,7 +41,7 @@ function run(text: string) {
         getSourceFile: (fileName, languageVersion) => {
             if (fileName !== testFileName)
                 return undefined;
-            return ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+            return ts.createSourceFile(fileName, text, languageVersion, false, ts.ScriptKind.TS);
         },
         getDefaultLibFileName: options => ts.getDefaultLibFileName(options),
         writeFile: () => { throw new Error("Not implemented"); },

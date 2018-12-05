@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { visitNode } from "./transforms";
+import { visitNode } from "./visitNode";
 
 export const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
     return file => visitSourceFile(file, context) as ts.SourceFile;

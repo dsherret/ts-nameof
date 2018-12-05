@@ -10,9 +10,8 @@ export function getNumberFromExpression(expr: ts.Expression) {
                 return result * -1;
         }
     }
-
     // positive
-    if (ts.isNumericLiteral(expr)) {
+    else if (ts.isNumericLiteral(expr)) {
         const result = parseInt(expr.text, 10);
         if (!isNaN(result))
             return result;
