@@ -14,17 +14,9 @@ npm install ts-nameof --save-dev
 
 **VERSION 2 BREAKING CHANGE:** Please re-read the instructions for setting up ts-nameof when upgrading to version 2. Most instructions use the typescript compiler API's transformation API now.
 
-## Declaring global `nameof` function
+## Setup
 
-You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
-
-```typescript
-/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
-```
-
-Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
-
-## Build Setup
+### 1. Build Setup
 
 Follow any of these instructions:
 
@@ -39,6 +31,17 @@ These instructions need updating to use the transformation API, but will still w
 
 * [Jest](setup/jest.md)
 * Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
+
+### 2. Declaring global `nameof` function
+
+You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
+
+```typescript
+/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
+```
+
+Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
+
 
 ## What does this do?
 
@@ -65,7 +68,7 @@ nameof.full<MyInterface>(o => o.prop.prop2);
 nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
-And outputs the identifiers as strings. In this case the output will be this minus the comments:
+And transforms the identifiers to strings at compile time. *Note:* the output won't include these added comments.
 
 ```typescript
 "console";             // nameof(console);
@@ -77,15 +80,15 @@ And outputs the identifiers as strings. In this case the output will be this min
 "alert.length";        // nameof.full(window.alert.length, -2);
 "window.alert.length"; // nameof.full(window.alert.length, -3);
 
-"MyInterface";                      // nameof<MyInterface>();
-"Array";                            // nameof<Array<MyInterface>>();
-"MyInnerInterface";                 // nameof<MyNamespace.MyInnerInterface>();
-"MyNamespace.MyInnerInterface";     // nameof.full<MyNamespace.MyInnerInterface>();
-"MyInnerInterface";                 // nameof.full<MyNamespace.MyInnerInterface>(1);
-"Array";                            // nameof.full<Array<MyInterface>>();
-"prop";                             // nameof<MyInterface>(o => o.prop);
-"prop.prop2";                       // nameof.full<MyInterface>(o => o.prop.prop2);
-"prop2.prop3";                      // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
+"MyInterface";                  // nameof<MyInterface>();
+"Array";                        // nameof<Array<MyInterface>>();
+"MyInnerInterface";             // nameof<MyNamespace.MyInnerInterface>();
+"MyNamespace.MyInnerInterface"; // nameof.full<MyNamespace.MyInnerInterface>();
+"MyInnerInterface";             // nameof.full<MyNamespace.MyInnerInterface>(1);
+"Array";                        // nameof.full<Array<MyInterface>>();
+"prop";                         // nameof<MyInterface>(o => o.prop);
+"prop.prop2";                   // nameof.full<MyInterface>(o => o.prop.prop2);
+"prop2.prop3";                  // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
 ## Development
