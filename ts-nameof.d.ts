@@ -2,7 +2,7 @@ declare module "ts-nameof" {
     interface Api {
         (): any /* ts.TransformerFactory<ts.SourceFile> */;
         replaceInFiles(fileNames: ReadonlyArray<string>, opts?: {
-            encoding: string;
+            encoding?: string;
         }, onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
         replaceInFiles(fileNames: ReadonlyArray<string>, onFinished?: (err?: any /* NodeJS.ErrnoException */) => void): void;
         replaceInText(fileName: string, fileText: string): {
@@ -15,9 +15,9 @@ declare module "ts-nameof" {
 }
 
 declare function nameof<T>(func?: (obj: T) => void): string;
-declare function nameof(obj: Object | null | undefined): string;
+declare function nameof(obj: object | null | undefined): string;
 declare namespace nameof {
     function full<T>(periodIndex?: number): string;
     function full<T>(func: (obj: T) => void, periodIndex?: number): string;
-    function full(obj: Object | null | undefined, periodIndex?: number): string;
+    function full(obj: object | null | undefined, periodIndex?: number): string;
 }

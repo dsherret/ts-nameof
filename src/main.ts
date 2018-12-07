@@ -4,7 +4,7 @@ import { transformerFactory } from "./transformation";
 
 interface Api {
     (): ts.TransformerFactory<ts.SourceFile>;
-    replaceInFiles(fileNames: ReadonlyArray<string>, opts?: { encoding: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
+    replaceInFiles(fileNames: ReadonlyArray<string>, opts?: { encoding?: string }, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
     replaceInFiles(fileNames: ReadonlyArray<string>, onFinished?: (err?: NodeJS.ErrnoException) => void): void;
     replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; };
 }

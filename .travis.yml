@@ -1,7 +1,8 @@
 language: node_js
 node_js:
     - "6"
-script:
-    - yarn run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 before_script:
     - yarn run lint
+    - yarn run verify-declaration-file
+script:
+    - yarn run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

@@ -10,6 +10,7 @@
 /dist/tests
 /coverage
 /setup
+/scripts
 /lib
 *.js.map
 *.v12.suo
