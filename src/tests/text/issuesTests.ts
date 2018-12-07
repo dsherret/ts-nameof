@@ -1,26 +1,28 @@
 ﻿import * as assert from "assert";
-import * as fs from "fs";
-import { replaceInFiles } from "../../main";
-import { getTestFilePath } from "./helpers";
+import { getTestFilePath, readFile, writeFile, replaceInFilesPromise } from "./helpers";
 
 describe("replaceInFiles()", () => {
-    function runTest(fileName: string, expectedFileName: string) {
+    async function runTest(fileName: string, expectedFileName: string) {
         fileName = getTestFilePath(fileName);
+        expectedFileName = getTestFilePath(expectedFileName);
 
-        before((done: MochaDone) => {
-            replaceInFiles([fileName], () => done());
-        });
+        const originalFileText = await readFile(expectedFileName);
 
-        it("should replace", () => {
-            const data = fs.readFileSync(fileName, "utf-8");
-            const expectedContents = fs.readFileSync(getTestFilePath(expectedFileName), "utf-8");
+        try {
+            await replaceInFilesPromise([fileName]);
+            const data = await readFile(fileName);
+            const expectedContents = await readFile(expectedFileName);
             assert.equal(data.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
-        });
+        } finally {
+            await writeFile(expectedFileName, originalFileText);
+        }
     }
 
     function runIssueTest(issueNumber: number) {
         describe(`issue ${issueNumber}`, () => {
-            runTest(`issues/${issueNumber}-source.txt`, `issues/${issueNumber}-expected.txt`);
+            it("should replace", async () => {
+                await runTest(`issues/${issueNumber}-source.txt`, `issues/${issueNumber}-expected.txt`);
+            });
         });
     }
 

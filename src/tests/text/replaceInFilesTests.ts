@@ -1,43 +1,47 @@
 import * as assert from "assert";
-import * as fs from "fs";
-import { replaceInFiles } from "../../main";
-import { getTestFilePath } from "./helpers";
+import { getTestFilePath, readFile, writeFile, replaceInFilesPromise } from "./helpers";
 
 describe("replaceInFiles()", () => {
-    function runTest(fileName: string, expectedContents: string) {
-        fileName = getTestFilePath(fileName);
+    interface FileInfo {
+        filePath: string;
+        contents: string;
+    }
 
-        before((done: MochaDone) => {
-            replaceInFiles([fileName], () => done());
-        });
+    async function runTest(paths: string[], expectedFiles: FileInfo[]) {
+        paths = paths.map(p => getTestFilePath(p));
+        expectedFiles.forEach(f => f.filePath = getTestFilePath(f.filePath));
 
-        it("should replace", () => {
-            const data = fs.readFileSync(fileName, "utf-8");
-            assert.equal(data.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
-        });
+        const initialFiles = await Promise.all(expectedFiles.map(f => readFile(f.filePath).then(data => ({
+            filePath: f.filePath,
+            contents: data
+        } as FileInfo))));
+
+        try {
+            await replaceInFilesPromise(paths);
+            const readFilePromises = expectedFiles.map(f => readFile(f.filePath).then(data => ({ data, expectedContents: f.contents })));
+
+            for (const promise of readFilePromises) {
+                const { data, expectedContents } = await promise;
+                assert.equal(data.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));
+            }
+        } finally {
+            await Promise.all(initialFiles.map(f => writeFile(f.filePath, f.contents)));
+        }
     }
 
     describe("glob support", () => {
-        const fileName = getTestFilePath("globFolder/MyGlobTestFile.js");
-
-        before((done: MochaDone) => {
-            replaceInFiles([getTestFilePath("globFolder/**/*.js")], () => done());
-        });
-
-        it("should replace in MyGlobTestFile.js", () => {
-            const data = fs.readFileSync(fileName, "utf-8");
-            const expected =
-`console.log("console");
-`;
-
-            assert.equal(data.replace(/\r?\n/g, "\n"), expected.replace(/\r?\n/g, "\n"));
+        it("should replace in MyGlobTestFile.txt", async () => {
+            await runTest(["globFolder/**/*.txt"], [{
+                filePath: "globFolder/MyGlobTestFile.txt",
+                contents: `console.log("console");\n`
+            }]);
         });
     });
 
     describe("general file", () => {
-        it("should have the correct number of characters", () => {
+        it("should have the correct number of characters", async () => {
             // because an IDE might auto-format the code, this makes sure that hasn't happened
-            assert.equal(fs.readFileSync(getTestFilePath("GeneralTestFile.txt"), "utf-8").replace(/\r?\n/g, "\n").length, 1121);
+            assert.equal((await readFile(getTestFilePath("GeneralTestFile.txt"))).replace(/\r?\n/g, "\n").length, 1121);
         });
 
         const expected =
@@ -67,7 +71,12 @@ console.log("MyInnerInterface");
 `;
 
         describe("file modifying test", () => {
-            runTest("GeneralTestFile.txt", expected);
+            it("should modify the file", async () => {
+                await runTest(["GeneralTestFile.txt"], [{
+                    filePath: "GeneralTestFile.txt",
+                    contents: expected
+                }]);
+            });
         });
     });
 });
