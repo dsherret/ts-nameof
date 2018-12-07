@@ -13,3 +13,4 @@
 *.csproj
 *.csproj.user
 *.sln
+/yarn-error.log
