@@ -97,7 +97,7 @@ And transforms the identifiers to strings at compile time. *Note:* the output wo
 # setup
 yarn install
 # running tests
-yarn run test
+yarn run test:watch
 # linting
 yarn run lint
 # creating declaration file
