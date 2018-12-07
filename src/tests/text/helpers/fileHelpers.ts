@@ -9,7 +9,7 @@ export function readFile(path: string) {
             }
 
             resolve(data);
-        })
+        });
     });
 }
 
@@ -22,6 +22,6 @@ export function writeFile(path: string, contents: string) {
             }
 
             resolve();
-        })
+        });
     });
 }
