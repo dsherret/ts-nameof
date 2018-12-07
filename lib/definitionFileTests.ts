@@ -29,6 +29,16 @@ function testFunc() {
     const es6Result = tsNameOfEs6.replaceInText("file.ts", "");
     console.log(es6Result.replaced);
 
+    // reference type test
+    const myObj = { test: "" };
+    nameof(myObj);
+    nameof.full(myObj);
+
+    // primitive type test
+    const myStr = "";
+    nameof(myStr);
+    nameof.full(myStr);
+
     // null test
     const nullTypedVar = null;
     nameof(nullTypedVar);
