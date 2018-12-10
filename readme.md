@@ -99,7 +99,7 @@ yarn install
 # running tests
 yarn run test:watch
 # linting
-yarn run lint
+yarn run lint:fix
 # creating declaration file
 yarn run create-declaration-file
 ```

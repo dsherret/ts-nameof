@@ -14,7 +14,8 @@
     "lint": "tslint src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
     "dopublish": "yarn run create-declaration-file && yarn run lint && yarn run test && yarn run build && npm publish --otp",
-    "maintain-barrels": "barrel-maintainer src"
+    "maintain-barrels": "barrel-maintainer src",
+    "verify": "yarn run lint:fix && yarn run test"
   },
   "repository": {
     "type": "git",
