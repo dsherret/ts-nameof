@@ -48,4 +48,8 @@ function testFunc() {
     const undefinedTypedVar = undefined;
     nameof(undefinedTypedVar);
     nameof.full(undefinedTypedVar);
+
+    // nameof.full tests
+    nameof.full(console.log);
+    nameof.full(console.log, 1);
 }
