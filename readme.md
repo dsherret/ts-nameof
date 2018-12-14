@@ -91,15 +91,7 @@ And transforms the identifiers to strings at compile time. *Note:* the output wo
 "prop2.prop3";                  // nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1);
 ```
 
-## Development
+## Other
 
-```
-# setup
-yarn install
-# running tests
-yarn run test:watch
-# linting
-yarn run lint:fix
-# creating declaration file
-yarn run create-declaration-file
-```
+* [Contributing](CONTRIBUTING.md)
+* [Development](development.md)
