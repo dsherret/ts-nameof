@@ -98,7 +98,7 @@ export function visitNode(visitingNode: ts.Node, sourceFile: ts.SourceFile) {
             return getQualifiedNameParts(node);
         if (ts.isTypeReferenceNode(node))
             return getNodeParts(node.typeName);
-        if (ts.isIdentifier(node))
+        if (ts.isIdentifier(node) || ts.isStringLiteral(node))
             return [node.text];
         return [getNodeText(node)];
 

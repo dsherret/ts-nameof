@@ -57,7 +57,7 @@ console.log("alert.length");
 console.log("length");
 console.log( "window" );
 console.log(  "window" );
-console.log("nameof(nameof(clearTimeout))");
+console.log("clearTimeout");
 console.log("Array");
 console.log("Array");
 console.log("prop");

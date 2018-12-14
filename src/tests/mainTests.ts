@@ -20,6 +20,14 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
             it("should get the result of an identifier with a dollar sign", () => {
                 runTest(`nameof(myObj.$prop);`, `"$prop";`);
             });
+
+            it("should resolve to string when nesting nameofs", () => {
+                runTest(`nameof(nameof(testing));`, `"testing";`);
+            });
+
+            it("should get nameof nameof", () => {
+                runTest(`nameof(nameof);`, `"nameof";`);
+            });
         });
 
         describe("type parameter", () => {
@@ -118,6 +126,10 @@ function doTestsForMethod(runTest: (text: string, expected: string) => void, run
 
             it("should throw when the absolute value of the negative periodIndex is greater than the number of periods + 1", () => {
                 runThrowsTest("nameof.full(MyTest.Test, -3)");
+            });
+
+            it("should resolve to string when nesting nameofs", () => {
+                runTest(`nameof.full(nameof(testing));`, `"testing";`);
             });
         });
 

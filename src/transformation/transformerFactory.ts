@@ -12,8 +12,7 @@ export function visitSourceFile(sourceFile: ts.SourceFile, context: ts.Transform
         if (node == null)
             return node;
 
-        node = visitNode(node, sourceFile);
-
-        return ts.visitEachChild(node, childNode => visitNodeAndChildren(childNode), context);
+        node = ts.visitEachChild(node, childNode => visitNodeAndChildren(childNode), context);
+        return visitNode(node, sourceFile);
     }
 }

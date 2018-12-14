@@ -9,29 +9,63 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
     }
 
     const sourceFile = ts.createSourceFile(fileName, fileText, ts.ScriptTarget.Latest, false);
-    let finalText = "";
-    let lastPos = 0;
+    const transformations: { start: number; end: number; text: string; }[] = [];
+    const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
+        // this will always use the source file above
+        return _ => visitSourceFile(context);
+    };
+    ts.transform(sourceFile, [transformerFactory]);
 
-    forEachChild(sourceFile);
-
-    if (lastPos === 0)
+    if (transformations.length === 0)
         return { replaced: false };
 
-    finalText += fileText.substring(lastPos);
+    return { fileText: getTransformedText(), replaced: true };
 
-    return { fileText: finalText, replaced: true };
+    function getTransformedText() {
+        let finalText = "";
+        let lastPos = 0;
 
-    function forEachChild(node: ts.Node) {
-        const result = visitNode(node, sourceFile);
-        const wasTransformed = result !== node;
-
-        if (!wasTransformed) {
-            ts.forEachChild(node, forEachChild);
-            return;
+        for (const transform of transformations) {
+            finalText += fileText.substring(lastPos, transform.start);
+            finalText += `"${transform.text}"`;
+            lastPos = transform.end;
         }
 
-        finalText += fileText.substring(lastPos, node.getStart(sourceFile));
-        finalText += `"${(result as ts.StringLiteral).text}"`;
-        lastPos = node.getEnd();
+        finalText += fileText.substring(lastPos);
+        return finalText;
+    }
+
+    function visitSourceFile(context: ts.TransformationContext) {
+        return visitNodeAndChildren(sourceFile) as ts.SourceFile;
+
+        function visitNodeAndChildren(node: ts.Node): ts.Node {
+            if (node == null)
+                return node;
+
+            node = ts.visitEachChild(node, childNode => visitNodeAndChildren(childNode), context);
+
+            const resultNode = visitNode(node, sourceFile);
+            const wasTransformed = resultNode !== node;
+
+            if (wasTransformed)
+                storeTransformation();
+
+            return resultNode;
+
+            function storeTransformation() {
+                const nodeStart = node.getStart(sourceFile);
+                const lastTransformation = transformations[transformations.length - 1];
+
+                // remove the last transformation if it's nested within this transformation
+                if (lastTransformation != null && lastTransformation.start > nodeStart)
+                    transformations.pop();
+
+                transformations.push({
+                    start: nodeStart,
+                    end: node.end,
+                    text: (resultNode as ts.StringLiteral).text
+                });
+            }
+        }
     }
 }
