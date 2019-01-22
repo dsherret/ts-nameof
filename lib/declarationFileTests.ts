@@ -5,6 +5,12 @@ import tsNameOf = require("ts-nameof");
 import * as tsNameOfEs6 from "ts-nameof";
 import { IsExactType, assert } from "conditional-type-checks";
 
+namespace TestNamespace {
+    export interface TestType {
+        prop: string;
+    }
+}
+
 /* istanbul ignore next */
 function testFunc() {
     tsNameOf.replaceInFiles(["test"]);
@@ -29,6 +35,24 @@ function testFunc() {
     const es6Result = tsNameOfEs6.replaceInText("file.ts", "");
     console.log(es6Result.replaced);
 
+    class TestClass {
+        prop: string;
+    }
+
+    // nameof tests
+    nameof(TestClass);
+    nameof<TestNamespace.TestType>();
+    nameof<TestClass>(t => t.prop);
+
+    // nameof.full tests
+    const testInstance = new TestClass();
+    nameof.full(testInstance.prop);
+    nameof.full(testInstance.prop, 1);
+    nameof.full<TestNamespace.TestType>();
+    nameof.full<TestNamespace.TestType>(1);
+    nameof.full<TestClass>(t => t.prop);
+    nameof.full<TestClass>(t => t.prop, 1);
+
     // reference type test
     const myObj = { test: "" };
     nameof(myObj);
@@ -48,8 +72,4 @@ function testFunc() {
     const undefinedTypedVar = undefined;
     nameof(undefinedTypedVar);
     nameof.full(undefinedTypedVar);
-
-    // nameof.full tests
-    nameof.full(console.log);
-    nameof.full(console.log, 1);
 }
