@@ -4,7 +4,7 @@
   "description": "Macro for nameof that uses the typescript compiler.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "keywords": [
     "nameof",

@@ -10,7 +10,7 @@
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file && yarn run --silent verify-declaration-file",
     "verify-declaration-file": "ts-node  --project tsconfig.scripts.json scripts/verification/main verify-declaration-file",
-    "lint": "tslint src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
+    "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
     "dopublish": "yarn run create-declaration-file && yarn run lint && yarn run test && yarn run build && npm publish --otp",
     "maintain-barrels": "barrel-maintainer src",

@@ -7,7 +7,8 @@
   "author": "David Sherret",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --build",
+    "build": "rimraf dist && tsc --build",
+    "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "yarn run build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
@@ -16,6 +17,11 @@
   "devDependencies": {
     "ts-nameof-tests-common": "file:../tests-common",
     "ts-node": "^8.0.1",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0"
   }
 }

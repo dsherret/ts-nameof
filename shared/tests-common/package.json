@@ -5,5 +5,8 @@
   "description": "Common tests for ts-nameof packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -c tslint.json src/**/*.ts"
+  }
 }

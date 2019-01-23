@@ -1,5 +1,5 @@
 {
-    "extends": "../tslint.common.json",
+    "extends": "../../tslint.common.json",
     "rules": {
         "no-console": false
     }
