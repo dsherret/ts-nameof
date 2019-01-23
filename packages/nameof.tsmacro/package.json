@@ -1,0 +1,15 @@
+{
+  "name": "nameof.tsmacro",
+  "version": "1.0.0",
+  "description": "Macro for nameof that uses the typescript compiler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nameof",
+    "tsmacro"
+  ],
+  "author": "David Sherret",
+  "license": "MIT"
+}

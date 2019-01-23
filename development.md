@@ -1,5 +1,7 @@
 # Development
 
+TODO: I need to update this file with new monorepo instructions.
+
 Standard commands:
 
 ```
@@ -8,7 +10,6 @@ yarn install
 
 # running tests
 yarn run test
-yarn run test:watch
 
 # linting
 yarn run lint

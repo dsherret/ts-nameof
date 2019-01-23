@@ -1,0 +1,9 @@
+{
+  "name": "ts-nameof-tests-common",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Common tests for ts-nameof packages.",
+  "main": "./dist/index.js",
+  "author": "David Sherret",
+  "license": "MIT"
+}

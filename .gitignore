@@ -14,3 +14,15 @@
 *.csproj.user
 *.sln
 /yarn-error.log
+/packages/ts-nameof/dist
+/shared/common/dist
+/shared/tests-common/dist
+/shared/transforms-ts/node_modules
+/shared/transforms-ts/dist
+/packages/ts-nameof/node_modules
+/packages/ts-nameof/.nyc_output
+/packages/ts-nameof/coverage
+/shared/transforms-ts/coverage
+/shared/transforms-ts/.nyc_output
+/shared/transforms-ts/yarn-error.log
+/packages/ts-nameof/temp
