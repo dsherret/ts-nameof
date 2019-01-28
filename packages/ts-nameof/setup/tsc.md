@@ -32,6 +32,6 @@ In the meantime, this is possible using [ttypescript](https://github.com/cevek/t
 
 ### Swapping out TypeScript with TTypeScript
 
-Read the instructions at [`ttypescript`'s GitHub page](https://github.com/cevek/ttypescript) for how to use with tools like `webpack`, `webpack`, `ts-node`, visual studio code, etc.
+Read the instructions at [`ttypescript`'s GitHub page](https://github.com/cevek/ttypescript) for how to use with tools like `ts-node` and visual studio code.
 
 Generally, most build tools have a way to swap out which version of the compiler you use (ex. using environment variables or command line arguments) so this should work across a lot of build tools.
