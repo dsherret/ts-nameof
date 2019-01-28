@@ -39,7 +39,7 @@ npm install @types/ts-nameof --save-dev
 
 ## Transforms
 
-[See here](../../README.md)
+[Read here](../../README.md)
 
 ## Other
 

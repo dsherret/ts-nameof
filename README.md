@@ -7,6 +7,7 @@ Monorepo for ts-nameof projects:
 
 * [ts-nameof](packages/ts-nameof)
 * [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof)
+* [ts-nameof.macro](packages/ts-nameof.macro)
 
 
 ## Transforms

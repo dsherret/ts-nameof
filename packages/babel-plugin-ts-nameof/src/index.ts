@@ -1,1 +1,1 @@
-export { default } from "./external/transforms-babel";
+export { plugin as default } from "./external/transforms-babel";

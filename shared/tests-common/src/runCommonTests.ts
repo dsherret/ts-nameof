@@ -1,8 +1,16 @@
 import * as assert from "assert";
 import * as prettier from "prettier";
 
-export function runCommonTests(getTransformedText: (text: string) => string) {
+/**
+ * Runs tests across different compilers.
+ * @param getTransformedText Function to get the transformed text.
+ * @param options Options for running the tests.
+ */
+export function runCommonTests(getTransformedText: (text: string) => string, options: { commonPrefix?: string; } = {}) {
     function runTest(text: string, expected: string) {
+        if (options.commonPrefix != null)
+            text = options.commonPrefix + text;
+
         const result = getTransformedText(text);
         if (!expected.endsWith("\n"))
             expected += "\n";
@@ -10,17 +18,14 @@ export function runCommonTests(getTransformedText: (text: string) => string) {
     }
 
     function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
-        if (typeof possibleExpectedMessages === "string")
-            possibleExpectedMessages = [possibleExpectedMessages];
-        if (possibleExpectedMessages != null) {
-            for (let i = 0; i < possibleExpectedMessages.length; i++)
-                possibleExpectedMessages[i] = "[ts-nameof]: " + possibleExpectedMessages[i];
-        }
+        if (options.commonPrefix != null)
+            text = options.commonPrefix + text;
 
         // for some reason, assert.throws was not working
         try {
             getTransformedText(text);
         } catch (ex) {
+            possibleExpectedMessages = getPossibleExpectedMessages();
             if (possibleExpectedMessages == null)
                 return;
 
@@ -34,6 +39,28 @@ export function runCommonTests(getTransformedText: (text: string) => string) {
         }
 
         throw new Error("Expected to throw");
+
+        function getPossibleExpectedMessages() {
+            const result = getAsArray();
+
+            if (result == null)
+                return undefined;
+
+            for (let i = result.length - 1; i >= 0; i--) {
+                result[i] = "[ts-nameof]: " + result[i];
+                result.push("./ts-nameof.macro: " + result[i]);
+            }
+
+            return result;
+
+            function getAsArray() {
+                if (typeof possibleExpectedMessages === "string")
+                    return [possibleExpectedMessages];
+                if (possibleExpectedMessages instanceof Array)
+                    return possibleExpectedMessages;
+                return undefined;
+            }
+        }
     }
 
     describe("nameof", () => {
@@ -60,10 +87,6 @@ export function runCommonTests(getTransformedText: (text: string) => string) {
 
             it("should resolve to string when nesting nameofs", () => {
                 runTest(`nameof(nameof(testing));`, `"testing";`);
-            });
-
-            it("should get nameof nameof", () => {
-                runTest(`nameof(nameof);`, `"nameof";`);
             });
         });
 

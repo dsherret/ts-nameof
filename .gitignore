@@ -49,3 +49,9 @@
 /packages/babel-plugin-ts-nameof/dist
 /shared/common/node_modules
 /shared/tests-common/yarn-error.log
+/packages/ts-nameof.macro/yarn-error.log
+/packages/ts-nameof.macro/src/external
+/packages/ts-nameof.macro/node_modules
+/packages/ts-nameof.macro/dist
+/packages/ts-nameof.macro/.nyc_output
+/packages/ts-nameof.macro/coverage

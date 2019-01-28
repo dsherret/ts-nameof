@@ -15,11 +15,13 @@ import { isNegativeNumericLiteral, getNegativeNumericLiteralValue, getReturnStat
  * @param traverseChildren Action to prompt the children to be traversed. This is to allow traversing the nodes in post order.
  * @remarks Parsing to a common structure allows for the same code to be used to determine the final string.
  */
-export function parse(t: typeof babelTypes, path: NodePath, traverseChildren: () => void) {
+export function parse(t: typeof babelTypes, path: NodePath, traverseChildren?: () => void) {
     if (!isNameof(path.node))
         return undefined;
 
-    traverseChildren(); // tell the caller to go over the nodes in post order
+    if (traverseChildren)
+        traverseChildren(); // tell the caller to go over the nodes in post order
+
     return parseNameof(path.node);
 
     function parseNameof(callExpr: CallExpression): common.NameofCallExpression {
