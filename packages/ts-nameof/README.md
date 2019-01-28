@@ -8,7 +8,7 @@
 [`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
 
 ```
-npm install ts-nameof --save-dev
+npm install ts-nameof @types/ts-nameof --save-dev
 ```
 
 **VERSION 2 BREAKING CHANGE:** Please re-read the instructions for setting up ts-nameof when upgrading to version 2. Most instructions use the typescript compiler API's transformation API now.
@@ -33,13 +33,11 @@ These instructions need updating to use the transformation API, but will still w
 
 ### 2. Declaring global `nameof` function
 
-You may need to add a reference to this package's typescript definition file in order to declare the global `nameof` function:
+Install `@types/ts-nameof`:
 
-```typescript
-/// <reference path="node_modules/ts-nameof/ts-nameof.d.ts" />
 ```
-
-Make sure to add that to a single definition file in your project where other references are located so that you don't need to include it in every file that uses nameof.
+npm install @types/ts-nameof --save-dev
+```
 
 ## Other
 
