@@ -13,6 +13,6 @@ export function transform(node: common.SupportedTransformNodes) {
         case "ArrayLiteral":
             return throwError("Not implemented transform: ArrayLiteral.");
         default:
-            return assertNever(node, `Unsupported node kind: ${(node as common.SupportedTransformNodes).kind}`)
+            return assertNever(node, `Unsupported node kind: ${(node as common.SupportedTransformNodes).kind}`);
     }
 }
