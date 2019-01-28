@@ -1,6 +1,16 @@
 # Development
 
-Standard commands in directories:
+## Building
+
+Open the root directory of the repo and run:
+
+```ts
+yarn install
+```
+
+This will cause all the subdirectories to build and correctly reference the other directories.
+
+## Standard Commands
 
 ```
 # setup
@@ -13,26 +23,18 @@ yarn run test
 yarn run lint
 ```
 
-Ensure this command passes before committing:
+## Declaration File
 
-```
-yarn run verify
-```
+### Global Definitions
 
-## ts-nameof
+The global definitions are stored in [shared/lib/global.d.ts](shared/lib/global.d.ts). To make changes:
 
-### Creating Declaration File
+1. Add a failing test in [shared/lib/global.tests.ts](shared/lib/global.tests.ts) (failing test means you get a compile error)
+1. Update [shared/lib/global.d.ts](shared/lib/global.d.ts).
+1. Run `yarn run create-declaration-file` in the root directory which will update all the project's declaration files.
 
-The declaration file ([packages/ts-nameof/ts-nameof.d.ts](packages/ts-nameof/ts-nameof.d.ts)) is a concatenation of the the emitted `.d.ts` file of [packages/ts-nameof/src/main.ts](packages/ts-nameof/src/main.ts) and [packages/ts-nameof/src/global.d.ts](packages/ts-nameof/src/global.d.ts).
-
-### Updating API
+### ts-nameof - Updating API
 
 1. Update the API in `packages/ts-nameof/src/main.ts`.
-1. Run `yarn run create-declaration-file`.
-
-### Updating global `nameof` or `nameof.X` functions
-
-1. Update `packages/ts-nameof/src/global.d.ts`.
-1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test (failing test means you get a compile error because `ts-nameof.d.ts` hasn't been updated yet).
-1. Run `yarn run create-declaration-file`.
-    * This will recreate `ts-nameof.d.ts` and verify that `packages/ts-nameof/lib/declarationFileTests.ts` no longer throws a compile error.
+1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test.
+1. Run `yarn run create-declaration-file`

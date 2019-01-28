@@ -2670,9 +2670,9 @@ ts-node@^8.0.1:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-ts-simple-ast@^19.0.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-19.1.0.tgz#788997552816b27b4e6ac222ea011871b520850f"
+ts-simple-ast@^21.0.2:
+  version "21.0.2"
+  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-21.0.2.tgz#7ee82dabfd5bb46320b03ee938eae60fbc508ab9"
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     code-block-writer "^7.2.2"

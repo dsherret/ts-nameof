@@ -10,7 +10,10 @@
     "install": "cd packages/babel-plugin-ts-nameof && yarn install && cd ../ts-nameof && yarn install && cd ../../",
     "test-packages": "cd packages/ts-nameof && yarn run test && cd ../../",
     "test-shared": "cd shared/transforms-babel && yarn run test && cd ../transforms-common && yarn run test && cd ../transforms-ts && yarn run test && cd ../../",
-    "test": "yarn run test-packages && yarn run test-shared"
+    "test": "yarn run test-packages && yarn run test-shared",
+    "create-declaration-file": "cd packages/ts-nameof && yarn run create-declaration-file && cd ../../",
+    "verify-declaration-file": "cd packages/ts-nameof && yarn run verify-declaration-file && cd ../../",
+    "verify": "yarn run lint && yarn run test && yarn run verify-declaration-file"
   },
   "repository": {
     "type": "git",

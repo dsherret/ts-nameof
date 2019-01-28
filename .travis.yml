@@ -3,6 +3,6 @@ node_js:
     - "6"
 before_script:
     - yarn run lint
-    - cd packages/ts-nameof && yarn run verify-declaration-file && cd ../../
+    - yarn run verify-declaration-file
 script:
     - yarn run test

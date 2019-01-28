@@ -5,9 +5,9 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "install-dependencies": "cd ../../shared/transforms-ts && yarn install && npm run build && cd ../tests-common && yarn install && npm run build && cd ../../packages/ts-nameof",
+    "install-dependencies": "cd ../../shared/transforms-ts && yarn install && yarn run build && cd ../tests-common && yarn install && yarn run build && cd ../../packages/ts-nameof",
     "create-links": "symlink-dir ../../shared/transforms-ts/dist src/external/transforms-ts && symlink-dir ../../shared/tests-common/dist src/external/test-common && symlink-dir ../../shared/common/dist src/external/common",
-    "install": "npm run install-dependencies && npm run create-links",
+    "install": "yarn run install-dependencies && yarn run create-links",
     "test": "tsc --build && yarn run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
@@ -15,8 +15,7 @@
     "verify-declaration-file": "ts-node  --project tsconfig.scripts.json scripts/verification/main verify-declaration-file",
     "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
-    "dopublish": "yarn run create-declaration-file && yarn run lint && yarn run test && yarn run build && npm publish --otp",
-    "verify": "yarn run lint:fix && yarn run test && yarn run verify-declaration-file"
+    "dopublish": "yarn run create-declaration-file && yarn run lint && yarn run test && yarn run build && npm publish --otp"
   },
   "repository": {
     "type": "git",
@@ -68,7 +67,7 @@
     "rimraf": "^2.6.2",
     "symlink-dir": "^2.0.2",
     "ts-node": "^8.0.1",
-    "ts-simple-ast": "^19.0.0",
+    "ts-simple-ast": "^21.0.2",
     "tslint": "^5.11.0",
     "typescript": "^3.1.6"
   }
