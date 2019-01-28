@@ -1,14 +1,13 @@
 ts-nameof
 ==========
 
-[`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
+[`nameof`](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/nameof) in TypeScript.
 
 Monorepo for ts-nameof projects:
 
-* [ts-nameof](packages/ts-nameof)
-* [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof)
-* [ts-nameof.macro](packages/ts-nameof.macro)
-
+* [ts-nameof](packages/ts-nameof) (TypeScript compiler)
+* [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) (Babel compiler)
+* [ts-nameof.macro](packages/ts-nameof.macro) (Babel compiler)
 
 ## Transforms
 
@@ -26,7 +25,7 @@ Transforms to:
 "log";
 ```
 
-### `nameof<T>();`
+### `nameof<T>()`
 
 ```ts
 nameof<MyInterface>();
@@ -44,7 +43,7 @@ Transforms to:
 
 This is useful when working in the type domain.
 
-### `nameof<T>(o => ...);`
+### `nameof<T>(o => ...)`
 
 ```ts
 nameof<MyInterface>(o => o.prop);
@@ -55,8 +54,6 @@ Transforms to:
 ```ts
 "prop";
 ```
-
-## `nameof.full`
 
 ### `nameof.full(...)`
 
