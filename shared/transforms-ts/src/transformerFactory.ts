@@ -1,6 +1,7 @@
 import * as ts from "typescript";
-import { transform } from "./external/transforms-common";
+import { transformCallExpression } from "./external/transforms-common";
 import { parse } from "./parse";
+import { transform } from "./transform";
 
 export const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
     return file => visitSourceFile(file, context) as ts.SourceFile;
@@ -23,6 +24,5 @@ export function visitNode(visitingNode: ts.Node, sourceFile: ts.SourceFile) {
     const parseResult = parse(visitingNode, sourceFile);
     if (parseResult == null)
         return visitingNode;
-    const transformResult = transform(parseResult);
-    return transformResult == null ? visitingNode : ts.createLiteral(transformResult);
+    return transform(transformCallExpression(parseResult));
 }

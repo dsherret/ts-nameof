@@ -114,10 +114,6 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
-"@types/minimist@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
-
 "@types/mocha@^5.2.0":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
@@ -320,15 +316,6 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
-barrel-maintainer@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/barrel-maintainer/-/barrel-maintainer-1.5.0.tgz#80fe80b38071716754089ee206ee759b8f1eae47"
-  dependencies:
-    "@types/minimist" "^1.2.0"
-    chokidar "^1.7.0"
-    minimist "^1.2.0"
-    ts-simple-ast "17.0.0"
-
 base@^0.11.1:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/base/-/base-0.11.2.tgz#7bde5ced145b6d551a90db87f83c558b4eb48a8f"
@@ -446,7 +433,7 @@ chalk@^2.0.0, chalk@^2.3.0:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chokidar@^1.6.0, chokidar@^1.7.0:
+chokidar@^1.6.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
   dependencies:
@@ -2678,20 +2665,6 @@ ts-node@^8.0.1:
     make-error "^1.1.1"
     source-map-support "^0.5.6"
     yn "^3.0.0"
-
-ts-simple-ast@17.0.0:
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-17.0.0.tgz#89c73adb6741a7bf825781d49ef4fd23f6239e75"
-  dependencies:
-    "@dsherret/to-absolute-glob" "^2.0.2"
-    code-block-writer "^7.2.2"
-    fs-extra "^7.0.0"
-    glob-parent "^3.1.0"
-    globby "^8.0.1"
-    is-negated-glob "^1.0.0"
-    multimatch "^2.1.0"
-    tslib "^1.9.0"
-    typescript "^3.0.1"
 
 ts-simple-ast@^19.0.0:
   version "19.1.0"

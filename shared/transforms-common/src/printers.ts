@@ -73,6 +73,8 @@ export function printNode(node: Node): string {
                 if (node.next != null)
                     functionResult = `(${functionResult})`;
                 return functionResult;
+            case "ArrayLiteral":
+                return `[${node.elements.map(e => printNode(e)).join(", ")}]`;
             default:
                 return assertNever(node, `Unhandled kind: ${(node as Node).kind}`);
         }

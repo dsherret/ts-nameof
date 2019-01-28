@@ -1,4 +1,3 @@
-/* barrel:ignore */
 import * as ts from "typescript";
 import { runCommonTests } from "../external/test-common";
 import { transformerFactory } from "../transformerFactory";

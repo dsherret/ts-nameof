@@ -159,4 +159,26 @@ describe("printNode", () => {
             doTest(node, `((a, b) => 5).length`);
         });
     });
+
+    describe("array", () => {
+        it("should print the array with no elements", () => {
+            const node = factories.createArrayLiteralNode([]);
+            doTest(node, "[]");
+        });
+
+        it("should print the array with one element", () => {
+            const node = factories.createArrayLiteralNode([factories.createStringLiteralNode("test")]);
+            doTest(node, `["test"]`);
+        });
+
+        it("should print the array with multiple elements", () => {
+            const node = factories.createArrayLiteralNode([factories.createStringLiteralNode("test"), factories.createStringLiteralNode("test2")]);
+            doTest(node, `["test", "test2"]`);
+        });
+
+        it("should print with a property after", () => {
+            const node = factories.createArrayLiteralNode([], factories.createIdentifierNode("length"));
+            doTest(node, `[].length`);
+        });
+    });
 });

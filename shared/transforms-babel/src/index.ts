@@ -1,7 +1,8 @@
 import * as babelTypes from "@babel/types";
 import { NodePath } from "@babel/traverse";
-import { transform } from "./external/transforms-common";
+import { transformCallExpression } from "./external/transforms-common";
 import { parse } from "./parse";
+import { transform } from "./transform";
 
 export default function({ types: t }: { types: typeof babelTypes }) {
     const visitor = {
@@ -9,9 +10,8 @@ export default function({ types: t }: { types: typeof babelTypes }) {
             const parseResult = parse(t, path, () => path.traverse(visitor));
             if (parseResult == null)
                 return;
-            const transformResult = transform(parseResult);
-            if (transformResult != null)
-                path.replaceWith(t.stringLiteral(transformResult));
+            const transformResult = transform(t, transformCallExpression(parseResult));
+            path.replaceWith(transformResult);
         }
     };
     return { visitor };

@@ -286,6 +286,10 @@ export function runCommonTests(getTransformedText: (text: string) => string) {
     });
 
     describe("general", () => {
+        it("should error when specifying a different nameof property", () => {
+            runThrowTest(`nameof.nonExistent()`, "Unsupported nameof call expression: nameof.nonExistent()");
+        });
+
         it("should replace handling comments", () => {
             const input = `nameof(window);
 // nameof(window);

@@ -11,7 +11,6 @@ const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
  * is not a nameof call expression.
  * @param parsingNode Babel AST node to parse.
  * @param sourceFile Containing source file.
- * @remarks Parsing to a common structure allows for the same code to be used to determine the final string.
  */
 export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
     return isNameof(parsingNode) ? parseNameof(parsingNode) : undefined;

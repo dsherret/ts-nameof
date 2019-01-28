@@ -16,7 +16,6 @@
     "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
     "dopublish": "yarn run create-declaration-file && yarn run lint && yarn run test && yarn run build && npm publish --otp",
-    "maintain-barrels": "barrel-maintainer src",
     "verify": "yarn run lint:fix && yarn run test && yarn run verify-declaration-file"
   },
   "repository": {
@@ -59,7 +58,6 @@
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.0",
     "@types/node": "^10.0.4",
-    "barrel-maintainer": "^1.5.0",
     "conditional-type-checks": "^0.5.0",
     "copyfiles": "^2.0.0",
     "coveralls": "^3.0.2",

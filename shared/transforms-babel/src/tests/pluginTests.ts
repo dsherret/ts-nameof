@@ -1,4 +1,3 @@
-/* barrel:ignore */
 import * as babel from "@babel/core";
 import { runCommonTests } from "../external/test-common";
 import plugin from "../index";

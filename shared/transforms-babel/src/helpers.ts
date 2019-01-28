@@ -1,4 +1,3 @@
-/* barrel:ignore */
 import * as babelTypes from "@babel/types";
 import { Node, BlockStatement, UnaryExpression } from "@babel/types";
 import { throwError } from "./external/common";

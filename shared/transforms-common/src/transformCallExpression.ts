@@ -1,18 +1,27 @@
 import { throwError } from "./external/common";
 import { NameofCallExpression, Node } from "./nodes";
+import { createStringLiteralNode } from "./node-factories";
 import { printCallExpression, printNode } from "./printers";
 
-export function transform(callExpr: NameofCallExpression) {
+export function transformCallExpression(callExpr: NameofCallExpression) {
     if (callExpr.property == null)
-        return handleNameof(callExpr);
+        return createStringLiteralNodeOrThrow(handleNameof(callExpr));
     if (callExpr.property === "full")
-        return handleNameofFull(callExpr);
-    return undefined;
+        return createStringLiteralNodeOrThrow(handleNameofFull(callExpr));
+    return throwForUnsupportedCallExpression();
+
+    function createStringLiteralNodeOrThrow(value: string | undefined) {
+        return value == null ? throwForUnsupportedCallExpression() : createStringLiteralNode(value);
+    }
+
+    function throwForUnsupportedCallExpression() {
+        return throwError(`Unsupported nameof call expression: ${printCallExpression(callExpr)}`);
+    }
 }
 
 function handleNameof(callExpr: NameofCallExpression) {
     const expression = getExpression();
-    return expression == null ? undefined : getNodePartAsStringArray(expression, undefined).pop();
+    return expression == null ? undefined : getNodeAsStringArray(expression, undefined).pop();
 
     function getExpression() {
         if (callExpr.arguments.length === 1)
@@ -25,7 +34,7 @@ function handleNameof(callExpr: NameofCallExpression) {
 
 function handleNameofFull(callExpr: NameofCallExpression) {
     const exprAndCount = getExpressionAndCount();
-    return exprAndCount == null ? undefined : getPartsAsString(getNodePartAsStringArray(exprAndCount.expression, undefined), getCount(exprAndCount.count));
+    return exprAndCount == null ? undefined : getPartsAsString(getNodeAsStringArray(exprAndCount.expression, undefined), getCount(exprAndCount.count));
 
     function getExpressionAndCount() {
         if (shouldUseArguments())
@@ -73,34 +82,36 @@ function handleNameofFull(callExpr: NameofCallExpression) {
     }
 }
 
-function getNodePartAsStringArray(nodePart: Node | undefined, parent: Node | undefined) {
+function getNodeAsStringArray(node: Node | undefined, parent: Node | undefined) {
     const result: string[] = [];
 
-    while (nodePart != null) {
-        if (nodePart.kind === "Computed") {
-            const text = `[${getNodePartAsStringArray(nodePart.value, nodePart).join(".")}]`;
+    while (node != null) {
+        if (node.kind === "Computed") {
+            const text = `[${getNodeAsStringArray(node.value, node).join(".")}]`;
             if (result.length === 0)
                 result.push(text);
             else
                 result[result.length - 1] += text;
         }
-        else if (nodePart.kind === "Function") {
+        else if (node.kind === "Function") {
             if (parent != null)
-                return throwError(`Nesting functions is not supported: ${printNode(nodePart)}`);
+                return throwError(`Nesting functions is not supported: ${printNode(node)}`);
             // skip over the first part
-            const firstPart = nodePart.value;
+            const firstPart = node.value;
             if (firstPart.next == null)
-                return throwError(`A property must be accessed on the object: ${printNode(nodePart)}`);
+                return throwError(`A property must be accessed on the object: ${printNode(node)}`);
             if (firstPart.next.kind === "Computed")
-                return throwError(`First accessed property must not be computed: ${printNode(nodePart)}`);
-            result.push(...getNodePartAsStringArray(firstPart.next, undefined));
+                return throwError(`First accessed property must not be computed: ${printNode(node)}`);
+            result.push(...getNodeAsStringArray(firstPart.next, undefined));
         }
-        else if (nodePart.kind === "StringLiteral" && parent != null && parent.kind === "Computed" && result.length === 0)
-            result.push(`"${nodePart.value}"`);
+        else if (node.kind === "StringLiteral" && parent != null && parent.kind === "Computed" && result.length === 0)
+            result.push(`"${node.value}"`);
+        else if (node.kind === "ArrayLiteral")
+            return throwError("Not implemented transform for ArrayLiteral.");
         else
-            result.push(nodePart.value.toString());
+            result.push(node.value.toString());
 
-        nodePart = nodePart.next;
+        node = node.next;
     }
 
     return result;

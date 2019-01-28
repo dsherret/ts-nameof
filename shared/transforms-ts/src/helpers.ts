@@ -1,4 +1,3 @@
-/* barrel:ignore */
 import * as ts from "typescript";
 import { throwError } from "./external/common";
 

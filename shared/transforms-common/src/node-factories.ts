@@ -1,4 +1,4 @@
-import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ComputedNode, FunctionNode } from "./nodes";
+import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode } from "./nodes";
 
 export function createIdentifierNode(value: string, next?: Node | undefined): IdentifierNode {
     return {
@@ -20,6 +20,14 @@ export function createNumericLiteralNode(value: number, next?: Node | undefined)
     return {
         kind: "NumericLiteral",
         value,
+        next
+    };
+}
+
+export function createArrayLiteralNode(elements: ArrayLiteralNode["elements"], next?: Node | undefined): ArrayLiteralNode {
+    return {
+        kind: "ArrayLiteral",
+        elements,
         next
     };
 }
