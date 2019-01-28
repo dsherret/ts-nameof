@@ -1,13 +1,13 @@
 {
-  "name": "ts-nameof-transforms-ts",
+  "name": "ts-nameof-transforms-babel",
   "private": true,
   "version": "0.0.0",
-  "description": "TypeScript compiler transforms for ts-nameof packages.",
+  "description": "Babel transforms for ts-nameof packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
   "license": "MIT",
   "scripts": {
-    "install-dependencies": "cd ../tests-common && yarn install && yarn run build && cd ../common && yarn install && yarn run build && cd ../transforms-common && yarn install && yarn run build && cd ../transforms-ts",
+    "install-dependencies": "cd ../tests-common && yarn install && yarn run build && cd ../common && yarn install && yarn run build && cd ../transforms-common && yarn install && yarn run build && cd ../transforms-babel",
     "create-links": "symlink-dir ../tests-common/dist src/external/test-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
     "install": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
@@ -18,6 +18,14 @@
     "prettier": "^1.16.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/babel-types": "^7.0.4",
+    "@types/babel__core": "^7.0.4",
+    "@types/babel__generator": "^7.0.1",
+    "@types/babel__template": "^7.0.1",
+    "@types/babel__traverse": "^7.0.4",
+    "@types/node": "^10.12.18",
     "coveralls": "^3.0.2",
     "cpx": "^1.5.0",
     "mocha": "^5.2.0",

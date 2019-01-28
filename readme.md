@@ -6,4 +6,4 @@ ts-nameof
 Monorepo for ts-nameof and related projects:
 
 * [ts-nameof](packages/ts-nameof)
-* [nameof.tsmacro](packages/nameof.tsmacro)
+* [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof)

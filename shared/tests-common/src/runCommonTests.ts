@@ -1,8 +1,49 @@
-export function runCommonTests(runTest: (text: string, expected: string) => void, runThrowTest: (text: string, expectedMessage?: string) => void) {
+import * as assert from "assert";
+import * as prettier from "prettier";
+
+export function runCommonTests(getTransformedText: (text: string) => string) {
+    function runTest(text: string, expected: string) {
+        const result = getTransformedText(text);
+        if (!expected.endsWith("\n"))
+            expected += "\n";
+        assert.equal(prettier.format(result, { parser: "typescript" }), expected);
+    }
+
+    function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
+        if (typeof possibleExpectedMessages === "string")
+            possibleExpectedMessages = [possibleExpectedMessages];
+        if (possibleExpectedMessages != null) {
+            for (let i = 0; i < possibleExpectedMessages.length; i++)
+                possibleExpectedMessages[i] = "[ts-nameof]: " + possibleExpectedMessages[i];
+        }
+
+        // for some reason, assert.throws was not working
+        try {
+            getTransformedText(text);
+        } catch (ex) {
+            if (possibleExpectedMessages == null)
+                return;
+
+            const actualMessage = (ex as any).message;
+            for (const message of possibleExpectedMessages) {
+                if (message === actualMessage)
+                    return;
+            }
+
+            throw new Error(`Expected the error message of ${actualMessage} to equal one of the following messages: ${possibleExpectedMessages}`);
+        }
+
+        throw new Error("Expected to throw");
+    }
+
     describe("nameof", () => {
         describe("argument", () => {
             it("should get the result of an identifier", () => {
                 runTest(`nameof(myObj);`, `"myObj";`);
+            });
+
+            it("should get the result of the this keyword", () => {
+                runTest(`nameof(this);`, `"this";`);
             });
 
             it("should get the result of a property access expression", () => {
@@ -49,12 +90,24 @@ export function runCommonTests(runTest: (text: string, expected: string) => void
                 runTest(`nameof(anyProp[0].prop);`, `"prop";`);
             });
 
+            it("should escape strings inside element access expressions", () => {
+                runTest(`nameof(obj["prop"]);`, `"obj[\\"prop\\"]";`);
+            });
+
             it("should include the brackets when getting an ambient declaration's property", () => {
                 runTest(`nameof<MyInterface>(i => i.prop[0]);`, `"prop[0]";`);
             });
 
             it("should include the nested brackets when getting an ambient declaration's property", () => {
                 runTest(`nameof<MyInterface>(i => i.prop[0][1]);`, `"prop[0][1]";`);
+            });
+
+            it("should include brackets nested in brackets", () => {
+                runTest(`nameof<MyInterface>(i => i.prop[prop[0]]);`, `"prop[prop[0]]";`);
+            });
+
+            it("should not allow only an array", () => {
+                runThrowTest(`nameof([0]);`);
             });
         });
 
@@ -68,12 +121,38 @@ export function runCommonTests(runTest: (text: string, expected: string) => void
                 runTest(`nameof<MyInterface>(i => { console.log('test'); return i.prop1.prop2; });`, `"prop2";`);
             });
 
+            it("should throw when using an element access expression directly on the object", () => {
+                runThrowTest(`nameof<MyInterface>(i => i["prop1"]);`, `First accessed property must not be computed: (i) => i["prop1"]`);
+            });
+
             it("should throw when the function doesn't have a period", () => {
                 runThrowTest(`nameof<MyInterface>(i => i);`);
             });
 
             it("should throw when the function doesn't have a return statement", () => {
-                runThrowTest(`nameof<MyInterface>(i => { i; });`, "Cound not find return statement with an expression in function expression: {\n    i;\n}");
+                const errorPrefix = "Cound not find return statement with an expression in function expression: ";
+                const possibleMessages = [
+                    errorPrefix + "{ i; }", // babel
+                    errorPrefix + "{\n    i;\n}" // typescript
+                ];
+                runThrowTest(`nameof<MyInterface>(i => { i; });`, possibleMessages);
+            });
+        });
+
+        describe("literals", () => {
+            it("should leave the string literal as-is", () => {
+                // this allows for nested nameofs
+                runTest(`nameof("test");`, `"test";`);
+            });
+
+            it("should transform a numeric literal as a string", () => {
+                runTest(`nameof(5);`, `"5";`);
+            });
+        });
+
+        describe("other", () => {
+            it("should ignore spread syntax", () => {
+                runTest(`nameof(...test);`, `"test";`);
             });
         });
     });
@@ -90,6 +169,10 @@ export function runCommonTests(runTest: (text: string, expected: string) => void
 
             it("should not include null assertion operators when also using element access expressions", () => {
                 runTest(`nameof.full(obj!.prop![0].other!);`, `"obj.prop[0].other";`);
+            });
+
+            it("should escape string literals in element access expressions", () => {
+                runTest(`nameof.full(obj.prop["other"]);`, `"obj.prop[\\"other\\"]";`);
             });
 
             it("should allow using a period index", () => {
@@ -204,30 +287,23 @@ export function runCommonTests(runTest: (text: string, expected: string) => void
 
     describe("general", () => {
         it("should replace handling comments", () => {
-            const input = `
-nameof(window);
+            const input = `nameof(window);
 // nameof(window);
 nameof(window);
-/* nameof(window);
-nameof(window);
-*/
+/* nameof(window); nameof(window); */
 nameof(window);
 `;
-            const expected = `
-"window";
+            const expected = `"window";
 // nameof(window);
 "window";
-/* nameof(window);
-nameof(window);
-*/
+/* nameof(window); nameof(window); */
 "window";
 `;
             runTest(input, expected);
         });
 
         it("should replace handling strings", () => {
-            const input = `
-nameof(window);
+            const input = `nameof(window);
 const t = /\`/g;
 \`nameof(window); /
 \${nameof(window)}
@@ -241,11 +317,10 @@ nameof(window);
 "C:\\\\";
 nameof(window);
 \`\${() => {
-    nameof(console);
+  nameof(console);
 }}\`;
 `;
-            const expected = `
-"window";
+            const expected = `"window";
 const t = /\`/g;
 \`nameof(window); /
 $\{"window"\}
@@ -254,12 +329,12 @@ nameof(window);
 \`; //test
 "nameof(window);";
 "\\"nameof(window);";
-'nameof(window);';
+"nameof(window);";
 '\\'\\"nameof(window);';
 "C:\\\\";
 "window";
 \`\${() => {
-    "console";
+  "console";
 }}\`;
 `;
             runTest(input, expected);

@@ -1,31 +1,9 @@
 /* barrel:ignore */
-import * as assert from "assert";
 import * as ts from "typescript";
-import { runCommonTests } from "ts-nameof-tests-common";
+import { runCommonTests } from "../external/test-common";
 import { transformerFactory } from "../transformerFactory";
 
-runCommonTests(runTest, runThrowTest);
-
-function runTest(text: string, expected: string) {
-    const results = run(text);
-    assert.equal(results[0].fileText.trim(), expected.trim());
-}
-
-function runThrowTest(text: string, expectedMessage?: string) {
-    if (expectedMessage != null)
-        expectedMessage = "[ts-nameof]: " + expectedMessage;
-
-    // for some reason, assert.throws was not working
-    try {
-        run(text);
-    } catch (ex) {
-        if (expectedMessage != null)
-            assert.equal((ex as any).message, expectedMessage);
-        return;
-    }
-
-    throw new Error("Expected to throw");
-}
+runCommonTests(run);
 
 function run(text: string) {
     const results: { fileName: string; fileText: string; }[] = [];
@@ -56,5 +34,5 @@ function run(text: string) {
     };
     const program = ts.createProgram(["/file.ts"], compilerOptions, host);
     program.emit(undefined, (fileName, fileText) => results.push({ fileName, fileText }), undefined, false, transformers);
-    return results;
+    return results[0].fileText;
 }

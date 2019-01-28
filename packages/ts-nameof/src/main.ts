@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import { replaceInText, replaceInFiles } from "./text";
-import { transformerFactory } from "ts-nameof-transforms-ts";
+import { transformerFactory } from "./external/transforms-ts";
 
 interface Api {
     (): ts.TransformerFactory<ts.SourceFile>;

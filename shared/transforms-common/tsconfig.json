@@ -8,8 +8,6 @@
     "extends": "../../tsconfig.common.json",
     "include": ["./src/**/*.ts"],
     "references": [
-        { "path": "../common" },
-        { "path": "../transforms-common" },
-        { "path": "../tests-common" }
+        { "path": "../common" }
     ]
 }

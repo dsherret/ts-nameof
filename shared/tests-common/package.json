@@ -7,6 +7,13 @@
   "author": "David Sherret",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint -c tslint.json src/**/*.ts"
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^10.12.18",
+    "@types/prettier": "^1.15.2",
+    "prettier": "^1.16.1"
   }
 }

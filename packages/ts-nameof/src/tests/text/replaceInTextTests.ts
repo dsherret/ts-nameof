@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { runCommonTests } from "ts-nameof-tests-common";
+import { runCommonTests } from "../../external/test-common";
 import { replaceInText } from "../../text";
 
 describe("replaceInText", () => {
@@ -25,26 +25,7 @@ describe("replaceInText", () => {
         assert.equal(result.fileText, `const t = <div t={"t"} />;`);
     });
 
-    runCommonTests(runTest, runThrowTest);
+    runCommonTests(text => {
+        return replaceInText("file.ts", text).fileText || text;
+    });
 });
-
-function runTest(text: string, expected: string) {
-    const result = replaceInText("file.ts", text);
-    assert.equal(result.fileText || text, expected);
-}
-
-function runThrowTest(text: string, expectedMessage?: string) {
-    if (expectedMessage != null)
-        expectedMessage = "[ts-nameof]: " + expectedMessage;
-
-    // for some reason, assert.throws was not working
-    try {
-        replaceInText("file.ts", text);
-    } catch (ex) {
-        if (expectedMessage != null)
-            assert.equal((ex as any).message, expectedMessage);
-        return;
-    }
-
-    throw new Error("Expected to throw");
-}

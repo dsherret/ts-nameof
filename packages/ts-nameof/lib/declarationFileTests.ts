@@ -14,15 +14,13 @@ namespace TestNamespace {
 /* istanbul ignore next */
 function testFunc() {
     tsNameOf.replaceInFiles(["test"]);
-    tsNameOf.replaceInFiles(["test"], (err) => {
-        const e: NodeJS.ErrnoException | undefined = err;
-        console.log(e);
+    tsNameOf.replaceInFiles(["test"], err => {
+        assert<IsExactType<any, typeof err>>(true);
     });
     tsNameOf.replaceInFiles(["test"], { });
     tsNameOf.replaceInFiles(["test"], { encoding: "utf-8" });
-    tsNameOf.replaceInFiles(["test"], { encoding: "utf-8" }, (err) => {
-        const e: NodeJS.ErrnoException | undefined = err;
-        console.log(e);
+    tsNameOf.replaceInFiles(["test"], { encoding: "utf-8" }, err => {
+        assert<IsExactType<any, typeof err>>(true);
     });
 
     // replaceInText

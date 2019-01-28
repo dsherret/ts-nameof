@@ -44,5 +44,5 @@ Make sure to add that to a single definition file in your project where other re
 
 ## Other
 
-* [Contributing](CONTRIBUTING.md)
-* [Development](development.md)
+* [Contributing](../../CONTRIBUTING.md)
+* [Development](../../development.md)

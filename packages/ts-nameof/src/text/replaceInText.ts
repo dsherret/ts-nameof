@@ -1,5 +1,5 @@
 ﻿import * as ts from "typescript";
-import { visitNode } from "ts-nameof-transforms-ts";
+import { visitNode } from "../external/transforms-ts";
 
 export function replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; } {
     // unofficial pre-2.0 backwards compatibility for this method
@@ -27,7 +27,7 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
 
         for (const transform of transformations) {
             finalText += fileText.substring(lastPos, transform.start);
-            finalText += `"${transform.text}"`;
+            finalText += `"${transform.text.replace(/\"/g, `\\"`)}"`;
             lastPos = transform.end;
         }
 

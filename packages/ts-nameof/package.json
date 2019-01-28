@@ -5,8 +5,11 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "yarn run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
-    "build": "rimraf dist && tsc --build",
+    "install-dependencies": "cd ../../shared/transforms-ts && yarn install && npm run build && cd ../tests-common && yarn install && npm run build && cd ../../packages/ts-nameof",
+    "create-links": "symlink-dir ../../shared/transforms-ts/dist src/external/transforms-ts && symlink-dir ../../shared/tests-common/dist src/external/test-common && symlink-dir ../../shared/common/dist src/external/common",
+    "install": "npm run install-dependencies && npm run create-links",
+    "test": "tsc --build && yarn run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
+    "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file && yarn run --silent verify-declaration-file",
     "verify-declaration-file": "ts-node  --project tsconfig.scripts.json scripts/verification/main verify-declaration-file",
@@ -21,6 +24,7 @@
     "url": "git+https://github.com/dsherret/ts-nameof.git"
   },
   "keywords": [
+    "nameof",
     "typescript",
     "transformer",
     "custom-transformer"
@@ -59,14 +63,14 @@
     "conditional-type-checks": "^0.5.0",
     "copyfiles": "^2.0.0",
     "coveralls": "^3.0.2",
+    "cpx": "^1.5.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
+    "symlink-dir": "^2.0.2",
     "ts-node": "^8.0.1",
     "ts-simple-ast": "^19.0.0",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6",
-    "ts-nameof-tests-common": "file:../../shared/tests-common",
-    "ts-nameof-transforms-ts": "file:../../shared/transforms-ts"
+    "typescript": "^3.1.6"
   }
 }
