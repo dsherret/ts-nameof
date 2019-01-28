@@ -5,4 +5,4 @@ before_script:
     - yarn run lint
     - cd packages/ts-nameof && yarn run verify-declaration-file && cd ../../
 script:
-    - yarn run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - yarn run test
