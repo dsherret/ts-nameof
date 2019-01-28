@@ -8,6 +8,7 @@
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
     "install": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build",
+    "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
