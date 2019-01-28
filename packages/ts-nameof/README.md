@@ -11,8 +11,6 @@
 npm install ts-nameof @types/ts-nameof --save-dev
 ```
 
-**VERSION 2 BREAKING CHANGE:** Please re-read the instructions for setting up ts-nameof when upgrading to version 2. Most instructions use the typescript compiler API's transformation API now.
-
 ## Setup
 
 ### 1. Build Setup

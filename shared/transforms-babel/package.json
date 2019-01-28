@@ -15,7 +15,6 @@
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
-    "prettier": "^1.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -30,6 +29,7 @@
     "cpx": "^1.5.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
+    "prettier": "^1.16.1",
     "rimraf": "^2.6.2",
     "symlink-dir": "^2.0.2",
     "ts-node": "^8.0.1",

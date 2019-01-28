@@ -15,9 +15,9 @@
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
-    "@types/mocha": "^5.2.5"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
     "coveralls": "^3.0.2",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
