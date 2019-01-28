@@ -37,7 +37,11 @@ Install `@types/ts-nameof`:
 npm install @types/ts-nameof --save-dev
 ```
 
+## Transforms
+
+[See here](../../README.md)
+
 ## Other
 
 * [Contributing](../../CONTRIBUTING.md)
-* [Development](../../development.md)
+* [Development](../../DEVELOPMENT.md)

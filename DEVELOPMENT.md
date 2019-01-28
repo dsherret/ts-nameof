@@ -35,6 +35,6 @@ The global definitions are stored in [shared/lib/global.d.ts](shared/lib/global.
 
 ### ts-nameof - Updating API
 
-1. Update the API in `packages/ts-nameof/src/main.ts`.
+1. Update the API in [packages/ts-nameof/src/main.ts](packages/ts-nameof/src/main.ts).
 1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test.
 1. Run `yarn run create-declaration-file`

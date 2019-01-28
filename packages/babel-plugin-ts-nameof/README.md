@@ -8,13 +8,15 @@
 
 [`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
 
+## Setup
+
+1. Run:
+
 ```
 npm install babel-plugin-ts-nameof @types/ts-nameof --save-dev
 ```
 
-## Setup
-
-Add an entry to `.babelrc` for `babel-plugin-ts-nameof`:
+2. Add an entry to `.babelrc` for `babel-plugin-ts-nameof`:
 
 ```
 {
@@ -22,7 +24,11 @@ Add an entry to `.babelrc` for `babel-plugin-ts-nameof`:
 }
 ```
 
+## Transforms
+
+[See here](../../README.md)
+
 ## Other
 
 * [Contributing](../../CONTRIBUTING.md)
-* [Development](../../development.md)
+* [Development](../../DEVELOPMENT.md)

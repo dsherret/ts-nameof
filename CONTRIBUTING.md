@@ -23,5 +23,5 @@
     1. Wait for discussion and green light from [@dsherret](https://github.com/dsherret) (who will try to reply as soon as possible, but it might take a few days).
         * Note: If the change is small and you think it wouldn't take you too much time, then feel free to start working on it and even submit a PR. Just beware that you're taking the risk that it could be denied.
 1. After approval, start working on the change in a branch and submit a PR.
-1. Read [development.md](development.md) for some useful information.
+1. Read [DEVELOPMENT.md](DEVELOPMENT.md) for some useful information.
 1. Ensure `yarn run verify` passes when run in the root directory.
