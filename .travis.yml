@@ -3,6 +3,6 @@ node_js:
     - "6"
 before_script:
     - yarn run lint
-    - yarn run verify-declaration-file
+    - cd packages/ts-nameof && yarn run verify-declaration-file && cd ../../
 script:
     - yarn run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

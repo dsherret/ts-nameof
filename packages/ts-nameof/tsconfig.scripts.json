@@ -4,7 +4,7 @@
         "rootDir": "./scripts",
         "noEmit": true
     },
-    "extends": "./tsconfig.common.json",
+    "extends": "../../tsconfig.common.json",
     "exclude": [
         "./lib",
         "./src"

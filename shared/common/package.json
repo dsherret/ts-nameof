@@ -9,5 +9,9 @@
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*.ts",
     "build": "tsc"
+  },
+  "dependencies": {
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
   }
 }
