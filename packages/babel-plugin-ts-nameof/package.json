@@ -7,14 +7,16 @@
     "install-dependencies": "cd ../../shared/transforms-babel && yarn install && yarn run build && cd ../../packages/babel-plugin-ts-nameof",
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
     "install": "yarn run install-dependencies && yarn run create-links",
-    "build": "rimraf dist && tsc --build",
+    "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "lint": "tslint -c tslint.json src/**/*.ts",
+    "dopublish": "yarn install && yarn build && npm publish --otp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "nameof",
     "typescript",
-    "transforms"
+    "transforms",
+    "babel"
   ],
   "repository": {
     "type": "git",

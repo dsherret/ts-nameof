@@ -46,3 +46,4 @@
 /shared/transforms-babel/yarn-error.log
 /shared/transforms-common/yarn-error.log
 /packages/babel-plugin-ts-nameof/yarn-error.log
+/packages/babel-plugin-ts-nameof/dist

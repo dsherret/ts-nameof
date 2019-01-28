@@ -14,7 +14,13 @@ npm install babel-plugin-ts-nameof @types/ts-nameof --save-dev
 
 ## Setup
 
+Add an entry to `.babelrc` for `babel-plugin-ts-nameof`:
 
+```
+{
+  "plugins": ["babel-plugin-ts-nameof"]
+}
+```
 
 ## Other
 
