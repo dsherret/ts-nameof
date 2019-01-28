@@ -48,3 +48,4 @@
 /packages/babel-plugin-ts-nameof/yarn-error.log
 /packages/babel-plugin-ts-nameof/dist
 /shared/common/node_modules
+/shared/tests-common/yarn-error.log
