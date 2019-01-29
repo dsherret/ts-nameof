@@ -7,62 +7,6 @@ import * as prettier from "prettier";
  * @param options Options for running the tests.
  */
 export function runCommonTests(getTransformedText: (text: string) => string, options: { commonPrefix?: string; } = {}) {
-    function runTest(text: string, expected: string) {
-        if (options.commonPrefix != null)
-            text = options.commonPrefix + text;
-
-        const result = getTransformedText(text);
-        if (!expected.endsWith("\n"))
-            expected += "\n";
-        assert.equal(prettier.format(result, { parser: "typescript" }), expected);
-    }
-
-    function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
-        if (options.commonPrefix != null)
-            text = options.commonPrefix + text;
-
-        // for some reason, assert.throws was not working
-        try {
-            getTransformedText(text);
-        } catch (ex) {
-            possibleExpectedMessages = getPossibleExpectedMessages();
-            if (possibleExpectedMessages == null)
-                return;
-
-            const actualMessage = (ex as any).message;
-            for (const message of possibleExpectedMessages) {
-                if (message === actualMessage)
-                    return;
-            }
-
-            throw new Error(`Expected the error message of ${actualMessage} to equal one of the following messages: ${possibleExpectedMessages}`);
-        }
-
-        throw new Error("Expected to throw");
-
-        function getPossibleExpectedMessages() {
-            const result = getAsArray();
-
-            if (result == null)
-                return undefined;
-
-            for (let i = result.length - 1; i >= 0; i--) {
-                result[i] = "[ts-nameof]: " + result[i];
-                result.push("./ts-nameof.macro: " + result[i]);
-            }
-
-            return result;
-
-            function getAsArray() {
-                if (typeof possibleExpectedMessages === "string")
-                    return [possibleExpectedMessages];
-                if (possibleExpectedMessages instanceof Array)
-                    return possibleExpectedMessages;
-                return undefined;
-            }
-        }
-    }
-
     describe("nameof", () => {
         describe("argument", () => {
             it("should get the result of an identifier", () => {
@@ -373,4 +317,61 @@ nameof(window);
             runTest(input, expected);
         });
     });
+
+    function runTest(text: string, expected: string) {
+        if (options.commonPrefix != null)
+            text = options.commonPrefix + text;
+
+        const result = getTransformedText(text);
+        if (!expected.endsWith("\n"))
+            expected += "\n";
+        assert.equal(prettier.format(result, { parser: "typescript" }), expected);
+    }
+
+    function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
+        if (options.commonPrefix != null)
+            text = options.commonPrefix + text;
+
+        // for some reason, assert.throws was not working
+        try {
+            getTransformedText(text);
+        } catch (ex) {
+            possibleExpectedMessages = getPossibleExpectedMessages();
+            if (possibleExpectedMessages == null)
+                return;
+
+            const actualMessage = (ex as any).message;
+            for (const message of possibleExpectedMessages) {
+                if (message === actualMessage)
+                    return;
+            }
+
+            throw new Error(`Expected the error message of ${actualMessage} to equal one of the following messages: ${possibleExpectedMessages}`);
+        }
+
+        throw new Error("Expected to throw");
+
+        function getPossibleExpectedMessages() {
+            const result = getAsArray();
+
+            if (result == null)
+                return undefined;
+
+            for (let i = result.length - 1; i >= 0; i--) {
+                result[i] = "[ts-nameof]: " + result[i];
+                result.push("./ts-nameof.macro: " + result[i]);
+            }
+
+            return result;
+
+            function getAsArray() {
+                if (typeof possibleExpectedMessages === "string")
+                    return [possibleExpectedMessages];
+                if (possibleExpectedMessages instanceof Array)
+                    return possibleExpectedMessages;
+                return undefined;
+            }
+        }
+    }
+
 }
