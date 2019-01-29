@@ -7,13 +7,16 @@ export default createMacro(nameofMacro);
 
 // @ts-ignore
 function nameofMacro({ references, state, babel }) {
-    // go over as if traversing in post order
+    // go over in reverse as if traversing in post order
     const reverseDefault = references.default.slice().reverse();
 
     // @ts-ignore
     reverseDefault.forEach(path => {
         const t = babel.types;
-        transformNode(t, getPath());
+        transformNode(t, getPath(), {
+            // tell the transformation to expect this identifier's name
+            nameofIdentifierName: path.node.name
+        });
 
         function getPath() {
             const parentPath = path.parentPath; // identifier;

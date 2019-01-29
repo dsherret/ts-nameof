@@ -1,12 +1,12 @@
 {
   "name": "babel-plugin-ts-nameof",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "nameof in TypeScript for babel.",
   "main": "dist/index.js",
   "scripts": {
     "install-dependencies": "cd ../../shared/transforms-babel && yarn install && yarn run build && cd ../../packages/babel-plugin-ts-nameof",
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
-    "install": "yarn run install-dependencies && yarn run create-links",
+    "prepare": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "dopublish": "yarn install && yarn build && npm publish --otp",

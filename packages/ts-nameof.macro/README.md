@@ -12,13 +12,13 @@ This is a [babel macro](https://github.com/kentcdodds/babel-plugin-macros) of [t
 
 ## Setup
 
-1. Ensure `babel-plugin-macros` is probably setup ([Instructions](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)).
-
-2. Run:
+1. Install dependencies:
 
 ```
-npm install ts-nameof.macro --save-dev
+npm install --save-dev babel-plugin-macros ts-nameof.macro
 ```
+
+2. Ensure `babel-plugin-macros` is properly setup ([Instructions](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)).
 
 3. Import and use the default export. For example:
 

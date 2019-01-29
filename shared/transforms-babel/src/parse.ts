@@ -7,20 +7,32 @@ import { throwError } from "./external/common";
 import * as common from "./external/transforms-common";
 import { isNegativeNumericLiteral, getNegativeNumericLiteralValue, getReturnStatementArgumentFromBlock } from "./helpers";
 
+export interface ParseOptions {
+    /**
+     * Action to prompt the children to be traversed. This is to allow traversing the nodes in post order.
+     */
+    traverseChildren?: () => void;
+    /**
+     * Expected identifier name at the start of the call expression. This could be different when using a macro.
+     * @default Defaults to "nameof".
+     */
+    nameofIdentifierName?: string;
+}
+
 /**
  * Parses a Babel AST node to a common NameofCallExpression or returns undefined if the current node
  * is not a nameof call expression.
  * @param t Babel types namespace to use.
  * @param path Path of the current Babel AST node.
- * @param traverseChildren Action to prompt the children to be traversed. This is to allow traversing the nodes in post order.
+ * @param options Options for parsing.
  * @remarks Parsing to a common structure allows for the same code to be used to determine the final string.
  */
-export function parse(t: typeof babelTypes, path: NodePath, traverseChildren?: () => void) {
+export function parse(t: typeof babelTypes, path: NodePath, options: ParseOptions = {}) {
     if (!isNameof(path.node))
         return undefined;
 
-    if (traverseChildren)
-        traverseChildren(); // tell the caller to go over the nodes in post order
+    if (options.traverseChildren)
+        options.traverseChildren(); // tell the caller to go over the nodes in post order
 
     return parseNameof(path.node);
 
@@ -158,7 +170,7 @@ export function parse(t: typeof babelTypes, path: NodePath, traverseChildren?: (
             return false;
 
         const identifier = getIdentifierToInspect(node.callee);
-        return identifier != null && identifier.name === "nameof";
+        return identifier != null && identifier.name === (options.nameofIdentifierName || "nameof");
 
         function getIdentifierToInspect(expression: Expression) {
             if (t.isIdentifier(expression))
