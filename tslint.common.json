@@ -15,6 +15,7 @@
         ],
         "no-bitwise": false,
         "no-empty": false,
+        "no-empty-interface": false,
         "no-namespace": false,
         "no-reference": false,
         "no-string-literal": false,
