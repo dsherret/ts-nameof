@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "install-dependencies": "ts-node ../../scripts/runInSeries install-build common transforms-common",
-    "create-links": "symlink-dir ../tests-common/dist src/external/test-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
+    "create-links": "symlink-dir ../tests-common/dist src/external/tests-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
     "prepare": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
     "install-build": "yarn install && yarn run build",

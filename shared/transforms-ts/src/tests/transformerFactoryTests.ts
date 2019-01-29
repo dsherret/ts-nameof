@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { runCommonTests } from "../external/test-common";
+import { runCommonTests } from "../external/tests-common";
 import { transformerFactory } from "../transformerFactory";
 
 runCommonTests(run);

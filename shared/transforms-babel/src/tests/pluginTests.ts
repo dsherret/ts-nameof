@@ -1,5 +1,5 @@
 import * as babel from "@babel/core";
-import { runCommonTests } from "../external/test-common";
+import { runCommonTests } from "../external/tests-common";
 import { plugin } from "../index";
 import "@babel/preset-typescript";
 

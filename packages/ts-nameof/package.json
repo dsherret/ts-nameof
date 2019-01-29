@@ -7,7 +7,7 @@
   "scripts": {
     "install-dependencies": "ts-node ../../scripts/runInSeries install-build transforms-ts tests-common common scripts-common",
     "create-links-scripts": "symlink-dir ../../shared/scripts-common/dist scripts/external/scripts-common",
-    "create-links-src": "symlink-dir ../../shared/transforms-ts/dist src/external/transforms-ts && symlink-dir ../../shared/tests-common/dist src/external/test-common && symlink-dir ../../shared/common/dist src/external/common",
+    "create-links-src": "symlink-dir ../../shared/transforms-ts/dist src/external/transforms-ts && symlink-dir ../../shared/tests-common/dist src/external/tests-common && symlink-dir ../../shared/common/dist src/external/common",
     "create-links": "yarn run create-links-scripts && yarn run create-links-src",
     "prepare": "yarn run install-dependencies && yarn run create-links",
     "test": "tsc --build && yarn run --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",

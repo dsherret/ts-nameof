@@ -1,7 +1,7 @@
 /// <reference path="../references.d.ts" />
 import * as assert from "assert";
 import * as path from "path";
-import { runCommonTests } from "../external/test-common";
+import { runCommonTests } from "../external/tests-common";
 import * as babel from "@babel/core";
 import babelPluginMacros from "babel-plugin-macros";
 import "@babel/preset-typescript";
