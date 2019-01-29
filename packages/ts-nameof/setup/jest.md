@@ -1,8 +1,10 @@
 ﻿# Using ts-nameof with Jest
 
-1. `npm install --save-dev ts-nameof @types/ts-nameof`
+1. Setup jest with [ts-jest](https://github.com/kulshekhar/ts-jest)
 
-2. In *package.json* specify...
+2. `npm install --save-dev ts-nameof @types/ts-nameof`
+
+3. In *package.json* specify...
 
 ```
 {
