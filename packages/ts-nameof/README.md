@@ -21,12 +21,12 @@ Follow any of these instructions:
 * [Gulp](setup/gulp.md)
 * [FuseBox](setup/fusebox.md)
 * [tsc](setup/tsc.md)
+* [Jest](setup/jest.md)
 * [Custom](setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
 
 These instructions need updating to use the transformation API, but will still work in the meantime:
 
-* [Jest](setup/jest.md)
 * Nuxt - Use [https://github.com/Kukks/nuxt-ts-nameof](https://github.com/Kukks/nuxt-ts-nameof#readme)
 
 ### 2. Declaring global `nameof` function

@@ -12,5 +12,7 @@ interface Api {
 const api: Api = transformerFactory as any as Api;
 api.replaceInFiles = replaceInFiles;
 api.replaceInText = replaceInText;
+// this is for ts-jest support... not ideal
+(api as any).factory = () => transformerFactory;
 
 export = api;
