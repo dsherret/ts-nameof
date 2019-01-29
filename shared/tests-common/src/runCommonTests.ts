@@ -21,6 +21,14 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
                 runTest(`nameof(myObj.prop);`, `"prop";`);
             });
 
+            it("should get the result of an expression with a parenthesized expression", () => {
+                runTest(`nameof((myObj).prop);`, `"prop";`);
+            });
+
+            it("should get the result of an expression with a type assertion", () => {
+                runTest(`nameof((myObj as any).prop);`, `"prop";`);
+            });
+
             it("should get the result of a property access expression with null assertion operators", () => {
                 runTest(`nameof(myObj!.prop!);`, `"prop";`);
             });

@@ -70,7 +70,7 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseFunctionReturnExpression(node, getArrowFunctionReturnExpression(node));
         if (t.isFunctionExpression(node))
             return parseFunctionReturnExpression(node, getReturnStatementArgumentFromBlockOrThrow(node.body));
-        if (t.isTSNonNullExpression(node))
+        if (t.isTSNonNullExpression(node) || t.isParenthesizedExpression(node) || t.isTSAsExpression(node))
             return parseCommonNode(node.expression);
         if (t.isTSQualifiedName(node))
             return parseQualifiedName(node);

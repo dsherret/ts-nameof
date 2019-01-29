@@ -49,7 +49,7 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             return parseFunctionReturnExpression(node, getArrowFunctionReturnExpression(node));
         if (ts.isFunctionExpression(node))
             return parseFunctionReturnExpression(node, getReturnStatementExpressionFromBlockOrThrow(node.body));
-        if (ts.isNonNullExpression(node))
+        if (ts.isNonNullExpression(node) || ts.isParenthesizedExpression(node) || ts.isAsExpression(node))
             return parseCommonNode(node.expression);
         if (ts.isQualifiedName(node))
             return parseQualifiedName(node);
