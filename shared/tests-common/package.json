@@ -1,0 +1,21 @@
+{
+  "name": "ts-nameof-tests-common",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Common tests for ts-nameof packages.",
+  "main": "./dist/index.js",
+  "author": "David Sherret",
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -c tslint.json src/**/*{.ts,.js}",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^10.12.18",
+    "@types/prettier": "^1.15.2",
+    "prettier": "^1.16.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

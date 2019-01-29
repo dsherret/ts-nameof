@@ -1,0 +1,55 @@
+{
+  "name": "ts-nameof.macro",
+  "version": "0.1.2",
+  "description": "nameof in TypeScript as a babel macro.",
+  "main": "dist/index.js",
+  "types": "ts-nameof.macro.d.ts",
+  "scripts": {
+    "install-dependencies": "cd ../../shared/transforms-babel && yarn install && yarn run build && cd ../tests-common && yarn install && yarn run build && cd ../../packages/ts-nameof.macro",
+    "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel && symlink-dir ../../shared/tests-common/dist src/external/test-common",
+    "prepare": "yarn run install-dependencies && yarn run create-links",
+    "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
+    "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",
+    "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
+    "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file",
+    "dopublish": "yarn install && yarn build && npm publish --otp"
+  },
+  "keywords": [
+    "nameof",
+    "typescript",
+    "transforms",
+    "babel",
+    "babel-plugin-macros"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsherret/ts-nameof.git"
+  },
+  "author": "David Sherret",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-macros": "^2.4.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/babel-types": "^7.0.4",
+    "@types/babel__core": "^7.0.4",
+    "@types/babel__generator": "^7.0.1",
+    "@types/babel__template": "^7.0.1",
+    "@types/babel__traverse": "^7.0.4",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
+    "coveralls": "^3.0.2",
+    "cpx": "^1.5.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.16.1",
+    "rimraf": "^2.6.2",
+    "symlink-dir": "^2.0.2",
+    "ts-node": "^8.0.1",
+    "ts-simple-ast": "^21.0.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

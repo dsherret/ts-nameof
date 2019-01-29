@@ -1,0 +1,17 @@
+{
+  "name": "ts-nameof-common",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Common code across packages.",
+  "main": "./dist/index.js",
+  "author": "David Sherret",
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

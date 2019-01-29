@@ -1,0 +1,31 @@
+{
+  "name": "ts-nameof-transforms-ts",
+  "private": true,
+  "version": "0.0.0",
+  "description": "TypeScript compiler transforms for ts-nameof packages.",
+  "main": "./dist/index.js",
+  "author": "David Sherret",
+  "license": "MIT",
+  "scripts": {
+    "install-dependencies": "cd ../tests-common && yarn install && yarn run build && cd ../common && yarn install && yarn run build && cd ../transforms-common && yarn install && yarn run build && cd ../transforms-ts",
+    "create-links": "symlink-dir ../tests-common/dist src/external/test-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
+    "prepare": "yarn run install-dependencies && yarn run create-links",
+    "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "cpx": "^1.5.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.16.1",
+    "rimraf": "^2.6.2",
+    "symlink-dir": "^2.0.2",
+    "ts-node": "^8.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}
