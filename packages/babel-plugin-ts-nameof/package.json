@@ -4,13 +4,12 @@
   "description": "nameof in TypeScript for babel.",
   "main": "dist/index.js",
   "scripts": {
-    "install-dependencies": "cd ../../shared/transforms-babel && yarn install && yarn run build && cd ../../packages/babel-plugin-ts-nameof",
+    "install-dependencies": "ts-node ../../scripts/runInSeries install-build transforms-common",
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
     "prepare": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "dopublish": "yarn install && yarn build && npm publish --otp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dopublish": "yarn install && yarn build && npm publish --otp"
   },
   "keywords": [
     "nameof",

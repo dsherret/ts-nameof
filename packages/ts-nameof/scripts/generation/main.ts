@@ -1,4 +1,5 @@
-import { ArgsChecker, getProject } from "../common";
+import { getProject } from "../common";
+import { ArgsChecker } from "../external/scripts-common";
 import { createDeclarationFile } from "./createDeclarationFile";
 
 const argsChecker = new ArgsChecker();

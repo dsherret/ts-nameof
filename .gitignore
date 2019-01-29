@@ -55,3 +55,9 @@
 /packages/ts-nameof.macro/dist
 /packages/ts-nameof.macro/.nyc_output
 /packages/ts-nameof.macro/coverage
+/shared/scripts-common/dist
+/shared/scripts-common/node_modules
+/packages/ts-nameof/scripts/external
+/packages/ts-nameof.macro/scripts/external
+/shared/scripts-common/yarn-error.log
+/shared/common/yarn-error.log

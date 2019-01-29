@@ -1,15 +1,15 @@
 {
-  "name": "ts-nameof-tests-common",
+  "name": "ts-nameof-scripts-common",
   "private": true,
   "version": "0.0.0",
-  "description": "Common tests for ts-nameof packages.",
+  "description": "Common scripts for ts-nameof packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
   "license": "MIT",
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*{.ts,.js}",
-    "install-build": "yarn install && yarn run build",
-    "build": "tsc"
+    "build": "tsc",
+    "install-build": "yarn install && yarn run build"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.0",

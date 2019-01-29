@@ -5,8 +5,10 @@
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
   "scripts": {
-    "install-dependencies": "cd ../../shared/transforms-babel && yarn install && yarn run build && cd ../tests-common && yarn install && yarn run build && cd ../../packages/ts-nameof.macro",
-    "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel && symlink-dir ../../shared/tests-common/dist src/external/test-common",
+    "install-dependencies": "ts-node ../../scripts/runInSeries install-build transforms-babel tests-common common scripts-common",
+    "create-links-scripts": "symlink-dir ../../shared/scripts-common/dist scripts/external/scripts-common",
+    "create-links-src": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel && symlink-dir ../../shared/tests-common/dist src/external/test-common",
+    "create-links": "yarn run create-links-src && yarn run create-links-scripts",
     "prepare": "yarn run install-dependencies && yarn run create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",

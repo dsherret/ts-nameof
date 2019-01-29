@@ -1,0 +1,11 @@
+{
+    "extends": "../../tslint.common.json",
+    "rules": {
+        "no-console": false
+    },
+    "linterOptions": {
+        "exclude": [
+            "./src/external/**/*.*"
+        ]
+    }
+}
