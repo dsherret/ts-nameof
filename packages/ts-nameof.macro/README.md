@@ -1,10 +1,10 @@
 ﻿ts-nameof.macro
 ===============
 
-[![npm version](https://badge.fury.io/js/babel-plugin-ts-nameof.svg)](https://badge.fury.io/js/babel-plugin-ts-nameof)
+[![npm version](https://badge.fury.io/js/ts-nameof.macro.svg)](https://badge.fury.io/js/ts-nameof.macro)
 [![Build Status](https://travis-ci.org/dsherret/ts-nameof.svg)](https://travis-ci.org/dsherret/ts-nameof)
-[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
 [`nameof`](https://msdn.microsoft.com/en-us/library/dn986596.aspx) in TypeScript.
 
