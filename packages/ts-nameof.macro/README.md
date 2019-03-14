@@ -36,9 +36,9 @@ Transforms to:
 
 ## Transforms
 
-[Read here](../../README.md)
+[Read here](https://github.com/dsherret/ts-nameof/blob/master/README.md)
 
 ## Other
 
-* [Contributing](../../CONTRIBUTING.md)
-* [Development](../../DEVELOPMENT.md)
+* [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
+* [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)

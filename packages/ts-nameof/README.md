@@ -17,12 +17,12 @@ npm install ts-nameof @types/ts-nameof --save-dev
 
 Follow any of these instructions:
 
-* [Webpack](setup/webpack.md)
-* [Gulp](setup/gulp.md)
-* [FuseBox](setup/fusebox.md)
-* [tsc](setup/tsc.md)
-* [Jest](setup/jest.md)
-* [Custom](setup/custom.md)
+* [Webpack](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/webpack.md)
+* [Gulp](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/gulp.md)
+* [FuseBox](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/fusebox.md)
+* [tsc](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/tsc.md)
+* [Jest](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/jest.md)
+* [Custom](https://github.com/dsherret/ts-nameof/blob/master/packages/ts-nameof/setup/custom.md)
 * Others - Open an [issue](https://github.com/dsherret/ts-nameof/issues).
 
 These instructions need updating to use the transformation API, but will still work in the meantime:
@@ -39,9 +39,9 @@ npm install @types/ts-nameof --save-dev
 
 ## Transforms
 
-[Read here](../../README.md)
+[Read here](https://github.com/dsherret/ts-nameof/blob/master/README.md)
 
 ## Other
 
-* [Contributing](../../CONTRIBUTING.md)
-* [Development](../../DEVELOPMENT.md)
+* [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
+* [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)
