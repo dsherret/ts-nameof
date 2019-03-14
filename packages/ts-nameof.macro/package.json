@@ -1,6 +1,6 @@
 {
   "name": "ts-nameof.macro",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Babel macro for nameof in TypeScript.",
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
