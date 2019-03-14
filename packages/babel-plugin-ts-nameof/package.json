@@ -19,7 +19,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dsherret/ts-nameof.git"
+    "url": "git+https://github.com/dsherret/ts-nameof.git",
+    "directory": "packages/babel-plugin-ts-nameof"
   },
   "author": "David Sherret",
   "license": "MIT",

@@ -21,7 +21,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dsherret/ts-nameof.git"
+    "url": "git+https://github.com/dsherret/ts-nameof.git",
+    "directory": "packages/ts-nameof"
   },
   "keywords": [
     "nameof",
