@@ -7,7 +7,6 @@ export interface NameofCallExpression {
 }
 
 export type Node = IdentifierNode | StringLiteralNode | NumericLiteralNode | ArrayLiteralNode | ComputedNode | FunctionNode;
-export type SupportedTransformNodes = StringLiteralNode | ArrayLiteralNode;
 
 export interface IdentifierNode {
     kind: "Identifier";
@@ -29,7 +28,7 @@ export interface NumericLiteralNode {
 
 export interface ArrayLiteralNode {
     kind: "ArrayLiteral";
-    elements: StringLiteralNode[];
+    elements: Node[];
     next: Node | undefined;
 }
 
