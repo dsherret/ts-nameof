@@ -6,6 +6,6 @@ Contains the TypeScript Compiler API transforms used in ts-nameof.
 
 ```
 yarn install
-yarn run test
-yarn run lint
+yarn test
+yarn lint
 ```

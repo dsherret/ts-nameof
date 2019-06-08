@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*{.ts,.js}",
-    "install-build": "yarn install && yarn run build",
+    "lint:fix": "tslint --fix -c tslint.json src/**/*{.ts,.js}",
+    "install-build": "yarn install && yarn build",
     "build": "tsc"
   },
   "devDependencies": {

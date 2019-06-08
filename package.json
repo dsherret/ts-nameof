@@ -5,12 +5,13 @@
   "description": "Monorepo for ts-nameof. This file is only used for scripts.",
   "scripts": {
     "lint": "ts-node scripts/runInParallel lint",
+    "lint:fix": "ts-node scripts/runInParallel lint:fix",
     "install": "ts-node scripts/runInSeries install packages/",
     "test:transforms": "ts-node scripts/runInParallel test transforms-babel transforms-ts",
     "test": "ts-node scripts/runInParallel test",
     "create-declaration-file": "ts-node scripts/runInParallel create-declaration-file ts-nameof ts-nameof.macro",
     "verify-declaration-file": "ts-node scripts/runInParallel verify-declaration-file ts-nameof",
-    "verify": "yarn run lint && yarn run test && yarn run verify-declaration-file"
+    "verify": "yarn lint && yarn test && yarn verify-declaration-file"
   },
   "repository": {
     "type": "git",

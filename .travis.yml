@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - "6"
 before_script:
-    - yarn run lint
-    - yarn run verify-declaration-file
+    - yarn lint
+    - yarn verify-declaration-file
 script:
-    - yarn run test
+    - yarn test

@@ -6,9 +6,10 @@
   "scripts": {
     "install-dependencies": "ts-node ../../scripts/runInSeries install-build transforms-common",
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
-    "prepare": "yarn run install-dependencies && yarn run create-links",
+    "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "lint": "tslint -c tslint.json src/**/*.ts",
+    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
     "dopublish": "yarn install && yarn build && npm publish --otp"
   },
   "keywords": [
@@ -27,7 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-typescript": "^7.1.0",
-    "@types/babel-types": "^7.0.4",
+    "@types/babel-types": "^7.0.7",
     "@types/babel__core": "^7.0.4",
     "@types/babel__generator": "^7.0.1",
     "@types/babel__template": "^7.0.1",

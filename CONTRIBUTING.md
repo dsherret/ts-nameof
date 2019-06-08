@@ -12,7 +12,7 @@
     1. State that you are going to work on the bug.
     1. Discuss major structural changes in the issue before doing the work to ensure it makes sense and work isn't wasted.
 1. Start working on the fix in a branch and submit a PR when done.
-1. Ensure `yarn run verify` passes when run in the root directory.
+1. Ensure `yarn verify` passes when run in the root directory.
 
 # Contributing Features
 
@@ -24,4 +24,4 @@
         * Note: If the change is small and you think it wouldn't take you too much time, then feel free to start working on it and even submit a PR. Just beware that you're taking the risk that it could be denied.
 1. After approval, start working on the change in a branch and submit a PR.
 1. Read [DEVELOPMENT.md](DEVELOPMENT.md) for some useful information.
-1. Ensure `yarn run verify` passes when run in the root directory.
+1. Ensure `yarn verify` passes when run in the root directory.

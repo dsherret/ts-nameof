@@ -9,9 +9,9 @@
   "scripts": {
     "install-dependencies": "ts-node ../../scripts/runInSeries install-build common transforms-common",
     "create-links": "symlink-dir ../tests-common/dist src/external/tests-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
-    "prepare": "yarn run install-dependencies && yarn run create-links",
+    "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
-    "install-build": "yarn install && yarn run build",
+    "install-build": "yarn install && yarn build",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },

@@ -17,10 +17,10 @@ This will cause all the subdirectories to build and correctly reference the othe
 yarn install
 
 # running tests
-yarn run test
+yarn test
 
 # linting
-yarn run lint
+yarn lint
 ```
 
 ## Declaration File
@@ -31,10 +31,10 @@ The global definitions are stored in [shared/lib/global.d.ts](shared/lib/global.
 
 1. Add a failing test in [shared/lib/global.tests.ts](shared/lib/global.tests.ts) (failing test means you get a compile error)
 1. Update [shared/lib/global.d.ts](shared/lib/global.d.ts).
-1. Run `yarn run create-declaration-file` in the root directory which will update all the project's declaration files.
+1. Run `yarn create-declaration-file` in the root directory which will update all the project's declaration files.
 
 ### ts-nameof - Updating API
 
 1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test.
 1. Update the API in [packages/ts-nameof/src/main.ts](packages/ts-nameof/src/main.ts).
-1. Run `yarn run create-declaration-file`
+1. Run `yarn create-declaration-file`

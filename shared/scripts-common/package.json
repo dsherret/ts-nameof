@@ -8,8 +8,9 @@
   "license": "MIT",
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*{.ts,.js}",
+    "lint:fix": "tslint --fix -c tslint.json src/**/*{.ts,.js}",
     "build": "tsc",
-    "install-build": "yarn install && yarn run build"
+    "install-build": "yarn install && yarn build"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.0",

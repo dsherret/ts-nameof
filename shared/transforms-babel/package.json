@@ -9,10 +9,11 @@
   "scripts": {
     "install-dependencies": "ts-node ../../scripts/runInSeries install-build common transforms-common tests-common",
     "create-links": "symlink-dir ../tests-common/dist src/external/tests-common && symlink-dir ../common/dist src/external/common && symlink-dir ../transforms-common/dist src/external/transforms-common",
-    "prepare": "yarn run install-dependencies && yarn run create-links",
+    "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
-    "install-build": "yarn install && yarn run build",
+    "install-build": "yarn install && yarn build",
     "lint": "tslint -c tslint.json src/**/*.ts",
+    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
@@ -20,7 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-typescript": "^7.1.0",
-    "@types/babel-types": "^7.0.4",
+    "@types/babel-types": "^7.0.7",
     "@types/babel__core": "^7.0.4",
     "@types/babel__generator": "^7.0.1",
     "@types/babel__template": "^7.0.1",

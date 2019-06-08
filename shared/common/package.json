@@ -8,8 +8,9 @@
   "license": "MIT",
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*.ts",
+    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
     "build": "tsc",
-    "install-build": "yarn install && yarn run build"
+    "install-build": "yarn install && yarn build"
   },
   "dependencies": {
     "tslint": "^5.11.0",
