@@ -181,4 +181,26 @@ describe("printNode", () => {
             doTest(node, `[].length`);
         });
     });
+
+    describe("import type", () => {
+        it("should print when it has no argument", () => {
+            const node = factories.createImportTypeNode(false, undefined, factories.createIdentifierNode("length"));
+            doTest(node, `import().length`);
+        });
+
+        it("should print when it receives an identifier", () => {
+            const node = factories.createImportTypeNode(false, factories.createIdentifierNode("test"), undefined);
+            doTest(node, `import(test)`);
+        });
+
+        it("should print when it receives a string literal", () => {
+            const node = factories.createImportTypeNode(false, factories.createStringLiteralNode("test"), undefined);
+            doTest(node, `import("test")`);
+        });
+
+        it("should print when it has a typeof", () => {
+            const node = factories.createImportTypeNode(true, factories.createIdentifierNode("test"));
+            doTest(node, `typeof import(test)`);
+        });
+    });
 });

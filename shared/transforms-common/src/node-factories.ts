@@ -1,4 +1,4 @@
-import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode } from "./nodes";
+import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode, ImportTypeNode } from "./nodes";
 
 export function createIdentifierNode(value: string, next?: Node | undefined): IdentifierNode {
     return {
@@ -45,6 +45,15 @@ export function createFunctionNode(value: Node, parameterNames: string[], next?:
         kind: "Function",
         parameterNames,
         value,
+        next
+    };
+}
+
+export function createImportTypeNode(isTypeOf: boolean, argument: Node | undefined, next?: Node | undefined): ImportTypeNode {
+    return {
+        kind: "ImportType",
+        isTypeOf,
+        argument,
         next
     };
 }

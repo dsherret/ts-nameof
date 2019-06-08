@@ -54,6 +54,18 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should get an identifier with a dollar sign", () => {
                 runTest(`nameof<Test$>();`, `"Test$";`);
             });
+
+            it("should handle when someone uses an import type as not the last node", () => {
+                runTest(`nameof<import('test').prop>();`, `"prop";`);
+            });
+
+            it("should throw when someone only uses an import type", () => {
+                runThrowTest(`nameof<import('test')>();`, "The node `import(\"test\")` is not supported in this scenario.");
+            });
+
+            it("should throw when someone only uses an import type with typeof", () => {
+                runThrowTest(`nameof<typeof import('test')>();`, "The node `typeof import(\"test\")` is not supported in this scenario.");
+            });
         });
 
         describe("arrays", () => {
@@ -94,6 +106,10 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should get from the return statement", () => {
                 // no reason for people to do this, but don't bother complaining
                 runTest(`nameof<MyInterface>(i => { console.log('test'); return i.prop1.prop2; });`, `"prop2";`);
+            });
+
+            it("should handle when someone uses an import type", () => {
+                runTest(`nameof<import('test')>(x => x.Foo);`, `"Foo";`);
             });
 
             it("should throw when using an element access expression directly on the object", () => {
@@ -222,6 +238,10 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
 
             it("should throw when the absolute value of the negative periodIndex is greater than the number of periods + 1", () => {
                 runThrowTest("nameof.full<MyTest.Test>(-3)");
+            });
+
+            it("should throw when someone uses an import type", () => {
+                runThrowTest(`nameof.full<import('test').other.test>();`, "The node `import(\"test\").other.test` is not supported in this scenario.");
             });
         });
 

@@ -75,6 +75,8 @@ export function printNode(node: Node): string {
                 return functionResult;
             case "ArrayLiteral":
                 return `[${node.elements.map(e => printNode(e)).join(", ")}]`;
+            case "ImportType":
+                return (node.isTypeOf ? "typeof " : "") + `import(${node.argument == null ? "" : printNode(node.argument)})`;
             default:
                 return assertNever(node, `Unhandled kind: ${(node as Node).kind}`);
         }

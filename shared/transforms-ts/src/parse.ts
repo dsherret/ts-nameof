@@ -63,6 +63,10 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             return parseStringLiteral(node);
         if (ts.isIdentifier(node))
             return parseIdentifier(node);
+        if (ts.isImportTypeNode(node))
+            return parseImportType(node);
+        if (ts.isLiteralTypeNode(node))
+            return parseCommonNode(node.literal); // skip over and go straight to the literal
         if (node.kind === ts.SyntaxKind.ThisKeyword)
             return common.createIdentifierNode("this");
         return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
@@ -118,6 +122,13 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
         });
 
         return common.createFunctionNode(parseCommonNode(node), parameterNames);
+    }
+
+    function parseImportType(node: ts.ImportTypeNode) {
+        const importType = common.createImportTypeNode(node.isTypeOf || false, node.argument && parseCommonNode(node.argument));
+        const qualifier = node.qualifier && parseCommonNode(node.qualifier);
+        getEndCommonNode(importType).next = qualifier;
+        return importType;
     }
 
     function getEndCommonNode(commonNode: common.Node) {

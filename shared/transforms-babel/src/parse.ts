@@ -1,7 +1,7 @@
 import * as babelTypes from "@babel/types";
 import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression,
     BlockStatement, NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSEntityName, SpreadElement,
-    TSTypeParameterInstantiation, TSType, JSXNamespacedName } from "@babel/types";
+    TSTypeParameterInstantiation, TSType, JSXNamespacedName, TSImportType } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { throwError } from "./external/common";
 import * as common from "./external/transforms-common";
@@ -86,6 +86,12 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseIdentifier(node);
         if (t.isThisExpression(node))
             return common.createIdentifierNode("this");
+        if (t.isTSImportType(node))
+            return parseImportType(node, false);
+        if (t.isTSTypeQuery(node) && t.isTSImportType(node.exprName))
+            return parseImportType(node.exprName, true);
+        if (t.isTSLiteralType(node))
+            return parseCommonNode(node.literal); // skip over and go straight to the literal
 
         return throwError(`Unhandled node type (${node.type}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
     }
@@ -132,6 +138,13 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
         });
 
         return common.createFunctionNode(parseCommonNode(node), parameterNames);
+    }
+
+    function parseImportType(node: TSImportType, isTypeOf: boolean) {
+        const importTypeNode = common.createImportTypeNode(isTypeOf, parseCommonNode(node.argument));
+        const qualifier = node.qualifier == null ? undefined : parseCommonNode(node.qualifier);
+        getEndCommonNode(importTypeNode).next = qualifier;
+        return importTypeNode;
     }
 
     function getEndCommonNode(commonNode: common.Node) {
