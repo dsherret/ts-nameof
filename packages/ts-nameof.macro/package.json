@@ -54,6 +54,7 @@
     "ts-node": "^8.0.1",
     "ts-simple-ast": "^21.0.2",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "babel-plugin-macros": "^2.6.1"
   }
 }
