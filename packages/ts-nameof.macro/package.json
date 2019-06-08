@@ -31,8 +31,8 @@
   },
   "author": "David Sherret",
   "license": "MIT",
-  "dependencies": {
-    "babel-plugin-macros": "^2.4.5"
+  "peerDependencies": {
+    "babel-plugin-macros": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

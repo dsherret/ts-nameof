@@ -50,8 +50,8 @@
     ],
     "all": true
   },
-  "typescript": {
-    "definition": "ts-nameof.d.ts"
+  "peerDependencies": {
+    "typescript": "*"
   },
   "dependencies": {
     "glob": "^7.1.3"
