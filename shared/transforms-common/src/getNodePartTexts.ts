@@ -5,7 +5,7 @@ import { printNode } from "./printers";
 /**
  * Gets the last node part.
  *
- * For example, give `some.node.like.this` it will return `"this"`.
+ * For example, given `some.node.like.this` it will return `"this"`.
  */
 export function getLastNodePartText(node: Node) {
     const lastPart = getNodeParts(node).pop();
