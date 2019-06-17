@@ -10,7 +10,7 @@ import { printNode } from "./printers";
 export function getLastNodePartText(node: Node) {
     const lastPart = getNodeParts(node).pop();
     if (lastPart == null)
-        return throwError(`Could not resolve the last identifier for: ${printNode(node)}`);
+        return throwError(`Could not resolve the last node part for: ${printNode(node)}`); // this should never happen
     if (typeof lastPart === "string")
         return lastPart;
     return throwError(`The node \`${printNode(lastPart)}\` is not supported in this scenario.`);
