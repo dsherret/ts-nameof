@@ -6,43 +6,34 @@ import { getLastNodePartText, getNodePartTexts } from "./getNodePartTexts";
 
 export function transformCallExpression(callExpr: NameofCallExpression) {
     if (callExpr.property == null)
-        return createStringLiteralNodeOrThrow(handleNameof(callExpr));
+        return createStringLiteralNode(handleNameof(callExpr));
     if (callExpr.property === "full")
-        return createStringLiteralNodeOrThrow(handleNameofFull(callExpr));
-    return throwForUnsupportedCallExpression();
-
-    function createStringLiteralNodeOrThrow(value: string | undefined) {
-        return value == null ? throwForUnsupportedCallExpression() : createStringLiteralNode(value);
-    }
-
-    function throwForUnsupportedCallExpression() {
-        return throwError(`Unsupported nameof call expression: ${printCallExpression(callExpr)}`);
-    }
+        return createStringLiteralNode(handleNameofFull(callExpr));
+    return throwError(`Unsupported nameof call expression with property '${callExpr.property}': ${printCallExpression(callExpr)}`);
 }
 
 function handleNameof(callExpr: NameofCallExpression) {
-    const expression = getExpression();
-    return expression == null ? undefined : getLastNodePartText(expression);
+    return getLastNodePartText(getExpression());
 
     function getExpression() {
         if (callExpr.arguments.length === 1)
             return callExpr.arguments[0];
         else if (callExpr.typeArguments.length === 1)
             return callExpr.typeArguments[0];
-        return undefined;
+        return throwError(`Call expression must have one argument or type argument: ${printCallExpression(callExpr)}`);
     }
 }
 
 function handleNameofFull(callExpr: NameofCallExpression) {
     const exprAndCount = getExpressionAndCount();
-    return exprAndCount == null ? undefined : getPartsAsString(getNodePartTexts(exprAndCount.expression), getCount(exprAndCount.count));
+    return getPartsAsString(getNodePartTexts(exprAndCount.expression), getCount(exprAndCount.count));
 
     function getExpressionAndCount() {
         if (shouldUseArguments())
             return { expression: callExpr.arguments[0], count: callExpr.arguments.length > 1 ? callExpr.arguments[1] : undefined };
         if (callExpr.typeArguments.length > 0)
             return { expression: callExpr.typeArguments[0], count: callExpr.arguments.length > 0 ? callExpr.arguments[0] : undefined };
-        return undefined;
+        return throwError(`Unsupported use of nameof.full: ${printCallExpression(callExpr)}`);
 
         function shouldUseArguments() {
             if (callExpr.arguments.length === 0)
@@ -60,12 +51,12 @@ function handleNameofFull(callExpr: NameofCallExpression) {
         function getSubParts() {
             if (count > 0) {
                 if (count > parts.length - 1)
-                    return throwError(`Count of ${count} was larger than max count of ${parts.length - 1} for ${printCallExpression(callExpr)}`);
+                    return throwError(`Count of ${count} was larger than max count of ${parts.length - 1}: ${printCallExpression(callExpr)}`);
                 return parts.slice(count);
             }
             if (count < 0) {
                 if (Math.abs(count) > parts.length)
-                    return throwError(`Count of ${count} was larger than max count of ${parts.length * -1} for ${printCallExpression(callExpr)}`);
+                    return throwError(`Count of ${count} was larger than max count of ${parts.length * -1}: ${printCallExpression(callExpr)}`);
                 return parts.slice(parts.length + count);
             }
             return parts;

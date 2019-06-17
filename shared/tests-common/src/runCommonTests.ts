@@ -8,6 +8,12 @@ import * as prettier from "prettier";
  */
 export function runCommonTests(getTransformedText: (text: string) => string, options: { commonPrefix?: string; } = {}) {
     describe("nameof", () => {
+        describe("bad call expressions", () => {
+            it("should throw if someone does not provide arguments or type arguments", () => {
+                runThrowTest("nameof();", "Call expression must have one argument or type argument: nameof()");
+            });
+        });
+
         describe("argument", () => {
             it("should get the result of an identifier", () => {
                 runTest(`nameof(myObj);`, `"myObj";`);
@@ -117,7 +123,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when the function doesn't have a period", () => {
-                runThrowTest(`nameof<MyInterface>(i => i);`);
+                runThrowTest(`nameof<MyInterface>(i => i);`, "A property must be accessed on the object: (i) => i");
             });
 
             it("should throw when the function doesn't have a return statement", () => {
@@ -149,6 +155,12 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
     });
 
     describe("nameof.full", () => {
+        describe("bad call expressions", () => {
+            it("should throw if someone does not provide arguments or type arguments", () => {
+                runThrowTest("nameof.full();", "Unsupported use of nameof.full: nameof.full()");
+            });
+        });
+
         describe("argument", () => {
             it("should include everything when no count arg is provided", () => {
                 runTest(`nameof.full(obj.prop.other);`, `"obj.prop.other";`);
@@ -187,15 +199,15 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when the periodIndex is not a number literal", () => {
-                runThrowTest("nameof.full(MyTest.Test, 'test')");
+                runThrowTest("nameof.full(MyTest.Test, 'test')", `Expected count to be a number, but was: "test"`);
             });
 
             it("should throw when the periodIndex is greater than the number of periods", () => {
-                runThrowTest("nameof.full(MyTest.Test, 2)");
+                runThrowTest("nameof.full(MyTest.Test, 2)", "Count of 2 was larger than max count of 1: nameof.full(MyTest.Test, 2)");
             });
 
             it("should throw when the absolute value of the negative periodIndex is greater than the number of periods + 1", () => {
-                runThrowTest("nameof.full(MyTest.Test, -3)");
+                runThrowTest("nameof.full(MyTest.Test, -3)", "Count of -3 was larger than max count of -2: nameof.full(MyTest.Test, -3)");
             });
 
             it("should resolve to string when nesting nameofs", () => {
@@ -229,15 +241,15 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when the periodIndex is not a number literal", () => {
-                runThrowTest("nameof.full<MyTest.Test>('test')");
+                runThrowTest("nameof.full<MyTest.Test>('test')", `Expected count to be a number, but was: "test"`);
             });
 
             it("should throw when the periodIndex is greater than the number of periods", () => {
-                runThrowTest("nameof.full<MyTest.Test>(2)");
+                runThrowTest("nameof.full<MyTest.Test>(2)", "Count of 2 was larger than max count of 1: nameof.full<MyTest.Test>(2)");
             });
 
             it("should throw when the absolute value of the negative periodIndex is greater than the number of periods + 1", () => {
-                runThrowTest("nameof.full<MyTest.Test>(-3)");
+                runThrowTest("nameof.full<MyTest.Test>(-3)", "Count of -3 was larger than max count of -2: nameof.full<MyTest.Test>(-3)");
             });
 
             it("should throw when someone uses an import type", () => {
@@ -275,14 +287,14 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when the function doesn't have a period", () => {
-                runThrowTest(`nameof.full<MyInterface>(i => i);`);
+                runThrowTest(`nameof.full<MyInterface>(i => i);`, "A property must be accessed on the object: (i) => i");
             });
         });
     });
 
     describe("general", () => {
         it("should error when specifying a different nameof property", () => {
-            runThrowTest(`nameof.nonExistent()`, "Unsupported nameof call expression: nameof.nonExistent()");
+            runThrowTest(`nameof.nonExistent()`, "Unsupported nameof call expression with property 'nonExistent': nameof.nonExistent()");
         });
 
         it("should replace handling comments", () => {
@@ -359,10 +371,11 @@ nameof(window);
     function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
         if (options.commonPrefix != null)
             text = options.commonPrefix + text;
+        let transformedText: string | undefined;
 
         // for some reason, assert.throws was not working
         try {
-            getTransformedText(text);
+            transformedText = getTransformedText(text);
         } catch (ex) {
             possibleExpectedMessages = getPossibleExpectedMessages();
             if (possibleExpectedMessages == null)
@@ -377,7 +390,7 @@ nameof(window);
             throw new Error(`Expected the error message of ${actualMessage} to equal one of the following messages: ${possibleExpectedMessages}`);
         }
 
-        throw new Error("Expected to throw");
+        throw new Error(`Expected to throw, but returned: ${transformedText}`);
 
         function getPossibleExpectedMessages() {
             const result = getAsArray();
