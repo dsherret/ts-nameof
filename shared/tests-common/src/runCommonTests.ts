@@ -292,6 +292,39 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
         });
     });
 
+    describe("toArray", () => {
+        it("should return an array of values when given a function that returns an array as input", () => {
+            runTest(`nameof.toArray<MyInterface>(o => [o.Prop1, o.Prop2, o.Prop3]);`, `["Prop1", "Prop2", "Prop3"];`);
+        });
+
+        it("should return an array of values when given multiple arguments", () => {
+            runTest(`nameof.toArray(myObject.Prop1, otherObject.Prop2);`, `["Prop1", "Prop2"];`);
+        });
+
+        it("should return an array with a single element if a non-function argument is passed", () => {
+            runTest(`nameof.toArray(myObject.Prop1);`, `["Prop1"];`);
+        });
+
+        it("should support nested nameof calls", () => {
+            runTest(`nameof.toArray(nameof.full(Some.Qualified.Name), Some.Qualified.Name);`, `["Some.Qualified.Name", "Name"];`);
+        });
+
+        it("should support a non-arrow function expression", () => {
+            runTest(`nameof.toArray<MyInterface>(function(o) { return [o.Prop1, o.Prop2]; });`, `["Prop1", "Prop2"];`);
+        });
+
+        it("should throw when the function argument does not return an array", () => {
+            runThrowTest(
+                `nameof.toArray<MyInterface>(o => o.Prop1);`,
+                "Unsupported toArray call expression, an array must be returned by the provided function: nameof.toArray<MyInterface>((o) => o.Prop1)"
+            );
+        });
+
+        it("should throw when no arguments are provided", () => {
+            runThrowTest(`nameof.toArray<MyInterface>();`, "Unable to parse call expression, no arguments provided: nameof.toArray<MyInterface>()");
+        });
+    });
+
     describe("general", () => {
         it("should error when specifying a different nameof property", () => {
             runThrowTest(`nameof.nonExistent()`, "Unsupported nameof call expression with property 'nonExistent': nameof.nonExistent()");
