@@ -1,5 +1,5 @@
 import * as babelTypes from "@babel/types";
-import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression,
+import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression, ArrayExpression,
     BlockStatement, NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSEntityName, SpreadElement,
     TSTypeParameterInstantiation, TSType, JSXNamespacedName, TSImportType } from "@babel/types";
 import { NodePath } from "@babel/traverse";
@@ -63,7 +63,7 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
         return callExpr.arguments.map(arg => parseCommonNode(arg));
     }
 
-    function parseCommonNode(node: Expression | TypeAnnotation | TSEntityName | SpreadElement | TSType | JSXNamespacedName): common.Node {
+    function parseCommonNode(node: Node): common.Node {
         if (t.isMemberExpression(node))
             return parseMemberExpression(node);
         if (t.isArrowFunctionExpression(node))
@@ -84,6 +84,8 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseStringLiteral(node);
         if (t.isIdentifier(node))
             return parseIdentifier(node);
+        if (t.isArrayExpression(node))
+            return parseArrayExpression(node);
         if (t.isThisExpression(node))
             return common.createIdentifierNode("this");
         if (t.isTSImportType(node))
@@ -94,6 +96,16 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseCommonNode(node.literal); // skip over and go straight to the literal
 
         return throwError(`Unhandled node type (${node.type}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
+    }
+
+    function parseArrayExpression(node: ArrayExpression) {
+        const result: common.Node[] = [];
+        node.elements.forEach(element => {
+            if (element == null)
+                return throwError(`Unsupported scenario with empty element encountered in array: ${getNodeText(node)}`);
+            result.push(parseCommonNode(element));
+        });
+        return common.createArrayLiteralNode(result);
     }
 
     function parseMemberExpression(node: MemberExpression) {

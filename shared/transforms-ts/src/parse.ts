@@ -61,6 +61,8 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             return parseNumeric(node);
         if (ts.isStringLiteral(node))
             return parseStringLiteral(node);
+        if (ts.isArrayLiteralExpression(node))
+            return parseArrayLiteralExpression(node);
         if (ts.isIdentifier(node))
             return parseIdentifier(node);
         if (ts.isImportTypeNode(node))
@@ -70,6 +72,11 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
         if (node.kind === ts.SyntaxKind.ThisKeyword)
             return common.createIdentifierNode("this");
         return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
+    }
+
+    function parseArrayLiteralExpression(node: ts.ArrayLiteralExpression) {
+        const elements = node.elements.map(element => parseCommonNode(element));
+        return common.createArrayLiteralNode(elements);
     }
 
     function parsePropertyAccessExpression(node: ts.PropertyAccessExpression) {

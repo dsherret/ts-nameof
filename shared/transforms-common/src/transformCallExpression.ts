@@ -1,6 +1,6 @@
 import { throwError } from "./external/common";
 import { NameofCallExpression, Node } from "./nodes";
-import { createStringLiteralNode } from "./node-factories";
+import { createStringLiteralNode, createArrayLiteralNode } from "./node-factories";
 import { printCallExpression, printNode } from "./printers";
 import { getLastNodePartText, getNodePartTexts } from "./getNodePartTexts";
 
@@ -9,6 +9,8 @@ export function transformCallExpression(callExpr: NameofCallExpression) {
         return createStringLiteralNode(handleNameof(callExpr));
     if (callExpr.property === "full")
         return createStringLiteralNode(handleNameofFull(callExpr));
+    if (callExpr.property === "toArray")
+        return createArrayLiteralNode(handleNameofToArray(callExpr));
     return throwError(`Unsupported nameof call expression with property '${callExpr.property}': ${printCallExpression(callExpr)}`);
 }
 
@@ -71,5 +73,33 @@ function handleNameofFull(callExpr: NameofCallExpression) {
             return throwError(`Expected count to be a number, but was: ${printNode(countExpr)}`);
 
         return countExpr.value;
+    }
+}
+
+function handleNameofToArray(callExpr: NameofCallExpression) {
+    const arrayArguments = getNodeArray();
+    return arrayArguments.map(element => convertToStringLiteralNode(element));
+
+    function getNodeArray() {
+        if (callExpr.arguments.length === 0)
+            return throwError(`Unable to parse call expression, no arguments provided: ${printCallExpression(callExpr)}`);
+
+        const firstArgument = callExpr.arguments[0];
+        if (callExpr.arguments.length === 1 && firstArgument.kind === "Function") {
+            const functionReturnValue = firstArgument.value;
+
+            if (functionReturnValue == null || functionReturnValue.kind !== "ArrayLiteral")
+                return throwError(`Unsupported toArray call expression, an array must be returned by the provided function: ${printCallExpression(callExpr)}`);
+
+            return functionReturnValue.elements;
+        }
+        else {
+            return callExpr.arguments;
+        }
+    }
+
+    function convertToStringLiteralNode(element: Node) {
+        const stringElement = getLastNodePartText(element);
+        return createStringLiteralNode(stringElement);
     }
 }

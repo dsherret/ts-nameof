@@ -1,6 +1,8 @@
 ﻿import * as ts from "typescript";
 import { visitNode } from "../external/transforms-ts";
 
+const printer = ts.createPrinter();
+
 export function replaceInText(fileName: string, fileText: string): { fileText?: string; replaced: boolean; } {
     // unofficial pre-2.0 backwards compatibility for this method
     if (arguments.length === 1) {
@@ -27,7 +29,7 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
 
         for (const transform of transformations) {
             finalText += fileText.substring(lastPos, transform.start);
-            finalText += `"${transform.text.replace(/\"/g, `\\"`)}"`;
+            finalText += transform.text;
             lastPos = transform.end;
         }
 
@@ -63,7 +65,7 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
                 transformations.push({
                     start: nodeStart,
                     end: node.end,
-                    text: (resultNode as ts.StringLiteral).text
+                    text: printer.printNode(ts.EmitHint.Unspecified, resultNode, sourceFile)
                 });
             }
         }
