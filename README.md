@@ -9,7 +9,7 @@ Monorepo for ts-nameof projects:
 * [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) (Babel compiler)
 * [ts-nameof.macro](packages/ts-nameof.macro) (Babel compiler)
 
-## Transforms
+## nameof transform
 
 ### `nameof(...)`
 
@@ -54,6 +54,8 @@ Transforms to:
 ```ts
 "prop";
 ```
+
+## nameof.full transform
 
 ### `nameof.full(...)`
 
@@ -105,6 +107,38 @@ Transforms to:
 ```ts
 "prop.prop2";
 "prop2.prop3";
+```
+
+## nameof.toArray transform
+
+Contributed by: [@cecilyth](https://github.com/cecilyth)
+
+### `nameof.toArray(...)`
+
+```ts
+nameof.toArray(myObject, otherObject);
+nameof.toArray(obj.firstProp, obj.secondProp, otherObject, nameof.full(obj.other));
+```
+
+Transforms to:
+
+```ts
+["myObject", "otherObject"];
+["firstProp", "secondProp", "otherObject", "obj.other"];
+```
+
+### `nameof.toArray<T>(o => [...])`
+
+```ts
+nameof.toArray<MyType>(o => [o.firstProp, o.otherProp.secondProp, o.other]);
+nameof.toArray<MyType>(o => [o.prop, nameof.full(o.myProp.otherProp, 1)]);
+```
+
+Transforms to:
+
+```ts
+["firstProp", "secondProp", "other"];
+["prop", "myProp.otherProp"];
 ```
 
 ## Other
