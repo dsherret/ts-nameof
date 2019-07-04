@@ -61,3 +61,4 @@
 /packages/ts-nameof.macro/scripts/external
 /shared/scripts-common/yarn-error.log
 /shared/common/yarn-error.log
+*.tsbuildinfo

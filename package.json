@@ -30,7 +30,7 @@
     "@types/mocha": "^5.2.0",
     "@types/prettier": "^1.15.2",
     "@types/node": "^10.12.19",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.2.4"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
   }
 }
