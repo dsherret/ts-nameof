@@ -17,7 +17,7 @@
     "verify-declaration-file": "ts-node  --project tsconfig.scripts.json scripts/verification/main verify-declaration-file",
     "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
-    "dopublish": "yarn create-declaration-file && yarn lint && yarn test && yarn build && npm publish --otp"
+    "dopublish": "yarn create-declaration-file && yarn lint && yarn test && yarn build && echo \"run: npm publish --otp\""
   },
   "repository": {
     "type": "git",

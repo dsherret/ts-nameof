@@ -15,7 +15,7 @@
     "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
     "lint:fix": "tslint --fix -c tslint.json src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
     "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file",
-    "dopublish": "yarn install && yarn build && npm publish --otp"
+    "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
   "keywords": [
     "nameof",

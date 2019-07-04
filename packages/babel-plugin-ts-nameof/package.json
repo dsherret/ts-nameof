@@ -10,7 +10,7 @@
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
-    "dopublish": "yarn install && yarn build && npm publish --otp"
+    "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
   "keywords": [
     "nameof",
