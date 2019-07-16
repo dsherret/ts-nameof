@@ -13,11 +13,11 @@
     "install-build": "yarn install && yarn build"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.0",
-    "@types/node": "^10.12.18",
-    "@types/prettier": "^1.15.2",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.5",
+    "@types/prettier": "^1.16.4",
     "prettier": "^1.18.2",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   }
 }

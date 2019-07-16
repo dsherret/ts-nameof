@@ -1,4 +1,4 @@
-import { Project, NamespaceDeclarationKind } from "ts-simple-ast";
+import { Project, NamespaceDeclarationKind } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
     const mainFile = project.getSourceFileOrThrow("src/main.ts");

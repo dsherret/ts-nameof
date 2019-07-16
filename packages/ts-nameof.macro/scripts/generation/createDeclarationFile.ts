@@ -1,4 +1,4 @@
-import { Project, TypeGuards, NamespaceDeclarationKind } from "ts-simple-ast";
+import { Project, TypeGuards, NamespaceDeclarationKind } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
     const globalFile = project.addExistingSourceFile("../../shared/lib/global.d.ts");
