@@ -18,14 +18,14 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.5",
-    "coveralls": "^3.0.4",
+    "@types/mocha": "^5.2.7",
+    "coveralls": "^3.0.5",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
-    "symlink-dir": "^2.0.2",
+    "symlink-dir": "^3.1.0",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   }
 }

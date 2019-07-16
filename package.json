@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/dsherret/ts-nameof#readme",
   "devDependencies": {
-    "@types/mocha": "^5.2.0",
-    "@types/prettier": "^1.15.2",
-    "@types/node": "^10.12.19",
+    "@types/mocha": "^5.2.7",
+    "@types/prettier": "^1.16.4",
+    "@types/node": "^12.6.5",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   }
 }
