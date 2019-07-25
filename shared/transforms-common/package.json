@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "coveralls": "^3.0.5",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
     "symlink-dir": "^3.1.0",
