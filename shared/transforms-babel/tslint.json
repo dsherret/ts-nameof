@@ -1,8 +1,0 @@
-{
-    "extends": "../../tslint.common.json",
-    "linterOptions": {
-        "exclude": [
-            "./src/external/**/*.*"
-        ]
-    }
-}

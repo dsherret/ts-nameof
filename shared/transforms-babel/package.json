@@ -12,8 +12,6 @@
     "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.*\" \"./dist/external\" -L",
     "install-build": "yarn install && yarn build",
-    "lint": "tslint -c tslint.json src/**/*.ts",
-    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
@@ -33,7 +31,6 @@
     "rimraf": "^2.6.3",
     "symlink-dir": "^3.1.0",
     "ts-node": "^8.3.0",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   }
 }

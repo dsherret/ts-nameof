@@ -1,4 +1,4 @@
-﻿import glob from "glob";
+import glob from "glob";
 
 export function getFileNamesFromGlobs(globs: ReadonlyArray<string>) {
     const promises = globs.map(g => getFileNamesFromGlob(g));

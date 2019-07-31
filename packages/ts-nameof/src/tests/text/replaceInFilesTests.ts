@@ -44,8 +44,7 @@ describe("replaceInFiles()", () => {
             assert.equal((await readFile(getTestFilePath("GeneralTestFile.txt"))).replace(/\r?\n/g, "\n").length, 1121);
         });
 
-        const expected =
-`console.log("alert");
+        const expected = `console.log("alert");
 console.log("alert");
 console.log("window.alert");
 console.log("window.alert");

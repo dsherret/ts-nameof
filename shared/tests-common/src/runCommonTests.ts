@@ -447,5 +447,4 @@ nameof(window);
             }
         }
     }
-
 }

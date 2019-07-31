@@ -1,4 +1,4 @@
-﻿import * as ts from "typescript";
+import * as ts from "typescript";
 import { visitNode } from "../external/transforms-ts";
 
 const printer = ts.createPrinter();

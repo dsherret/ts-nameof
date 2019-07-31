@@ -1,4 +1,4 @@
-﻿import * as assert from "assert";
+import * as assert from "assert";
 import { getTestFilePath, readFile, writeFile, replaceInFilesPromise } from "./helpers";
 
 describe("replaceInFiles()", () => {

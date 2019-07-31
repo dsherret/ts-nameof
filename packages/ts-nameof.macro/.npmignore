@@ -24,5 +24,4 @@
 CHANGELOG.md
 mocha.opts
 tsconfig.json
-tslint.json
 yarn-error.log

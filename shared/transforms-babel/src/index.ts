@@ -7,7 +7,7 @@ import { transform } from "./transform";
 export interface TransformOptions extends ParseOptions {
 }
 
-export function plugin({ types: t }: { types: typeof babelTypes }) {
+export function plugin({ types: t }: { types: typeof babelTypes; }) {
     const visitor = {
         CallExpression(path: NodePath) {
             transformNode(t, path, {

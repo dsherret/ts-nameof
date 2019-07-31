@@ -1,7 +1,7 @@
 import * as babelTypes from "@babel/types";
-import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression, ArrayExpression,
-    BlockStatement, NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSEntityName, SpreadElement,
-    TSTypeParameterInstantiation, TSType, JSXNamespacedName, TSImportType } from "@babel/types";
+import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression, ArrayExpression, BlockStatement,
+    NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSEntityName, SpreadElement, TSTypeParameterInstantiation, TSType, JSXNamespacedName,
+    TSImportType } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { throwError } from "./external/common";
 import * as common from "./external/transforms-common";

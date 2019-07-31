@@ -24,7 +24,9 @@ function run(text: string) {
             return ts.createSourceFile(fileName, text, languageVersion, false, ts.ScriptKind.TS);
         },
         getDefaultLibFileName: options => ts.getDefaultLibFileName(options),
-        writeFile: () => { throw new Error("Not implemented"); },
+        writeFile: () => {
+            throw new Error("Not implemented");
+        },
         getCurrentDirectory: () => "/",
         getDirectories: () => [],
         getCanonicalFileName: fileName => fileName,

@@ -12,8 +12,6 @@
     "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",
-    "lint": "tslint -c tslint.json src/**/*.ts && tslint -c tslint.scripts.json scripts/**/*.ts",
-    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts && tslint --fix -c tslint.scripts.json scripts/**/*.ts",
     "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file",
     "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
@@ -52,7 +50,6 @@
     "symlink-dir": "^3.1.0",
     "ts-node": "^8.3.0",
     "ts-morph": "^3.1.3",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3",
     "babel-plugin-macros": "^2.6.1"
   }

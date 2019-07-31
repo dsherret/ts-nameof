@@ -7,8 +7,6 @@
   "author": "David Sherret",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint -c tslint.json src/**/*{.ts,.js}",
-    "lint:fix": "tslint --fix -c tslint.json src/**/*{.ts,.js}",
     "build": "tsc",
     "install-build": "yarn install && yarn build"
   },
@@ -17,7 +15,6 @@
     "@types/node": "^12.6.8",
     "@types/prettier": "^1.18.0",
     "prettier": "^1.18.2",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   }
 }

@@ -7,5 +7,4 @@ Contains the TypeScript Compiler API transforms used in ts-nameof.
 ```
 yarn install
 yarn test
-yarn lint
 ```

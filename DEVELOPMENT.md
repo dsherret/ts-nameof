@@ -19,8 +19,8 @@ yarn install
 # running tests
 yarn test
 
-# linting
-yarn lint
+# format
+# <coming soon via dprint>
 ```
 
 ## Declaration File

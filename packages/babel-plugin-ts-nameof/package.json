@@ -8,8 +8,6 @@
     "create-links": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel",
     "prepare": "yarn install-dependencies && yarn create-links",
     "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
-    "lint": "tslint -c tslint.json src/**/*.ts",
-    "lint:fix": "tslint --fix -c tslint.json src/**/*.ts",
     "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
   "keywords": [
@@ -39,7 +37,6 @@
     "rimraf": "^2.6.3",
     "symlink-dir": "^3.1.0",
     "ts-node": "^8.3.0",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   }
 }

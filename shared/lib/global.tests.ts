@@ -1,5 +1,4 @@
 /// <reference path="./global.d.ts" />
-// tslint:disable-next-line no-namespace
 namespace TestNamespace {
     export interface TestType {
         prop: string;

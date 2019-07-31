@@ -56,7 +56,7 @@ export async function runScripts(commandName: string, packageNames: string[], op
         if (parallel)
             promises.push(promise);
         else {
-            await promise
+            await promise;
             throwIfHadError();
         }
     }

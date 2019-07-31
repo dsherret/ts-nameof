@@ -94,8 +94,7 @@ describe("printNode", () => {
         });
 
         it("should print the next computed value with no separation", () => {
-            const node = factories.createIdentifierNode("Test",
-                factories.createComputedNode(factories.createStringLiteralNode("prop")));
+            const node = factories.createIdentifierNode("Test", factories.createComputedNode(factories.createStringLiteralNode("prop")));
             doTest(node, `Test["prop"]`);
         });
     });
@@ -106,8 +105,7 @@ describe("printNode", () => {
         });
 
         it("should print with a property after", () => {
-            const node = factories.createStringLiteralNode("test",
-                factories.createIdentifierNode("length"));
+            const node = factories.createStringLiteralNode("test", factories.createIdentifierNode("length"));
             doTest(node, `"test".length`);
         });
     });
@@ -118,8 +116,7 @@ describe("printNode", () => {
         });
 
         it("should print with a property after", () => {
-            const node = factories.createNumericLiteralNode(5,
-                factories.createIdentifierNode("length"));
+            const node = factories.createNumericLiteralNode(5, factories.createIdentifierNode("length"));
             doTest(node, `5.length`);
         });
     });
@@ -131,8 +128,7 @@ describe("printNode", () => {
         });
 
         it("should print with a property after", () => {
-            const node = factories.createComputedNode(factories.createNumericLiteralNode(5),
-                factories.createIdentifierNode("length"));
+            const node = factories.createComputedNode(factories.createNumericLiteralNode(5), factories.createIdentifierNode("length"));
             doTest(node, `[5].length`);
         });
     });
@@ -154,8 +150,7 @@ describe("printNode", () => {
         });
 
         it("should print with a property after", () => {
-            const node = factories.createFunctionNode(factories.createNumericLiteralNode(5), ["a", "b"],
-                factories.createIdentifierNode("length"));
+            const node = factories.createFunctionNode(factories.createNumericLiteralNode(5), ["a", "b"], factories.createIdentifierNode("length"));
             doTest(node, `((a, b) => 5).length`);
         });
     });
