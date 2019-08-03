@@ -14,8 +14,7 @@
     "install-build": "yarn install && yarn build",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "cpx": "^1.5.0",
     "mocha": "^6.2.0",

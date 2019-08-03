@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "rootDir": "./src",
-        "outDir": "./dist"
-    },
-    "extends": "../../tsconfig.common.json",
-    "include": ["./src"],
-    "references": [
-        { "path": "../../shared/transforms-babel" }
-    ]
+  "compilerOptions": {
+    "allowJs": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "extends": "../../tsconfig.common.json",
+  "include": ["./src"],
+  "references": [
+    { "path": "../../shared/transforms-babel" }
+  ]
 }

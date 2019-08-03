@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "declaration": true,
-        "rootDir": "./src",
-        "outDir": "./dist"
-    },
-    "extends": "../../tsconfig.common.json",
-    "include": ["./src/**/*.ts"],
-    "references": [
-        { "path": "../common" },
-        { "path": "../transforms-common" },
-        { "path": "../tests-common" }
-    ]
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "extends": "../../tsconfig.common.json",
+  "include": ["./src/**/*.ts"],
+  "references": [
+    { "path": "../common" },
+    { "path": "../transforms-common" },
+    { "path": "../tests-common" }
+  ]
 }

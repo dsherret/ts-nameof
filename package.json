@@ -5,6 +5,7 @@
   "description": "Monorepo for ts-nameof. This file is only used for scripts.",
   "scripts": {
     "install": "ts-node scripts/runInSeries install packages/",
+    "format": "dprint \"**/*{.ts|.json}\"",
     "test:transforms": "ts-node scripts/runInParallel test transforms-babel transforms-ts",
     "test": "ts-node scripts/runInParallel test",
     "create-declaration-file": "ts-node scripts/runInParallel create-declaration-file ts-nameof ts-nameof.macro",
@@ -26,8 +27,9 @@
   "homepage": "https://github.com/dsherret/ts-nameof#readme",
   "devDependencies": {
     "@types/mocha": "^5.2.7",
-    "@types/prettier": "^1.16.4",
     "@types/node": "^12.6.5",
+    "@types/prettier": "^1.16.4",
+    "dprint": "^0.2.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

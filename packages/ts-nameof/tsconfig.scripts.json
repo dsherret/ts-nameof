@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "rootDir": "./scripts",
-        "noEmit": true
-    },
-    "extends": "../../tsconfig.common.json",
-    "exclude": [
-        "./lib",
-        "./src"
-    ],
-    "references": [
-        { "path": "../../shared/scripts-common" }
-    ]
+  "compilerOptions": {
+    "target": "es6",
+    "rootDir": "./scripts",
+    "noEmit": true
+  },
+  "extends": "../../tsconfig.common.json",
+  "exclude": [
+    "./lib",
+    "./src"
+  ],
+  "references": [
+    { "path": "../../shared/scripts-common" }
+  ]
 }

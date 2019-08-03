@@ -14,8 +14,7 @@
     "install-build": "yarn install && yarn build",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",

@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "declaration": false,
-        "sourceMap": false,
-        "strict": true,
-        "removeComments": true,
-        "experimentalDecorators": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "lib": ["es2015"],
-        "esModuleInterop": true
-    },
-    "compileOnSave": false
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "sourceMap": false,
+    "strict": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "lib": ["es2015"],
+    "esModuleInterop": true
+  },
+  "compileOnSave": false
 }
