@@ -1,6 +1,8 @@
 ts-nameof
 ==========
 
+[![Build Status](https://travis-ci.org/dsherret/ts-nameof.svg)](https://travis-ci.org/dsherret/ts-nameof)
+
 [`nameof`](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/nameof) in TypeScript.
 
 Monorepo for ts-nameof projects:
