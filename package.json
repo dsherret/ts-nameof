@@ -29,7 +29,9 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.5",
     "@types/prettier": "^1.16.4",
-    "dprint": "^0.3.0",
+    "dprint": "^0.4.1",
+    "dprint-plugin-jsonc": "^0.1.1",
+    "dprint-plugin-typescript": "^0.1.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

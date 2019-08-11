@@ -1,7 +1,0 @@
-{
-  "projectType": "openSource",
-  "json.indentWidth": 2,
-  "useBraces": "preferNone",
-  "lineWidth": 160,
-  "tryStatement.nextControlFlowPosition": "sameLine"
-}
