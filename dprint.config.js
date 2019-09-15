@@ -9,10 +9,17 @@ module.exports.config = {
     plugins: [
         new TypeScriptPlugin({
             useBraces: "preferNone",
+            singleBodyPosition: "nextLine",
             "tryStatement.nextControlFlowPosition": "sameLine"
         }),
         new JsoncPlugin({
             indentWidth: 2
         })
+    ],
+    includes: [
+        "**/*{.ts|.json|.js}"
+    ],
+    excludes: [
+        "**/dist/**/*.*"
     ]
 };
