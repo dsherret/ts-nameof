@@ -88,6 +88,8 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseArrayExpression(node);
         if (t.isThisExpression(node))
             return common.createIdentifierNode("this");
+        if (t.isSuper(node))
+            return common.createIdentifierNode("super");
         if (t.isTSImportType(node))
             return parseImportType(node, false);
         if (t.isTSTypeQuery(node) && t.isTSImportType(node.exprName))

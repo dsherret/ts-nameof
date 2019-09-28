@@ -71,6 +71,8 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             return parseCommonNode(node.literal); // skip over and go straight to the literal
         if (node.kind === ts.SyntaxKind.ThisKeyword)
             return common.createIdentifierNode("this");
+        if (node.kind === ts.SyntaxKind.SuperKeyword)
+            return common.createIdentifierNode("super");
         return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
     }
 

@@ -213,6 +213,13 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should resolve to string when nesting nameofs", () => {
                 runTest(`nameof.full(nameof(testing));`, `"testing";`);
             });
+
+            it("should get the result of the super keyword", () => {
+                runTest(
+                    `class Test {\n  constructor() {\n    nameof.full(super.test);\n  }\n}`,
+                    `class Test {\n  constructor() {\n    "super.test";\n  }\n}`
+                );
+            });
         });
 
         describe("type parameter", () => {
