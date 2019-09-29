@@ -1,3 +1,3 @@
 export * from "./nodes";
-export * from "./node-factories";
+export * from "./nodeFactories";
 export * from "./transformCallExpression";

@@ -1,4 +1,5 @@
-import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode, ImportTypeNode } from "./nodes";
+import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode, ImportTypeNode, InterpolateNode,
+    TemplateExpressionNode } from "./nodes";
 
 export function createIdentifierNode(value: string, next?: Node | undefined): IdentifierNode {
     return {
@@ -54,6 +55,23 @@ export function createImportTypeNode(isTypeOf: boolean, argument: Node | undefin
         kind: "ImportType",
         isTypeOf,
         argument,
+        next
+    };
+}
+
+export function createTemplateExpressionNode(parts: (string | InterpolateNode)[], next?: Node | undefined): TemplateExpressionNode {
+    return {
+        kind: "TemplateExpression",
+        parts,
+        next
+    };
+}
+
+export function createInterpolateNode(expression: unknown, expressionText: string, next?: Node | undefined): InterpolateNode {
+    return {
+        kind: "Interpolate",
+        expression,
+        expressionText,
         next
     };
 }

@@ -66,41 +66,47 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when someone only uses an import type", () => {
-                runThrowTest(`nameof<import('test')>();`, "The node `import(\"test\")` is not supported in this scenario.");
+                runThrowTest(`nameof<import('test')>();`, getNotSupportedErrorText("import(\"test\")"));
             });
 
             it("should throw when someone only uses an import type with typeof", () => {
-                runThrowTest(`nameof<typeof import('test')>();`, "The node `typeof import(\"test\")` is not supported in this scenario.");
+                runThrowTest(`nameof<typeof import('test')>();`, getNotSupportedErrorText("typeof import(\"test\")"));
             });
         });
 
-        describe("arrays", () => {
-            it("should include the brackets", () => {
-                runTest(`nameof(anyProp[0]);`, `"anyProp[0]";`);
+        describe("computed properties", () => {
+            it("should not allow a computed property to be at the end with a number", () => {
+                runThrowTest(`nameof(anyProp[0]);`, getFirstAccessedPropertyMustNotBeComputedErrorText(`anyProp[0]`));
             });
 
             it("should get after the period", () => {
                 runTest(`nameof(anyProp[0].prop);`, `"prop";`);
             });
 
-            it("should escape strings inside element access expressions", () => {
-                runTest(`nameof(obj["prop"]);`, `"obj[\\"prop\\"]";`);
+            it("should get the string inside the computed property", () => {
+                runTest(`nameof(obj["prop"]);`, `"prop";`);
             });
 
-            it("should include the brackets when getting an ambient declaration's property", () => {
-                runTest(`nameof<MyInterface>(i => i.prop[0]);`, `"prop[0]";`);
+            it("should get the string inside the computed property for a function", () => {
+                runTest(`nameof<MyInterface>(i => i["prop"]);`, `"prop";`);
             });
 
-            it("should include the nested brackets when getting an ambient declaration's property", () => {
-                runTest(`nameof<MyInterface>(i => i.prop[0][1]);`, `"prop[0][1]";`);
+            it("should not allow a computed property to be at the end with a number when using a function", () => {
+                runThrowTest(`nameof<MyInterface>(i => i.prop[0]);`, getFirstAccessedPropertyMustNotBeComputedErrorText("(i) => i.prop[0]"));
             });
 
-            it("should include brackets nested in brackets", () => {
-                runTest(`nameof<MyInterface>(i => i.prop[prop[0]]);`, `"prop[prop[0]]";`);
+            it("should not allow an identifier nested in a computed property", () => {
+                runThrowTest(`nameof<MyInterface>(i => i.prop[prop[0]]);`, getFirstAccessedPropertyMustNotBeComputedErrorText("(i) => i.prop[prop[0]]"));
             });
+        });
 
+        describe("array", () => {
             it("should not allow only an array", () => {
-                runThrowTest(`nameof([0]);`);
+                runThrowTest(`nameof([0]);`, getNotSupportedErrorText("[0]"));
+            });
+
+            it("should allow getting an array's property", () => {
+                runTest(`nameof([].length);`, `"length";`);
             });
         });
 
@@ -118,8 +124,12 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
                 runTest(`nameof<import('test')>(x => x.Foo);`, `"Foo";`);
             });
 
-            it("should throw when using an element access expression directly on the object", () => {
-                runThrowTest(`nameof<MyInterface>(i => i["prop1"]);`, `First accessed property must not be computed: (i) => i["prop1"]`);
+            it("should get when using an element access expression directly on the object", () => {
+                runTest(`nameof<MyInterface>(i => i["prop1"]);`, `"prop1";`);
+            });
+
+            it("should throw when using an element access expression directly on the object and it is not a string", () => {
+                runThrowTest(`nameof<MyInterface>(i => i[0]);`, getFirstAccessedPropertyMustNotBeComputedErrorText(`(i) => i[0]`));
             });
 
             it("should throw when the function doesn't have a period", () => {
@@ -144,6 +154,42 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
 
             it("should transform a numeric literal as a string", () => {
                 runTest(`nameof(5);`, `"5";`);
+            });
+        });
+
+        describe("interpolate", () => {
+            it("should throw when providing nameof.interpolate to nameof", () => {
+                runThrowTest(`nameof(nameof.interpolate(5));`, [
+                    getNotSupportedErrorText("nameof.interpolate(5)"),
+                    // it will be this for babel because it checks the parent nodes
+                    getUnusedNameofInterpolateErrorText("5")
+                ]);
+            });
+        });
+
+        describe("template expression", () => {
+            it("should return a no substitution template literal", () => {
+                runTest("nameof(`testing`);", "`testing`;");
+            });
+
+            it("should return the template expression when it has only a template tail", () => {
+                runTest("nameof(`testing${test}final`);", "`testing${test}final`;");
+            });
+
+            it("should return the template expression when it has a template middle", () => {
+                runTest("nameof(`testing${other}asdf${test}${asdf}final`);", "`testing${other}asdf${test}${asdf}final`;");
+            });
+
+            it("should return the template expression when it starts and ends with one", () => {
+                runTest("nameof(`${other}`);", "`${other}`;");
+            });
+
+            it("should return the template expression when it starts and ends with multiple", () => {
+                runTest("nameof(`${other}${asdf}${test}`);", "`${other}${asdf}${test}`;");
+            });
+
+            it("should throw when a nameof.interpolate is not used", () => {
+                runThrowTest("nameof(`${nameof.interpolate(other)}`);", getUnusedNameofInterpolateErrorText("other"));
             });
         });
 
@@ -260,7 +306,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             });
 
             it("should throw when someone uses an import type", () => {
-                runThrowTest(`nameof.full<import('test').other.test>();`, "The node `import(\"test\").other.test` is not supported in this scenario.");
+                runThrowTest(`nameof.full<import('test').other.test>();`, getNotSupportedErrorText("import(\"test\").other.test"));
             });
         });
 
@@ -296,6 +342,34 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should throw when the function doesn't have a period", () => {
                 runThrowTest(`nameof.full<MyInterface>(i => i);`, "A property must be accessed on the object: (i) => i");
             });
+
+            it("should throw when someone nests a function within a function", () => {
+                runThrowTest(`nameof.full<MyInterface>(i => () => 5);`, "A property must be accessed on the object: (i) => () => 5");
+            });
+        });
+
+        describe("interpolate", () => {
+            const singleArgumentErrorMessage = "Unexpected scenario where a nameof.interpolate function did not have a single argument.";
+
+            it("should interpolate the provided expression", () => {
+                runTest(`nameof.full(Test.Other[nameof.interpolate(other)]);`, "`Test.Other[${other}]`;");
+            });
+
+            it("should interpolate when using a function", () => {
+                runTest(`nameof.full<a>(a => a.b.c[nameof.interpolate(index)].d);`, "`b.c[${index}].d`;");
+            });
+
+            it("should throw when the interpolate function has zero arguments", () => {
+                runThrowTest(`nameof.full(Test.Other[nameof.interpolate()]);`, singleArgumentErrorMessage);
+            });
+
+            it("should throw when the interpolate function has multiple arguments", () => {
+                runThrowTest(`nameof.full(Test.Other[nameof.interpolate(test, test)]);`, singleArgumentErrorMessage);
+            });
+
+            it("should throw when a nameof.interpolate is not used inside a nameof.full", () => {
+                runThrowTest("nameof.interpolate(some.expression);", getUnusedNameofInterpolateErrorText("some.expression"));
+            });
         });
     });
 
@@ -323,12 +397,12 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
         it("should throw when the function argument does not return an array", () => {
             runThrowTest(
                 `nameof.toArray<MyInterface>(o => o.Prop1);`,
-                "Unsupported toArray call expression, an array must be returned by the provided function: nameof.toArray<MyInterface>((o) => o.Prop1)"
+                "Unsupported toArray call expression. An array must be returned by the provided function: nameof.toArray<MyInterface>((o) => o.Prop1)"
             );
         });
 
         it("should throw when no arguments are provided", () => {
-            runThrowTest(`nameof.toArray<MyInterface>();`, "Unable to parse call expression, no arguments provided: nameof.toArray<MyInterface>()");
+            runThrowTest(`nameof.toArray<MyInterface>();`, "Unable to parse call expression. No arguments provided: nameof.toArray<MyInterface>()");
         });
     });
 
@@ -408,7 +482,7 @@ nameof(window);
         assert.equal(prettier.format(result, { parser: "typescript" }), expected);
     }
 
-    function runThrowTest(text: string, possibleExpectedMessages?: string | string[]) {
+    function runThrowTest(text: string, possibleExpectedMessages: string | string[]) {
         if (options.commonPrefix != null)
             text = options.commonPrefix + text;
         let transformedText: string | undefined;
@@ -418,8 +492,6 @@ nameof(window);
             transformedText = getTransformedText(text);
         } catch (ex) {
             possibleExpectedMessages = getPossibleExpectedMessages();
-            if (possibleExpectedMessages == null)
-                return;
 
             const actualMessage = (ex as any).message;
             for (const message of possibleExpectedMessages) {
@@ -435,9 +507,6 @@ nameof(window);
         function getPossibleExpectedMessages() {
             const result = getAsArray();
 
-            if (result == null)
-                return undefined;
-
             for (let i = result.length - 1; i >= 0; i--) {
                 result[i] = "[ts-nameof]: " + result[i];
                 result.push("./ts-nameof.macro: " + result[i]);
@@ -448,10 +517,20 @@ nameof(window);
             function getAsArray() {
                 if (typeof possibleExpectedMessages === "string")
                     return [possibleExpectedMessages];
-                if (possibleExpectedMessages instanceof Array)
-                    return possibleExpectedMessages;
-                return undefined;
+                return possibleExpectedMessages;
             }
         }
     }
+}
+
+function getFirstAccessedPropertyMustNotBeComputedErrorText(nodeText: string) {
+    return `First accessed property must not be computed except if providing a string: ${nodeText}`;
+}
+
+function getNotSupportedErrorText(nodeText: string) {
+    return `The node \`${nodeText}\` is not supported in this scenario.`;
+}
+
+function getUnusedNameofInterpolateErrorText(nodeText: string) {
+    return `Found a nameof.interpolate that did not exist within a nameof.full call expression: nameof.interpolate(${nodeText})`;
 }

@@ -18,6 +18,7 @@ Monorepo for ts-nameof projects:
 ```ts
 nameof(console);
 nameof(console.log);
+nameof(console["warn"]);
 ```
 
 Transforms to:
@@ -25,6 +26,7 @@ Transforms to:
 ```ts
 "console";
 "log";
+"warn";
 ```
 
 ### `nameof<T>()`
@@ -109,6 +111,32 @@ Transforms to:
 ```ts
 "prop.prop2";
 "prop2.prop3";
+```
+
+### `nameof.interpolate(value)`
+
+Writing the following:
+
+```ts
+nameof.full(myObj.prop[i]);
+```
+
+...does not interpolate the node in the computed property.
+
+```ts
+"myObj.prop[i]";
+```
+
+If you want to interpolate the value then you can specify that explicitly with a `nameof.interpolate` function.
+
+```ts
+nameof.full(myObj.prop[nameof.interpolate(i)]);
+```
+
+Transforms to:
+
+```ts
+`myObj.prop[${i}]`;
 ```
 
 ## nameof.toArray transform

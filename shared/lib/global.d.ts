@@ -6,4 +6,5 @@ declare namespace nameof {
     function full(obj: any, periodIndex?: number): string;
     function toArray<T>(func: (obj: T) => any[]): string[];
     function toArray(...args: any[]): string[];
+    function interpolate<T>(value: T): T;
 }

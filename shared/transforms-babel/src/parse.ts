@@ -1,7 +1,6 @@
 import * as babelTypes from "@babel/types";
-import { Node, CallExpression, MemberExpression, Expression, TypeAnnotation, ArrowFunctionExpression, FunctionExpression, ArrayExpression, BlockStatement,
-    NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSEntityName, SpreadElement, TSTypeParameterInstantiation, TSType, JSXNamespacedName,
-    TSImportType } from "@babel/types";
+import { Node, CallExpression, MemberExpression, Expression, TemplateLiteral, ArrowFunctionExpression, FunctionExpression, ArrayExpression, BlockStatement,
+    NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSTypeParameterInstantiation, TSImportType } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { throwError } from "./external/common";
 import * as common from "./external/transforms-common";
@@ -22,9 +21,9 @@ export interface ParseOptions {
 /**
  * Parses a Babel AST node to a common NameofCallExpression or returns undefined if the current node
  * is not a nameof call expression.
- * @param t Babel types namespace to use.
- * @param path Path of the current Babel AST node.
- * @param options Options for parsing.
+ * @param t - Babel types namespace to use.
+ * @param path - Path of the current Babel AST node.
+ * @param options - Options for parsing.
  * @remarks Parsing to a common structure allows for the same code to be used to determine the final string.
  */
 export function parse(t: typeof babelTypes, path: NodePath, options: ParseOptions = {}) {
@@ -34,11 +33,18 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
     if (options.traverseChildren)
         options.traverseChildren(); // tell the caller to go over the nodes in post order
 
+    const propertyName = parsePropertyName(path.node);
+    // ignore nameof.interpolate function calls... they will be dealt with later
+    if (isInterpolatePropertyName(propertyName)) {
+        handleNameofInterpolate(path.node);
+        return undefined;
+    }
+
     return parseNameof(path.node);
 
     function parseNameof(callExpr: CallExpression): common.NameofCallExpression {
         return {
-            property: parsePropertyName(callExpr),
+            property: propertyName,
             typeArguments: parseTypeArguments(callExpr),
             arguments: parseArguments(callExpr)
         };
@@ -96,7 +102,10 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
             return parseImportType(node.exprName, true);
         if (t.isTSLiteralType(node))
             return parseCommonNode(node.literal); // skip over and go straight to the literal
-
+        if (t.isTemplateLiteral(node))
+            return parseTemplateExpression(node);
+        if (isNameof(node) && isInterpolatePropertyName(parsePropertyName(node)))
+            return parseInterpolateNode(node);
         return throwError(`Unhandled node type (${node.type}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
     }
 
@@ -161,6 +170,30 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
         return importTypeNode;
     }
 
+    function parseTemplateExpression(node: TemplateLiteral) {
+        return common.createTemplateExpressionNode(getParts());
+
+        function getParts() {
+            const parts: (string | common.InterpolateNode)[] = [];
+
+            // the number of quasis will always be greater than the number of expressions
+            for (let i = 0; i < node.quasis.length; i++) {
+                parts.push(node.quasis[i].value.raw);
+                const expression = node.expressions[i];
+                if (expression != null)
+                    parts.push(common.createInterpolateNode(expression, getNodeText(expression)));
+            }
+
+            return parts;
+        }
+    }
+
+    function parseInterpolateNode(node: CallExpression) {
+        if (node.arguments.length !== 1)
+            return throwError(`Expected a single argument for the nameof.interpolate function call ${getNodeText(node.arguments[0])}.`);
+        return common.createInterpolateNode(node.arguments[0], getNodeText(node.arguments[0]));
+    }
+
     function getEndCommonNode(commonNode: common.Node) {
         while (commonNode.next != null)
             commonNode = commonNode.next;
@@ -206,5 +239,29 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
                 return expression.object;
             return undefined;
         }
+    }
+
+    function handleNameofInterpolate(callExpr: CallExpression) {
+        if (!hasAncestorNameofFull()) {
+            return throwError(`Found a nameof.interpolate that did not exist within a `
+                + `nameof.full call expression: ${getNodeText(callExpr)}`);
+        }
+
+        if (callExpr.arguments.length !== 1)
+            return throwError("Unexpected scenario where a nameof.interpolate function did not have a single argument.");
+
+        function hasAncestorNameofFull() {
+            let parentPath: NodePath<Node> | undefined = path.parentPath;
+            while (parentPath != null) {
+                if (isNameof(parentPath.node) && parsePropertyName(parentPath.node) === "full")
+                    return true;
+                parentPath = parentPath.parentPath;
+            }
+            return false;
+        }
+    }
+
+    function isInterpolatePropertyName(propertyName: string | undefined) {
+        return propertyName === "interpolate";
     }
 }

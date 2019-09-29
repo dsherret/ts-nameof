@@ -1,23 +1,34 @@
 import * as ts from "typescript";
-import { throwError } from "./external/common";
+import { throwError, assertNever } from "./external/common";
 import * as common from "./external/transforms-common";
-import { isNegativeNumericLiteral, getNegativeNumericLiteralValue, getReturnStatementExpressionFromBlock } from "./helpers";
-
-// todo: the use of the printer seems suspect, but maybe not...
-const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+import { isNegativeNumericLiteral, getNegativeNumericLiteralValue, getReturnStatementExpressionFromBlock, getNodeText } from "./helpers";
+import { InterpolateNode, createInterpolateNode } from "./external/transforms-common";
+import { VisitSourceFileContext } from "./VisitSourceFileContext";
 
 /**
  * Parses a TypeScript AST node to a common NameofCallExpression or returns undefined if the current node
  * is not a nameof call expression.
- * @param parsingNode Babel AST node to parse.
- * @param sourceFile Containing source file.
+ * @param parsingNode - Babel AST node to parse.
+ * @param sourceFile - Containing source file.
+ * @param context - Context for when visiting all the source file nodes
  */
-export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
-    return isNameof(parsingNode) ? parseNameof(parsingNode) : undefined;
+export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile, context: VisitSourceFileContext | undefined) {
+    if (!isNameof(parsingNode))
+        return undefined;
+
+    const propertyName = parsePropertyName(parsingNode);
+
+    // Ignore nameof.interpolate function calls... they will be dealt with later.
+    if (isInterpolatePropertyName(propertyName)) {
+        handleNameofInterpolate(parsingNode);
+        return undefined;
+    }
+
+    return parseNameof(parsingNode);
 
     function parseNameof(callExpr: ts.CallExpression): common.NameofCallExpression {
         return {
-            property: parsePropertyName(callExpr),
+            property: propertyName,
             typeArguments: parseTypeArguments(callExpr),
             arguments: parseArguments(callExpr)
         };
@@ -73,7 +84,14 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             return common.createIdentifierNode("this");
         if (node.kind === ts.SyntaxKind.SuperKeyword)
             return common.createIdentifierNode("super");
-        return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node)} (Please open an issue if you believe this should be supported.)`);
+        if (ts.isNoSubstitutionTemplateLiteral(node))
+            return common.createTemplateExpressionNode([node.text]);
+        if (ts.isTemplateExpression(node))
+            return parseTemplateExpression(node);
+        if (isNameof(node) && isInterpolatePropertyName(parsePropertyName(node)))
+            return parseInterpolateNode(node);
+        return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node, sourceFile)}`
+            + ` (Please open an issue if you believe this should be supported.)`);
     }
 
     function parseArrayLiteralExpression(node: ts.ArrayLiteralExpression) {
@@ -127,7 +145,7 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             const name = p.name;
             if (ts.isIdentifier(name))
                 return name.text;
-            return getNodeText(name);
+            return getNodeText(name, sourceFile);
         });
 
         return common.createFunctionNode(parseCommonNode(node), parameterNames);
@@ -138,6 +156,34 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
         const qualifier = node.qualifier && parseCommonNode(node.qualifier);
         getEndCommonNode(importType).next = qualifier;
         return importType;
+    }
+
+    function parseTemplateExpression(node: ts.TemplateExpression) {
+        return common.createTemplateExpressionNode(getParts());
+
+        function getParts() {
+            const parts: (string | InterpolateNode)[] = [];
+            if (node.head.text.length > 0)
+                parts.push(node.head.text);
+            for (const templateSpan of node.templateSpans) {
+                if (ts.isTemplateHead(templateSpan))
+                    parts.push(templateSpan.text);
+                else if (ts.isTemplateSpan(templateSpan)) {
+                    parts.push(createInterpolateNode(templateSpan.expression, getNodeText(templateSpan.expression, sourceFile)));
+                    parts.push(templateSpan.literal.text);
+                }
+                else {
+                    return assertNever(templateSpan, "Not implemented scenario.");
+                }
+            }
+            return parts;
+        }
+    }
+
+    function parseInterpolateNode(node: ts.CallExpression) {
+        if (node.arguments.length !== 1)
+            return throwError(`Should never happen as this would have been tested for earlier.`);
+        return common.createInterpolateNode(node.arguments[0], getNodeText(node.arguments[0], sourceFile));
     }
 
     function getEndCommonNode(commonNode: common.Node) {
@@ -154,17 +200,23 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
 
     function getIdentifierTextOrThrow(node: ts.Node) {
         if (!ts.isIdentifier(node))
-            return throwError(`Expected node to be an identifier: ${getNodeText(node)}`);
+            return throwError(`Expected node to be an identifier: ${getNodeText(node, sourceFile)}`);
         return node.text;
     }
 
     function getReturnStatementExpressionFromBlockOrThrow(block: ts.Block) {
         return getReturnStatementExpressionFromBlock(block)
-            || throwError(`Cound not find return statement with an expression in function expression: ${getNodeText(block)}`);
+            || throwError(`Cound not find return statement with an expression in function expression: ${getNodeText(block, sourceFile)}`);
     }
 
-    function getNodeText(node: ts.Node) {
-        return printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
+    function handleNameofInterpolate(callExpr: ts.CallExpression) {
+        if (callExpr.arguments.length !== 1)
+            return throwError("Unexpected scenario where a nameof.interpolate function did not have a single argument.");
+
+        // Add the interpolate expression to the context so that it can be checked later to find
+        // nameof.interpolate calls that were never resolved.
+        if (context != null)
+            context.interpolateExpressions.add(callExpr.arguments[0]);
     }
 
     function isNameof(node: ts.Node): node is ts.CallExpression {
@@ -180,5 +232,9 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile) {
             if (ts.isPropertyAccessExpression(expression) && ts.isIdentifier(expression.expression))
                 return expression.expression;
         }
+    }
+
+    function isInterpolatePropertyName(propertyName: string | undefined) {
+        return propertyName === "interpolate";
     }
 }

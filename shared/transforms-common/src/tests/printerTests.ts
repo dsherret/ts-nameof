@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import * as printers from "../printers";
-import * as factories from "../node-factories";
+import * as factories from "../nodeFactories";
 import { NameofCallExpression, Node } from "../nodes";
 
 describe("printCallExpression", () => {
@@ -196,6 +196,26 @@ describe("printNode", () => {
         it("should print when it has a typeof", () => {
             const node = factories.createImportTypeNode(true, factories.createIdentifierNode("test"));
             doTest(node, `typeof import(test)`);
+        });
+    });
+
+    describe("template literal", () => {
+        it("should print when only has a string", () => {
+            const node = factories.createTemplateExpressionNode(["testing"], factories.createIdentifierNode("length"));
+            doTest(node, "`testing`.length");
+        });
+
+        it("should print when also has an interpolate node", () => {
+            const node = factories.createTemplateExpressionNode(["testing", factories.createInterpolateNode(undefined, "myVar"), "this"]);
+            // in practice, the printer will never be printing a template literal
+            doTest(node, "`testing${nameof.interpolate(myVar)}this`");
+        });
+    });
+
+    describe("interpolate node", () => {
+        it("should print", () => {
+            const node = factories.createInterpolateNode(undefined, "myVar", factories.createIdentifierNode("length"));
+            doTest(node, "nameof.interpolate(myVar).length");
         });
     });
 });

@@ -1,4 +1,4 @@
-import { NameofCallExpression, Node } from "./nodes";
+import { NameofCallExpression, Node, TemplateExpressionNode } from "./nodes";
 import { assertNever } from "./external/common";
 
 /**
@@ -77,8 +77,24 @@ export function printNode(node: Node): string {
                 return `[${node.elements.map(e => printNode(e)).join(", ")}]`;
             case "ImportType":
                 return (node.isTypeOf ? "typeof " : "") + `import(${node.argument == null ? "" : printNode(node.argument)})`;
+            case "Interpolate":
+                return `nameof.interpolate(${node.expressionText})`;
+            case "TemplateExpression":
+                return printTemplateExpression(node);
             default:
                 return assertNever(node, `Unhandled kind: ${(node as Node).kind}`);
         }
+    }
+
+    function printTemplateExpression(TemplateExpression: TemplateExpressionNode) {
+        let text = "`";
+        for (const part of TemplateExpression.parts) {
+            if (typeof part === "string")
+                text += part;
+            else
+                text += "${" + printNode(part) + "}";
+        }
+        text += "`";
+        return text;
     }
 }
