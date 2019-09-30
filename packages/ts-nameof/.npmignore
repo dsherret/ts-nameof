@@ -8,7 +8,6 @@
 /bin
 /src
 /dist/tests
-/dist/external/tests-common
 /coverage
 /setup
 /scripts

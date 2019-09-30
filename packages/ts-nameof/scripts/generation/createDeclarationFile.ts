@@ -50,7 +50,7 @@ export function createDeclarationFile(project: Project) {
     }
 
     function addGlobalDeclarations() {
-        const globalFile = project.addExistingSourceFile("../../shared/lib/global.d.ts");
+        const globalFile = project.addExistingSourceFile("../../lib/global.d.ts");
         declarationFile.addStatements(writer => {
             writer.newLine();
             writer.write(globalFile.getText().replace(/\r?\n$/, ""));

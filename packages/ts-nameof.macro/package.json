@@ -1,18 +1,13 @@
 {
   "name": "ts-nameof.macro",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Babel macro for nameof in TypeScript.",
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
   "scripts": {
-    "install-dependencies": "ts-node ../../scripts/runInSeries install-build transforms-babel tests-common common scripts-common",
-    "create-links-scripts": "symlink-dir ../../shared/scripts-common/dist scripts/external/scripts-common",
-    "create-links-src": "symlink-dir ../../shared/transforms-babel/dist src/external/transforms-babel && symlink-dir ../../shared/tests-common/dist src/external/tests-common",
-    "create-links": "yarn create-links-src && yarn create-links-scripts",
-    "prepare": "yarn install-dependencies && yarn create-links",
-    "build": "rimraf dist && tsc --build && cpx \"./src/external/**/*.js\" \"./dist/external\" -L",
+    "build": "rimraf dist && tsc --build",
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",
-    "create-declaration-file": "ts-node --project tsconfig.scripts.json scripts/generation/main create-declaration-file",
+    "create-declaration-file": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file",
     "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
   "keywords": [
@@ -32,9 +27,14 @@
   "peerDependencies": {
     "babel-plugin-macros": "^2.6.1"
   },
+  "dependencies": {
+    "@ts-nameof/transforms-babel": "^4.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@ts-nameof/scripts-common": "^4.0.1",
+    "@ts-nameof/tests-common": "^4.0.1",
     "@types/babel__core": "^7.1.2",
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",
@@ -42,12 +42,10 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.8",
     "coveralls": "^3.0.5",
-    "cpx": "^1.5.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
-    "symlink-dir": "^3.1.0",
     "ts-node": "^8.3.0",
     "ts-morph": "^3.1.3",
     "typescript": "^3.5.3",

@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "description": "Monorepo for ts-nameof. This file is only used for scripts.",
   "scripts": {
-    "install": "ts-node scripts/runInSeries install packages/",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "clean": "lerna clean",
     "format": "dprint",
-    "test:transforms": "ts-node scripts/runInParallel test transforms-babel transforms-ts",
-    "test": "ts-node scripts/runInParallel test",
-    "create-declaration-file": "ts-node scripts/runInParallel create-declaration-file ts-nameof ts-nameof.macro",
-    "verify-declaration-file": "ts-node scripts/runInParallel verify-declaration-file ts-nameof",
+    "test": "lerna run test",
+    "create-declaration-file": "lerna run create-declaration-file",
+    "verify-declaration-file": "lerna run verify-declaration-file",
     "verify": "yarn test && yarn verify-declaration-file"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "dprint": "^0.7.1",
     "dprint-plugin-jsonc": "^0.2.2",
     "dprint-plugin-typescript": "^0.6.2",
+    "lerna": "^3.16.4",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.3"
   }

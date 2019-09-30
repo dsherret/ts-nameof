@@ -1,5 +1,0 @@
-tsconfig.json
-./src
-./dist/tests
-./coverage
-./nyc

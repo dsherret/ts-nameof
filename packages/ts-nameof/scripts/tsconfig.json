@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "noEmit": true
+  },
+  "extends": "../../../tsconfig.common.json",
+  "exclude": [
+    "./lib",
+    "./src"
+  ],
+  "references": [
+    { "path": "../../scripts-common" }
+  ]
+}

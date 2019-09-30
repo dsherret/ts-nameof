@@ -8,8 +8,6 @@
 /bin
 /src
 /dist/tests
-/dist/external/tests-common
-/dist/external/transforms-babel/external/tests-common
 /coverage
 /setup
 /scripts

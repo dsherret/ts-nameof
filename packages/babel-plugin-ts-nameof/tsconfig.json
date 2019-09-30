@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "incremental": true
   },
   "extends": "../../tsconfig.common.json",
   "include": ["./src"],
   "references": [
-    { "path": "../../shared/transforms-babel" }
+    { "path": "../transforms-babel" }
   ]
 }

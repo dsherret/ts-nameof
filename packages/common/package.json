@@ -1,0 +1,20 @@
+{
+  "name": "@ts-nameof/common",
+  "version": "4.0.1",
+  "description": "ts-nameof - Common code across packages.",
+  "main": "./dist/index.js",
+  "author": "David Sherret",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "dependencies": {
+    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.0"
+  }
+}

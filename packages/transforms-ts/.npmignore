@@ -1,0 +1,7 @@
+tsconfig.json
+tsconfig.tsbuildinfo
+src
+coverage
+.nyc_output
+yarn-error.log
+mocha.opts

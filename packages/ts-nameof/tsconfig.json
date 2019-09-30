@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "rootDir": "./src",
     "outDir": "./dist"
   },
   "extends": "../../tsconfig.common.json",
   "include": ["./src"],
   "references": [
-    { "path": "../../shared/transforms-ts" },
-    { "path": "../../shared/tests-common" }
+    { "path": "../transforms-ts" },
+    { "path": "../tests-common" }
   ]
 }

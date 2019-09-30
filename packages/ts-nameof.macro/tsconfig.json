@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "incremental": true,
     "rootDir": "./src",
     "outDir": "./dist"
   },
   "extends": "../../tsconfig.common.json",
   "include": ["./src"],
   "references": [
-    { "path": "../../shared/transforms-babel" }
+    { "path": "../transforms-babel" }
   ]
 }

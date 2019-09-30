@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { runCommonTests } from "../../external/tests-common";
+import { runCommonTests } from "@ts-nameof/tests-common";
 import { replaceInText } from "../../text";
 
 describe("replaceInText", () => {

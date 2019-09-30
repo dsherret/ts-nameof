@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { visitNode, VisitSourceFileContext, throwIfContextHasInterpolateExpressions } from "../external/transforms-ts";
+import { visitNode, VisitSourceFileContext, throwIfContextHasInterpolateExpressions } from "@ts-nameof/transforms-ts";
 
 const printer = ts.createPrinter();
 

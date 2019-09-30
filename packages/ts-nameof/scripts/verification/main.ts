@@ -1,4 +1,4 @@
-import { ArgsChecker } from "../external/scripts-common";
+import { ArgsChecker } from "@ts-nameof/scripts-common";
 import { verifyDeclarationFile } from "./verifyDeclarationFile";
 
 const argsChecker = new ArgsChecker();
