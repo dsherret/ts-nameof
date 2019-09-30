@@ -7,8 +7,5 @@
   "exclude": [
     "./lib",
     "./src"
-  ],
-  "references": [
-    { "path": "../../scripts-common" }
   ]
 }
