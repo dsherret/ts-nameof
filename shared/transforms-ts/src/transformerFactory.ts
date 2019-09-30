@@ -18,11 +18,7 @@ export function visitSourceFile(sourceFile: ts.SourceFile, context: ts.Transform
     };
     const result = visitNodeAndChildren(sourceFile);
 
-    if (visitSourceFileContext.interpolateExpressions.size > 0) {
-        const firstResult = Array.from(visitSourceFileContext.interpolateExpressions.values())[0];
-        return throwError(`Found a nameof.interpolate that did not exist within a `
-            + `nameof.full call expression: nameof.interpolate(${getNodeText(firstResult, sourceFile)})`);
-    }
+    throwIfContextHasInterpolateExpressions(visitSourceFileContext, sourceFile);
 
     return result;
 
@@ -33,6 +29,19 @@ export function visitSourceFile(sourceFile: ts.SourceFile, context: ts.Transform
         // visit the children in post order
         node = ts.visitEachChild(node, childNode => visitNodeAndChildren(childNode), context);
         return visitNode(node, sourceFile, visitSourceFileContext);
+    }
+}
+
+/**
+ * Throws if the context contains any remaining interpolate expressions.
+ * @param context - Context to check.
+ * @param sourceFile - Source file being transformed.
+ */
+export function throwIfContextHasInterpolateExpressions(context: VisitSourceFileContext, sourceFile: ts.SourceFile) {
+    if (context.interpolateExpressions.size > 0) {
+        const firstResult = Array.from(context.interpolateExpressions.values())[0];
+        return throwError(`Found a nameof.interpolate that did not exist within a `
+            + `nameof.full call expression: nameof.interpolate(${getNodeText(firstResult, sourceFile)})`);
     }
 }
 

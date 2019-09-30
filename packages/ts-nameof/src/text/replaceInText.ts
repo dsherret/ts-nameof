@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { visitNode } from "../external/transforms-ts";
+import { visitNode, VisitSourceFileContext, throwIfContextHasInterpolateExpressions } from "../external/transforms-ts";
 
 const printer = ts.createPrinter();
 
@@ -10,6 +10,9 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
         fileName = "/file.tsx"; // assume tsx
     }
 
+    const visitSourceFileContext: VisitSourceFileContext = {
+        interpolateExpressions: new Set<ts.Node>()
+    };
     const sourceFile = ts.createSourceFile(fileName, fileText, ts.ScriptTarget.Latest, false);
     const transformations: { start: number; end: number; text: string; }[] = [];
     const transformerFactory: ts.TransformerFactory<ts.SourceFile> = context => {
@@ -17,6 +20,8 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
         return _ => visitSourceFile(context);
     };
     ts.transform(sourceFile, [transformerFactory]);
+
+    throwIfContextHasInterpolateExpressions(visitSourceFileContext, sourceFile);
 
     if (transformations.length === 0)
         return { replaced: false };
@@ -46,7 +51,7 @@ export function replaceInText(fileName: string, fileText: string): { fileText?: 
 
             node = ts.visitEachChild(node, childNode => visitNodeAndChildren(childNode), context);
 
-            const resultNode = visitNode(node, sourceFile);
+            const resultNode = visitNode(node, sourceFile, visitSourceFileContext);
             const wasTransformed = resultNode !== node;
 
             if (wasTransformed)
