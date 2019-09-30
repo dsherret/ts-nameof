@@ -1,6 +1,6 @@
 {
   "name": "ts-nameof",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "description": "nameof in TypeScript",
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
