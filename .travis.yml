@@ -1,8 +1,10 @@
 language: node_js
 node_js:
     - "10"
-before_script:
-    - yarn bootstrap
-    - yarn verify-declaration-file
+install:
+  - yarn install
+  - yarn bootstrap
+  - yarn build
 script:
+    - yarn verify-declaration-file
     - yarn test
