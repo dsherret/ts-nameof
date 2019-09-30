@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/transforms-common",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "ts-nameof - Common code for transforms.",
   "main": "./dist/index.js",
   "author": "David Sherret",
@@ -13,7 +13,7 @@
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
-    "@ts-nameof/common": "^4.0.1"
+    "@ts-nameof/common": "^4.0.2"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",

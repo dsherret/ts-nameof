@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/common",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "ts-nameof - Common code across packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",

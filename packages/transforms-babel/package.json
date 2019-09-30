@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/transforms-babel",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "ts-nameof - Babel transforms for ts-nameof packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
@@ -13,13 +13,13 @@
     "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
   },
   "dependencies": {
-    "@ts-nameof/common": "^4.0.1",
-    "@ts-nameof/transforms-common": "^4.0.1"
+    "@ts-nameof/common": "^4.0.2",
+    "@ts-nameof/transforms-common": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
-    "@ts-nameof/tests-common": "^4.0.1",
+    "@ts-nameof/tests-common": "^4.0.2",
     "@types/babel__core": "^7.1.2",
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",

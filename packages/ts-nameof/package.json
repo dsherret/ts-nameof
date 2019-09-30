@@ -1,6 +1,6 @@
 {
   "name": "ts-nameof",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "nameof in TypeScript",
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
@@ -47,13 +47,13 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@ts-nameof/common": "^4.0.1",
-    "@ts-nameof/transforms-ts": "^4.0.1",
+    "@ts-nameof/common": "^4.0.2",
+    "@ts-nameof/transforms-ts": "^4.0.2",
     "glob": "^7.1.4"
   },
   "devDependencies": {
-    "@ts-nameof/scripts-common": "^4.0.1",
-    "@ts-nameof/tests-common": "^4.0.1",
+    "@ts-nameof/scripts-common": "^4.0.2",
+    "@ts-nameof/tests-common": "^4.0.2",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.8",
