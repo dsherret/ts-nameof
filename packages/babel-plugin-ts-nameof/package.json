@@ -24,9 +24,9 @@
     "@ts-nameof/transforms-babel": "^4.0.1"
   },
   "devDependencies": {
-    "@ts-nameof/tests-common": "^4.0.1",
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@ts-nameof/tests-common": "^4.0.1",
     "@types/babel__core": "^7.1.2",
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",
