@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "rootDir": "./src",
     "outDir": "./dist"
   },

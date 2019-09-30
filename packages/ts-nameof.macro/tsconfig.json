@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "incremental": true,
     "rootDir": "./src",
     "outDir": "./dist"
   },
