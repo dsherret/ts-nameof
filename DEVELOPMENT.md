@@ -5,7 +5,7 @@
 Open the root directory of the repo and run:
 
 ```ts
-yarn install
+yarn bootstrap
 ```
 
 This will cause all the subdirectories to build and correctly reference the other directories.
@@ -14,23 +14,23 @@ This will cause all the subdirectories to build and correctly reference the othe
 
 ```
 # setup
-yarn install
+yarn bootstrap
 
 # running tests
 yarn test
 
 # format
-# <coming soon via dprint>
+yarn format
 ```
 
 ## Declaration File
 
 ### Global Definitions
 
-The global definitions are stored in [shared/lib/global.d.ts](shared/lib/global.d.ts). To make changes:
+The global definitions are stored in [lib/global.d.ts](lib/global.d.ts). To make changes:
 
-1. Add a failing test in [shared/lib/global.tests.ts](shared/lib/global.tests.ts) (failing test means you get a compile error)
-1. Update [shared/lib/global.d.ts](shared/lib/global.d.ts).
+1. Add a failing test in [lib/global.tests.ts](lib/global.tests.ts) (failing test means you get a compile error)
+1. Update [lib/global.d.ts](lib/global.d.ts).
 1. Run `yarn create-declaration-file` in the root directory which will update all the project's declaration files.
 
 ### ts-nameof - Updating API
