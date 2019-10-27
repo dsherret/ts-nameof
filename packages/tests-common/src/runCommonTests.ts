@@ -1,3 +1,4 @@
+import * as path from "path";
 import * as assert from "assert";
 import * as prettier from "prettier";
 
@@ -508,8 +509,14 @@ nameof(window);
             const result = getAsArray();
 
             for (let i = result.length - 1; i >= 0; i--) {
-                result[i] = "[ts-nameof]: " + result[i];
-                result.push("./ts-nameof.macro: " + result[i]);
+                const originalText = result[i];
+                result[i] = "[ts-nameof]: " + originalText;
+                // ts
+                result.push("[ts-nameof:/file.ts]: " + originalText);
+                // babel
+                result.push(`[ts-nameof:${path.resolve(__dirname, "../../transforms-babel/src/tests/test.ts")}]: ` + originalText);
+                // babel macro (not ideal, but whatever)
+                result.push("./ts-nameof.macro: [ts-nameof]: " + originalText);
             }
 
             return result;

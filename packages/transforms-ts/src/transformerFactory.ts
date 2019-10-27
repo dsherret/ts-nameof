@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import { transformCallExpression } from "@ts-nameof/transforms-common";
-import { throwError } from "@ts-nameof/common";
+import { throwError, throwErrorForSourceFile } from "@ts-nameof/common";
 import { getNodeText } from "./helpers";
 import { parse } from "./parse";
 import { transform, TransformResult } from "./transform";
@@ -16,11 +16,15 @@ export function visitSourceFile(sourceFile: ts.SourceFile, context: ts.Transform
     const visitSourceFileContext: VisitSourceFileContext = {
         interpolateExpressions: new Set()
     };
-    const result = visitNodeAndChildren(sourceFile);
+    try {
+        const result = visitNodeAndChildren(sourceFile);
 
-    throwIfContextHasInterpolateExpressions(visitSourceFileContext, sourceFile);
+        throwIfContextHasInterpolateExpressions(visitSourceFileContext, sourceFile);
 
-    return result;
+        return result;
+    } catch (err) {
+        return throwErrorForSourceFile(err.message, sourceFile.fileName);
+    }
 
     function visitNodeAndChildren(node: ts.Node): ts.Node {
         if (node == null)

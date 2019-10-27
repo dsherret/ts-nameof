@@ -1,5 +1,6 @@
 import * as babelTypes from "@babel/types";
 import { NodePath } from "@babel/traverse";
+import { throwErrorForSourceFile } from "@ts-nameof/common";
 import { transformCallExpression } from "@ts-nameof/transforms-common";
 import { parse, ParseOptions } from "./parse";
 import { transform } from "./transform";
@@ -9,10 +10,15 @@ export interface TransformOptions extends ParseOptions {
 
 export function plugin({ types: t }: { types: typeof babelTypes; }) {
     const visitor = {
-        CallExpression(path: NodePath) {
-            transformNode(t, path, {
-                traverseChildren: () => path.traverse(visitor)
-            });
+        CallExpression(path: NodePath, state: unknown) {
+            const filePath = (state as any).file.opts.filename as string;
+            try {
+                transformNode(t, path, {
+                    traverseChildren: () => path.traverse(visitor, state)
+                });
+            } catch (err) {
+                return throwErrorForSourceFile(err.message, filePath);
+            }
         }
     };
     return { visitor };
