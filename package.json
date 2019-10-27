@@ -9,6 +9,7 @@
     "clean": "lerna clean",
     "format": "dprint",
     "test": "lerna run test",
+    "dopublish": "yarn build && lerna publish",
     "create-declaration-file": "lerna run create-declaration-file",
     "verify-declaration-file": "lerna run verify-declaration-file",
     "verify": "yarn test && yarn verify-declaration-file",
