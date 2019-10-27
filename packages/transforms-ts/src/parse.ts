@@ -91,6 +91,7 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile, context: 
         if (isNameof(node) && isInterpolatePropertyName(parsePropertyName(node)))
             return parseInterpolateNode(node);
         return throwError(`Unhandled node kind (${node.kind}) in text: ${getNodeText(node, sourceFile)}`
+            +` in filename: ${sourceFile.fileName}\r\n.`              
             + ` (Please open an issue if you believe this should be supported.)`);
     }
 
