@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run transforms-babel tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "--prefix", "packages/transforms-babel", "test:debug"],
+            "port": 9229,
+            "stopOnEntry": false
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run transforms-common tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "--prefix", "packages/transforms-common", "test:debug"],
+            "port": 9229,
+            "stopOnEntry": false
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run transforms-ts tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "--prefix", "packages/transforms-ts", "test:debug"],
+            "port": 9229,
+            "stopOnEntry": false
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run ts-nameof.macro tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "--prefix", "packages/ts-nameof.macro", "test:debug"],
+            "port": 9229,
+            "stopOnEntry": false
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run ts-nameof tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "--prefix", "packages/ts-nameof", "test:debug"],
+            "port": 9229,
+            "stopOnEntry": false
+        },
+    ]
+}

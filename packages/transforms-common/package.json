@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc --build",
-    "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts"
+    "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test:debug": "yarn test --inspect-brk"
   },
   "dependencies": {
     "@ts-nameof/common": "^4.0.2"
