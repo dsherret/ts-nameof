@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-ts-nameof",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "nameof in TypeScript for babel.",
   "main": "dist/index.js",
   "scripts": {
@@ -21,12 +21,12 @@
   "author": "David Sherret",
   "license": "MIT",
   "dependencies": {
-    "@ts-nameof/transforms-babel": "^4.0.2"
+    "@ts-nameof/transforms-babel": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
-    "@ts-nameof/tests-common": "^4.0.2",
+    "@ts-nameof/tests-common": "^4.1.0",
     "@types/babel__core": "^7.1.2",
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",

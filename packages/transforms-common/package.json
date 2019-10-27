@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/transforms-common",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "ts-nameof - Common code for transforms.",
   "main": "./dist/index.js",
   "author": "David Sherret",
@@ -14,7 +14,7 @@
     "test:debug": "yarn test --inspect-brk"
   },
   "dependencies": {
-    "@ts-nameof/common": "^4.0.2"
+    "@ts-nameof/common": "^4.1.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",

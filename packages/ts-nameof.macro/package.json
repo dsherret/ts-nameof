@@ -1,6 +1,6 @@
 {
   "name": "ts-nameof.macro",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "Babel macro for nameof in TypeScript.",
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
@@ -29,13 +29,13 @@
     "babel-plugin-macros": "^2.6.1"
   },
   "dependencies": {
-    "@ts-nameof/transforms-babel": "^4.0.2"
+    "@ts-nameof/transforms-babel": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@ts-nameof/scripts-common": "^4.0.2",
-    "@ts-nameof/tests-common": "^4.0.2",
+    "@ts-nameof/tests-common": "^4.1.0",
     "@types/babel__core": "^7.1.2",
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",
