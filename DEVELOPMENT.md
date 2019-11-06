@@ -5,7 +5,9 @@
 Open the root directory of the repo and run:
 
 ```ts
+yarn install
 yarn bootstrap
+yarn build
 ```
 
 This will cause all the subdirectories to build and correctly reference the other directories.
