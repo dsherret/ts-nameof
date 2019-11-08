@@ -36,14 +36,6 @@ yarn format
 
 I believe at the moment you have to build a depended on package manually in development... that is, building a package that depends on another package will not build the depended on package. For now, just build everything after making a change when testing across libraries. (I will improve this later when I have time because it's not ideal... I think I was having trouble with incremental builds in the TypeScript compiler not doing exactly what I wanted...)
 
-## After Development
-
-Run the following command in the root directory, which will check that everything is good:
-
-```bash
-yarn verify
-```
-
 ## Declaration File
 
 ### Global Definitions
@@ -59,3 +51,11 @@ The global definitions are stored in [lib/global.d.ts](lib/global.d.ts). To make
 1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test.
 1. Update the API in [packages/ts-nameof/src/main.ts](packages/ts-nameof/src/main.ts).
 1. Run `yarn create-declaration-file`
+
+## After Development
+
+Run the following command in the root directory, which will check that everything is good:
+
+```bash
+yarn verify
+```
