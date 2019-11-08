@@ -9,8 +9,6 @@ Open the root directory of the repo and run:
 yarn setup
 ```
 
-This will cause all the subdirectories to build and correctly reference the other directories.
-
 ## Packages
 
 * [packages/babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) - Transform plugin for Babel.
