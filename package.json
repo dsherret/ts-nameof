@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "Monorepo for ts-nameof. This file is only used for scripts.",
   "scripts": {
+    "setup": "yarn install && yarn bootstrap && yarn build",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna clean",
