@@ -34,7 +34,7 @@ const mappings = [
     ["@ts-nameof/transforms-common", project.getSourceFileOrThrow("packages/transforms-common/src/index.ts")],
     ["@ts-nameof/transforms-ts", project.getSourceFileOrThrow("packages/transforms-ts/src/index.ts")],
     ["@ts-nameof/transforms-babel", project.getSourceFileOrThrow("packages/transforms-babel/src/index.ts")],
-    ["@ts-nameof/tests-common", project.getSourceFileOrThrow("packages/tests-common/src/index.ts")],
+    ["@ts-nameof/tests-common", project.getSourceFileOrThrow("packages/tests-common/src/index.ts")]
 ];
 
 if (process.argv[2] === "--undo")
