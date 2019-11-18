@@ -12,6 +12,8 @@ export function transformCallExpression(callExpr: NameofCallExpression) {
         return handleNameofFull(callExpr);
     if (callExpr.property === "toArray")
         return handleNameofToArray(callExpr);
+    if (callExpr.property === "split")
+        return handleNameofSplit(callExpr);
     return throwError(`Unsupported nameof call expression with property '${callExpr.property}': ${printCallExpression(callExpr)}`);
 }
 
@@ -28,8 +30,42 @@ function handleNameof(callExpr: NameofCallExpression) {
 }
 
 function handleNameofFull(callExpr: NameofCallExpression) {
+    return parseNameofFullExpression(getNodesFromCallExpression(callExpr));
+}
+
+function handleNameofSplit(callExpr: NameofCallExpression) {
+    const literalNodes = getNodesFromCallExpression(callExpr).map(node => parseNode(node));
+    return createArrayLiteralNode(literalNodes);
+}
+
+function handleNameofToArray(callExpr: NameofCallExpression) {
+    const arrayArguments = getNodeArray();
+    return createArrayLiteralNode(arrayArguments.map(element => parseNameofExpression(element)));
+
+    function getNodeArray() {
+        if (callExpr.arguments.length === 0)
+            return throwError(`Unable to parse call expression. No arguments provided: ${printCallExpression(callExpr)}`);
+
+        const firstArgument = callExpr.arguments[0];
+        if (callExpr.arguments.length === 1 && firstArgument.kind === "Function")
+            return handleFunction(firstArgument);
+        else
+            return callExpr.arguments;
+
+        function handleFunction(func: FunctionNode) {
+            const functionReturnValue = func.value;
+
+            if (functionReturnValue == null || functionReturnValue.kind !== "ArrayLiteral")
+                return throwError(`Unsupported toArray call expression. An array must be returned by the provided function: ${printCallExpression(callExpr)}`);
+
+            return functionReturnValue.elements;
+        }
+    }
+}
+
+function getNodesFromCallExpression(callExpr: NameofCallExpression) {
     const { expression, count } = getExpressionAndCount();
-    return parseNameofFullExpression(getNodesFromCount(flattenNodeToArray(expression), count));
+    return getNodesFromCount(flattenNodeToArray(expression), count);
 
     function getExpressionAndCount() {
         if (shouldUseArguments()) {
@@ -94,62 +130,11 @@ function handleNameofFull(callExpr: NameofCallExpression) {
     }
 }
 
-function handleNameofToArray(callExpr: NameofCallExpression) {
-    const arrayArguments = getNodeArray();
-    return createArrayLiteralNode(arrayArguments.map(element => parseNameofExpression(element)));
-
-    function getNodeArray() {
-        if (callExpr.arguments.length === 0)
-            return throwError(`Unable to parse call expression. No arguments provided: ${printCallExpression(callExpr)}`);
-
-        const firstArgument = callExpr.arguments[0];
-        if (callExpr.arguments.length === 1 && firstArgument.kind === "Function")
-            return handleFunction(firstArgument);
-        else
-            return callExpr.arguments;
-
-        function handleFunction(func: FunctionNode) {
-            const functionReturnValue = func.value;
-
-            if (functionReturnValue == null || functionReturnValue.kind !== "ArrayLiteral")
-                return throwError(`Unsupported toArray call expression. An array must be returned by the provided function: ${printCallExpression(callExpr)}`);
-
-            return functionReturnValue.elements;
-        }
-    }
-}
-
 function parseNameofExpression(expression: Node) {
-    const lastNode = getNodeForNameOf();
-
-    switch (lastNode.kind) {
-        case "Identifier":
-            return createStringLiteralNode(lastNode.value);
-        case "StringLiteral":
-            // make a copy
-            return createStringLiteralNode(lastNode.value);
-        case "TemplateExpression":
-            // todo: test this
-            return createTemplateExpressionNode(lastNode.parts);
-        case "NumericLiteral":
-            // make a copy
-            return createStringLiteralNode(lastNode.value.toString());
-        case "Function":
-            return throwError(`Nesting functions is not supported: ${printNode(expression)}`);
-        case "Computed":
-            if (lastNode.value.kind === "StringLiteral" && lastNode.value.next == null)
-                return createStringLiteralNode(lastNode.value.value);
-            return throwError(`First accessed property must not be computed except if providing a string: ${printNode(expression)}`);
-        case "Interpolate":
-        case "ArrayLiteral":
-        case "ImportType":
-            return throwNotSupportedErrorForNode(lastNode);
-        default:
-            return assertNever(lastNode, `Not implemented node: ${JSON.stringify(lastNode)}`);
-    }
+    return parseNode(getNodeForNameOf(), expression);
 
     function getNodeForNameOf() {
-        let node = getLastNextNode(expression);
+        const node = getLastNextNode(expression);
         if (node.kind === "Function") {
             const argument = node.value;
             if (argument.next == null)
@@ -157,6 +142,34 @@ function parseNameofExpression(expression: Node) {
             return getLastNextNode(argument.next);
         }
         return node;
+    }
+}
+
+function parseNode(node: Node, parent?: Node) {
+    switch (node.kind) {
+        case "Identifier":
+            return createStringLiteralNode(node.value);
+        case "StringLiteral":
+            // make a copy
+            return createStringLiteralNode(node.value);
+        case "TemplateExpression":
+            // todo: test this
+            return createTemplateExpressionNode(node.parts);
+        case "NumericLiteral":
+            // make a copy
+            return createStringLiteralNode(node.value.toString());
+        case "Function":
+            return throwError(`Nesting functions is not supported: ${printNode(parent || node)}`);
+        case "Computed":
+            if (node.value.kind === "StringLiteral" && node.value.next == null)
+                return createStringLiteralNode(node.value.value);
+            return throwError(`First accessed property must not be computed except if providing a string: ${printNode(parent || node)}`);
+        case "Interpolate":
+        case "ArrayLiteral":
+        case "ImportType":
+            return throwNotSupportedErrorForNode(node);
+        default:
+            return assertNever(node, `Not implemented node: ${JSON.stringify(node)}`);
     }
 }
 
