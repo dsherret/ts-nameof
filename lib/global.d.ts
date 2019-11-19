@@ -2,9 +2,11 @@
  * Gets a string representation of the final identifier of the given expression.
  * 
  * @example nameof<MyInterface>() -> "MyInterface"
+ * @example nameof<Array<MyInterface>>() -> "Array"
  * @example nameof<MyNamespace.MyInnerInterface>() -> "MyInnerInterface"
+ * @example nameof<MyInterface>(o => o.prop) -> "prop"
  * 
- * @param func A function for which the last identifier of the expression will be parsed.
+ * @param func An optional function for which the last identifier of the expression will be parsed.
  */
 declare function nameof<T>(func?: (obj: T) => void): string;
 
@@ -12,6 +14,7 @@ declare function nameof<T>(func?: (obj: T) => void): string;
  * Gets a string representation of the last identifier of the given expression.
  * 
  * @example nameof(console) -> "console"
+ * @example nameof(console.log) -> "log"
  * @example nameof(console["warn"]) -> "warn"
  * 
  * @param obj An expression for which the last identifier will be parsed.
@@ -24,6 +27,8 @@ declare namespace nameof {
      * 
      * @example nameof.full<MyNamespace.MyInnerInterface>() -> "MyNamespace.MyInnerInterface"
      * @example nameof.full<MyNamespace.MyInnerInterface>(1) -> "MyInnerInterface"
+     * @example nameof.full<Array<MyInterface>>() -> "Array"
+     * @example nameof.full<MyNamespace.MyInnerInterface.AnotherInterface>>(-1) -> "AnotherInterface"
      * 
      * @param periodIndex Specifies the index of the part of the expression to parse. 
      * When absent, the full expression will be parsed. 
@@ -36,6 +41,7 @@ declare namespace nameof {
      * 
      * @example nameof.full<MyInterface>(o => o.prop.prop2) -> "prop.prop2"
      * @example nameof.full<MyInterface>(o => o.prop.prop2.prop3, 1) -> "prop2.prop3"
+     * @example nameof.full<MyInterface>(o => o.prop.prop2.prop3, -1) -> `"prop3"
      * 
      * @param func A function for which the result will be parsed, excluding the parameter's identifier.
      * @param periodIndex Specifies the index of the part of the expression to parse. 
@@ -45,10 +51,11 @@ declare namespace nameof {
     function full<T>(func: (obj: T) => void, periodIndex?: number): string;
 
     /**
-     * Gets the string representation of the entire expression given by obj.
+     * Gets the string representation of the entire given expression.
      * 
      * @example nameof.full(console.log) -> "console.log"
      * @example nameof.full(window.alert.length, -1) -> "length"
+     * @example nameof.full(window.alert.length, 2) -> "length"
      * 
      * @param obj The expression which will be parsed.
      * @param periodIndex Specifies the index of the part of the expression to parse. 
@@ -89,9 +96,11 @@ declare namespace nameof {
     /**
      * Gets an array of strings where each element is a subsequent part of the expression provided.
      * 
-     * @example nameof.split<MyInterface>(o => o.Prop1.Prop2.Prop3) -> ["Prop1", "Prop2", "Prop3"]
+     * @example nameof.split<MyInterface>(o => o.prop.prop2.prop3) -> ["prop", "prop2", "prop3"]
+     * @example nameof.split<MyInterface>(o => o.prop.prop2.prop3, 1) -> ["prop2", "prop3"]
+     * @example nameof.split<MyInterface>(o => o.prop.prop2.prop3, -1) -> ["prop", "prop2"]
      * 
-     * @param func A function for which the resultant parts will be parsed.
+     * @param func A function for which the resultant parts will be parsed, excluding the parameter's identifier.
      * @param periodIndex Specifies the index of the part of the expression to parse. 
      * When absent, the full expression will be parsed. 
      * A negative index can be used, indicating an offset from the end of the sequence.
@@ -101,7 +110,9 @@ declare namespace nameof {
     /**
      * Gets an array of strings where each element is a subsequent part of the expression provided.
      * 
-     * @example nameof.split(o.Prop1.Prop2.Prop3) -> ["o", "Prop1", "Prop2", "Prop3"]
+     * @example nameof.split(o.prop.prop2.prop3) -> ["o", "prop", "prop2", "prop3"]
+     * @example nameof.split(o.prop.prop2.prop3, -3);`, `["prop", "prop2", "prop3"];
+     * @example nameof.split(o.prop.prop2.prop3, 2);`, `["prop2", "prop3"]
      * 
      * @param obj An expression for which the parts will be parsed.
      * @param periodIndex Specifies the index of the part of the expression to parse. 
