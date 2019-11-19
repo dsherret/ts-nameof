@@ -28,7 +28,7 @@ declare namespace nameof {
      * @example nameof.full<MyNamespace.MyInnerInterface>() -> "MyNamespace.MyInnerInterface"
      * @example nameof.full<MyNamespace.MyInnerInterface>(1) -> "MyInnerInterface"
      * @example nameof.full<Array<MyInterface>>() -> "Array"
-     * @example nameof.full<MyNamespace.MyInnerInterface.AnotherInterface>>(-1) -> "AnotherInterface"
+     * @example nameof.full<MyNamespace.AnotherNamespace.MyInnerInterface>>(-1) -> "MyInnerInterface"
      * 
      * @param periodIndex Specifies the index of the part of the expression to parse. 
      * When absent, the full expression will be parsed. 
