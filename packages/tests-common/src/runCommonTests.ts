@@ -407,6 +407,48 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
         });
     });
 
+    describe("split", () => {
+        it("should return an array of values where each element is a subsequent part of the path provided", () => {
+            runTest(`nameof.split<MyInterface>(o => o.Prop1.Prop2.Prop3);`, `["Prop1", "Prop2", "Prop3"];`);
+        });
+
+        it("should return an array of values where each element is a subsequent part of the path provided", () => {
+            runTest(`nameof.split(o.Prop1.Prop2.Prop3);`, `["o", "Prop1", "Prop2", "Prop3"];`);
+        });
+
+        it("should allow using a period index", () => {
+            runTest(`nameof.split(MyTest.Test.This, 1);`, `["Test", "This"];`);
+        });
+
+        it("should allow using a period index of 0", () => {
+            runTest(`nameof.split(MyTest.Test.This, 0);`, `["MyTest", "Test", "This"];`);
+        });
+
+        it("should allow using a period index up to its max value", () => {
+            runTest(`nameof.split(MyTest.Test.This, 2);`, `["This"];`);
+        });
+
+        it("should allow using a negative period index", () => {
+            runTest(`nameof.split(MyTest.Test.This, -1);`, `["This"];`);
+        });
+
+        it("should allow using a negative period index to its max value", () => {
+            runTest(`nameof.split(MyTest.Test.This, -3);`, `["MyTest", "Test", "This"];`);
+        });
+
+        it("should throw when the periodIndex is not a number literal", () => {
+            runThrowTest(`nameof.split(MyTest.Test, 'test')`, `Expected count to be a number, but was: "test"`);
+        });
+
+        it("should throw when the periodIndex is greater than the number of periods", () => {
+            runThrowTest(`nameof.split(MyTest.Test, 2)`, "Count of 2 was larger than max count of 1: nameof.split(MyTest.Test, 2)");
+        });
+
+        it("should throw when the absolute value of the negative periodIndex is greater than the number of periods + 1", () => {
+            runThrowTest(`nameof.split(MyTest.Test, -3)`, "Count of -3 was larger than max count of -2: nameof.split(MyTest.Test, -3)");
+        });
+    });
+
     describe("general", () => {
         it("should error when specifying a different nameof property", () => {
             runThrowTest(`nameof.nonExistent()`, "Unsupported nameof call expression with property 'nonExistent': nameof.nonExistent()");
