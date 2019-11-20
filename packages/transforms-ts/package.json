@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/transforms-ts",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "ts-nameof - TypeScript compiler transforms for ts-nameof packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
@@ -14,11 +14,11 @@
     "test:debug": "yarn test --inspect-brk"
   },
   "dependencies": {
-    "@ts-nameof/common": "^4.1.0",
-    "@ts-nameof/transforms-common": "^4.1.0"
+    "@ts-nameof/common": "^4.2.0",
+    "@ts-nameof/transforms-common": "^4.2.0"
   },
   "devDependencies": {
-    "@ts-nameof/tests-common": "^4.1.0",
+    "@ts-nameof/tests-common": "^4.2.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
