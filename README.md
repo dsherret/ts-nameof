@@ -171,6 +171,42 @@ Transforms to:
 ["prop", "myProp.otherProp"];
 ```
 
+## nameof.split transform
+
+Contributed by: [@cecilyth](https://github.com/cecilyth)
+
+### `nameof.split(...)`
+
+```ts
+nameof.split(myObj.prop.prop2);
+nameof.split(myObj.prop.prop2, 1);
+nameof.split(myObj.prop.prop2, -1);
+```
+
+Transforms to:
+
+```ts
+["myObj", "prop", "prop2"];
+["prop", "prop2"];
+["prop2"];
+```
+
+### `nameof.split<T>(o => ...)`
+
+```ts
+nameof.split<MyInterface>(o => o.prop.prop2.prop3);
+nameof.split<MyInterface>(o => o.prop.prop2.prop3, 1);
+nameof.split<MyInterface>(o => o.prop.prop2.prop3, -1);
+```
+
+Transforms to:
+
+```ts
+["prop", "prop2", "prop3"];
+["prop2", "prop3"];
+["prop3"];
+```
+
 ## Other
 
 * [Contributing](CONTRIBUTING.md)
