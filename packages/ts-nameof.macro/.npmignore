@@ -23,3 +23,4 @@ CHANGELOG.md
 mocha.opts
 tsconfig.json
 yarn-error.log
+tsconfig.tsbuildinfo

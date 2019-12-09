@@ -37,7 +37,7 @@
     "dprint-plugin-jsonc": "^0.2.2",
     "dprint-plugin-typescript": "^0.6.2",
     "lerna": "^3.16.4",
-    "ts-morph": "^4.3.2",
+    "ts-morph": "^6.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.3"
   }

@@ -1,7 +1,7 @@
 import { Project, TypeGuards, NamespaceDeclarationKind } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
-    const globalFile = project.addExistingSourceFile("../../lib/global.d.ts");
+    const globalFile = project.addSourceFileAtPath("../../lib/global.d.ts");
     const declarationFile = project.createSourceFile("ts-nameof.macro.d.ts", "", { overwrite: true });
     const namespaceDec = declarationFile.addNamespace({
         name: `"ts-nameof.macro"`,
