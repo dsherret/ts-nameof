@@ -206,6 +206,33 @@
     multimatch "^4.0.0"
     typescript "~3.7.2"
 
+"@ts-nameof/common@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@ts-nameof/common/-/common-4.2.0.tgz#a48d280e92ae1788c2067a5c4b5b1af846b42f52"
+  dependencies:
+    typescript "^3.5.3"
+
+"@ts-nameof/scripts-common@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@ts-nameof/scripts-common/-/scripts-common-4.0.2.tgz#f3a26643badfa45c3841e88ee9f46da84007de93"
+
+"@ts-nameof/tests-common@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@ts-nameof/tests-common/-/tests-common-4.2.0.tgz#3bec8727bbf02b51cd7b824bb3deac29c0842837"
+
+"@ts-nameof/transforms-babel@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@ts-nameof/transforms-babel/-/transforms-babel-4.2.0.tgz#3f72b6f033e50df1eac8796ecd0270576a2d564c"
+  dependencies:
+    "@ts-nameof/common" "^4.2.0"
+    "@ts-nameof/transforms-common" "^4.2.0"
+
+"@ts-nameof/transforms-common@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@ts-nameof/transforms-common/-/transforms-common-4.2.0.tgz#3f9bc331e2e4f09d1a25b73e6491770bc35dbd79"
+  dependencies:
+    "@ts-nameof/common" "^4.2.0"
+
 "@types/babel__core@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -452,9 +479,9 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@~2.20.0:
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
+commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -795,8 +822,8 @@ growl@1.10.5, "growl@~> 1.10.0":
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"
 
 handlebars@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.2.tgz#b6b37c1ced0306b221e094fc7aca3ec23b131b67"
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -1823,10 +1850,10 @@ typescript@~3.7.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.3.tgz#b36840668a16458a7025b9eabfad11b66ab85c69"
 
 uglify-js@^3.1.4:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.0.tgz#704681345c53a8b2079fb6cec294b05ead242ff5"
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.7.3.tgz#f918fce9182f466d5140f24bb0ff35c2d32dcc6a"
   dependencies:
-    commander "~2.20.0"
+    commander "~2.20.3"
     source-map "~0.6.1"
 
 unc-path-regex@^0.1.2:
