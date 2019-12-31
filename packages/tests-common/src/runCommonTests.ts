@@ -542,7 +542,8 @@ nameof(window);
                     return;
             }
 
-            throw new Error(`Expected the error message of ${actualMessage} to equal one of the following messages: ${possibleExpectedMessages}`);
+            throw new Error(`Expected the error message of ${JSON.stringify(actualMessage)} to equal `
+                + `one of the following messages: ${JSON.stringify(possibleExpectedMessages)}`);
         }
 
         throw new Error(`Expected to throw, but returned: ${transformedText}`);
@@ -556,9 +557,9 @@ nameof(window);
                 // ts
                 result.push("[ts-nameof:/file.ts]: " + originalText);
                 // babel
-                result.push(`[ts-nameof:${path.resolve(__dirname, "../../transforms-babel/src/tests/test.ts")}]: ` + originalText);
+                result.push(`[ts-nameof:${path.resolve(__dirname, "../../transforms-babel/src/tests/test.ts")}]: ${originalText}`);
                 // babel macro (not ideal, but whatever)
-                result.push("./ts-nameof.macro: [ts-nameof]: " + originalText);
+                result.push(`${path.resolve(__dirname, "../../ts-nameof.macro/src/tests/test.ts")}: ./ts-nameof.macro: [ts-nameof]: ${originalText}`);
             }
 
             return result;

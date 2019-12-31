@@ -25,12 +25,12 @@
     "@types/babel__generator": "^7.0.2",
     "@types/babel__template": "^7.0.2",
     "@types/babel__traverse": "^7.0.7",
-    "@types/node": "^12.6.8",
-    "coveralls": "^3.0.5",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
-    "rimraf": "^2.6.3",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "@types/node": "^13.1.2",
+    "coveralls": "^3.0.9",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
   }
 }
