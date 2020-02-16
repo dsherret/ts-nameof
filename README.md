@@ -181,6 +181,7 @@ Contributed by: [@cecilyth](https://github.com/cecilyth)
 nameof.split(myObj.prop.prop2);
 nameof.split(myObj.prop.prop2, 1);
 nameof.split(myObj.prop.prop2, -1);
+nameof.split(myObj.prop.prop2).join("/");
 ```
 
 Transforms to:
@@ -189,6 +190,7 @@ Transforms to:
 ["myObj", "prop", "prop2"];
 ["prop", "prop2"];
 ["prop2"];
+["myObj", "prop", "prop2"].join("/"); // "myObj/prop/prop2"
 ```
 
 ### `nameof.split<T>(o => ...)`
@@ -197,6 +199,7 @@ Transforms to:
 nameof.split<MyInterface>(o => o.prop.prop2.prop3);
 nameof.split<MyInterface>(o => o.prop.prop2.prop3, 1);
 nameof.split<MyInterface>(o => o.prop.prop2.prop3, -1);
+nameof.split<IState>(s => s.a.b.c).join("/");
 ```
 
 Transforms to:
@@ -205,6 +208,7 @@ Transforms to:
 ["prop", "prop2", "prop3"];
 ["prop2", "prop3"];
 ["prop3"];
+["a", "b", "c"].join("/"); // "a/b/c"
 ```
 
 ## Other
