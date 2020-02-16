@@ -12,11 +12,11 @@
     "build": "rimraf dist && tsc"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.2",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.1",
     "@types/prettier": "^1.19.0",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4"
+    "rimraf": "^3.0.2",
+    "typescript": "^3.7.5"
   }
 }

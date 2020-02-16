@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rimraf dist && tsc --build && yarn build:declarations",
     "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file",
-    "test": "tsc --build && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test": "tsc --build && nyc --reporter=lcov mocha",
     "test:debug": "yarn test --inspect-brk",
     "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
   },
@@ -32,24 +32,24 @@
     "@ts-nameof/transforms-babel": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-typescript": "^7.7.7",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
     "@ts-nameof/scripts-common": "^4.0.2",
     "@ts-nameof/tests-common": "^4.2.0",
-    "@types/babel__core": "^7.1.3",
+    "@types/babel__core": "^7.1.4",
     "@types/babel__generator": "^7.6.1",
     "@types/babel__template": "^7.0.2",
     "@types/babel__traverse": "^7.0.8",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.2",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.1",
     "babel-plugin-macros": "^2.8.0",
     "coveralls": "^3.0.9",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
-    "ts-morph": "^6.0.2",
-    "ts-node": "^8.5.4",
-    "typescript": "^3.7.4"
+    "rimraf": "^3.0.2",
+    "ts-morph": "^6.0.3",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   }
 }

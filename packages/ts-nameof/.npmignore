@@ -20,7 +20,7 @@
 .travis.yml
 .gitignore
 CHANGELOG.md
-mocha.opts
+.mocharc.yml
 tsconfig.json
 tsconfig.scripts.json
 yarn-error.log

@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "tsc --build && yarn --silent copy-test-files && nyc --reporter=lcov mocha --opts mocha.opts",
+    "test": "tsc --build && yarn --silent copy-test-files && nyc --reporter=lcov mocha",
     "test:debug": "yarn test --inspect-brk",
     "build": "rimraf dist && tsc --build && yarn build:declarations",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
@@ -56,17 +56,17 @@
     "@ts-nameof/scripts-common": "^4.0.2",
     "@ts-nameof/tests-common": "^4.2.0",
     "@types/glob": "^7.1.1",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.2",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.1",
     "conditional-type-checks": "^1.0.5",
-    "copyfiles": "^2.1.1",
+    "copyfiles": "^2.2.0",
     "coveralls": "^3.0.9",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
-    "ts-morph": "^6.0.2",
-    "ts-node": "^8.5.4",
+    "rimraf": "^3.0.2",
+    "ts-morph": "^6.0.3",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
   }
 }

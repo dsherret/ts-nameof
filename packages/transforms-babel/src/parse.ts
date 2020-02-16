@@ -1,6 +1,6 @@
 import * as babelTypes from "@babel/types";
 import { Node, CallExpression, MemberExpression, Expression, TemplateLiteral, ArrowFunctionExpression, FunctionExpression, ArrayExpression, BlockStatement,
-    NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSTypeParameterInstantiation, TSImportType } from "@babel/types";
+    NumericLiteral, StringLiteral, UnaryExpression, TSQualifiedName, TSTypeParameterInstantiation, TSImportType, V8IntrinsicIdentifier } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { throwError } from "@ts-nameof/common";
 import * as common from "@ts-nameof/transforms-common";
@@ -232,7 +232,7 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
         const identifier = getIdentifierToInspect(node.callee);
         return identifier != null && identifier.name === (options.nameofIdentifierName || "nameof");
 
-        function getIdentifierToInspect(expression: Expression) {
+        function getIdentifierToInspect(expression: Expression | V8IntrinsicIdentifier) {
             if (t.isIdentifier(expression))
                 return expression;
             if (t.isMemberExpression(expression) && t.isIdentifier(expression.object))

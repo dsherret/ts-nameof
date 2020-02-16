@@ -14,7 +14,7 @@ declare module "ts-nameof" {
     export = api;
 }
 
-declare function nameof<T>(func?: (obj: T) => void): string;
+declare function nameof<T>(func?: (obj: T) => any): string;
 
 /**
  * Gets a string representation of the last identifier of the given expression.
@@ -54,7 +54,7 @@ declare namespace nameof {
      * When absent, the full expression will be parsed.
      * A negative index can be used, indicating an offset from the end of the sequence.
      */
-    function full<T>(func: (obj: T) => void, periodIndex?: number): string;
+    function full<T>(func: (obj: T) => any, periodIndex?: number): string;
 
     /**
      * Gets the string representation of the entire given expression.

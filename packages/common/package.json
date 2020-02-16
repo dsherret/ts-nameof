@@ -12,9 +12,9 @@
     "build": "rimraf dist && tsc"
   },
   "dependencies": {
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.2"
   }
 }

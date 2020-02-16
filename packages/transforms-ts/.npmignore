@@ -4,4 +4,4 @@ src
 coverage
 .nyc_output
 yarn-error.log
-mocha.opts
+.mocharc.yml
