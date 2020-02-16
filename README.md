@@ -11,6 +11,10 @@ Monorepo for ts-nameof projects:
 * [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) (Babel compiler)
 * [ts-nameof.macro](packages/ts-nameof.macro) (Babel compiler)
 
+## Setup
+
+ts-nameof is a *compile time transform* so it requires some setup. For setup instructions, see the packages above for the compiler you use.
+
 ## nameof transform
 
 ### `nameof(...)`
