@@ -17,4 +17,5 @@ script:
   - node common/scripts/install-run-rush.js rebuild --verbose
   - echo -en 'travis_fold:end:build\\r'
 
-  - node common/scripts/install-run-rush.js verify
+  - node common/scripts/install-run-rush.js test
+  - node common/scripts/install-run-rush.js verify-declaration-file
