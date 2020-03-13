@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
+  "commands": [
+    {
+      "commandKind": "bulk",
+      "name": "test",
+      "summary": "Runs the tests for all packages.",
+      "enableParallelism": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "create-declaration-file",
+      "summary": "Creates declaration files for all the packages.",
+      "enableParallelism": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "verify-declaration-file",
+      "summary": "Verifies all the declaration files do not have compile errors.",
+      "enableParallelism": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "global",
+      "name": "format",
+      "summary": "Formats the code.",
+      "shellCommand": "node packages/global-dependencies/node_modules/dprint/dist/cli-bin.js",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "verify",
+      "summary": "Verifies everything is in order.",
+      "shellCommand": "rush test && rush verify-declaration-file",
+      "safeForSimultaneousRushProcesses": true
+    }
+  ],
+  "parameters": []
+}

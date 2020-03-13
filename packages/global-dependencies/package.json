@@ -1,0 +1,16 @@
+{
+  "name": "@ts-nameof/global-dependencies",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dependencies for ts-nameof",
+  "author": "David Sherret",
+  "license": "MIT",
+  "scripts": {
+    "build": ""
+  },
+  "dependencies": {
+    "dprint": "^0.9.0",
+    "dprint-plugin-jsonc": "^0.4.0",
+    "dprint-plugin-typescript": "^0.14.1"
+  }
+}

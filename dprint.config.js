@@ -1,8 +1,8 @@
-// @ts-check
-const { TypeScriptPlugin } = require("dprint-plugin-typescript");
-const { JsoncPlugin } = require("dprint-plugin-jsonc");
+// disabled, since not working: @ts-check
+const { TypeScriptPlugin } = require("./packages/global-dependencies/node_modules/dprint-plugin-typescript");
+const { JsoncPlugin } = require("./packages/global-dependencies/node_modules/dprint-plugin-jsonc");
 
-/** @type { import("dprint").Configuration } */
+/** @type { import("./packages/global-dependencies/node_modules/dprint").Configuration } */
 module.exports.config = {
     projectType: "openSource",
     lineWidth: 160,
@@ -12,9 +12,10 @@ module.exports.config = {
             singleBodyPosition: "nextLine",
             preferHanging: true,
             nextControlFlowPosition: "nextLine",
+            quoteStyle: "alwaysDouble",
+            semiColons: "always",
             "arrowFunctionExpression.useParentheses": "preferNone",
-            "tryStatement.nextControlFlowPosition": "sameLine",
-            "quoteStyle": "alwaysDouble"
+            "tryStatement.nextControlFlowPosition": "sameLine"
         }),
         new JsoncPlugin({
             indentWidth: 2
@@ -24,6 +25,7 @@ module.exports.config = {
         "**/*{.ts,.tsx,.json,.js}"
     ],
     excludes: [
+        "common/**",
         "**/dist/**/*.*"
     ]
 };

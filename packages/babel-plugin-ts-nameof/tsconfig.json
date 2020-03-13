@@ -4,5 +4,8 @@
     "outDir": "./dist"
   },
   "extends": "../../tsconfig.common.json",
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [
+    { "path": "../transforms-babel" }
+  ]
 }

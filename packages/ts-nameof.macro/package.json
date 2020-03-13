@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
   "scripts": {
-    "build": "rimraf dist && tsc --build && yarn build:declarations",
+    "build": "rimraf dist && tsc --b --clean && tsc --b && npm run build:declarations",
     "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file",
-    "test": "tsc --build && nyc --reporter=lcov mocha",
-    "test:debug": "yarn test --inspect-brk",
-    "dopublish": "yarn install && yarn build && echo \"Run: npm publish --otp\""
+    "test": "tsc --build && mocha",
+    "test:debug": "npm run build && mocha --inspect-brk",
+    "dopublish": "npm run install && npm run build && echo \"Run: npm publish --otp\""
   },
   "keywords": [
     "nameof",
@@ -43,9 +43,7 @@
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.1",
     "babel-plugin-macros": "^2.8.0",
-    "coveralls": "^3.0.9",
     "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "ts-morph": "^6.0.3",

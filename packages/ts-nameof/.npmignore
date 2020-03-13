@@ -2,13 +2,11 @@
 /.vscode
 /.vs
 /.git
-/.nyc_output
 /obj
 /temp
 /bin
 /src
 /dist/tests
-/coverage
 /setup
 /scripts
 /lib
@@ -17,11 +15,12 @@
 *.csproj
 *.csproj.user
 *.sln
+*.log
+.rush
 .travis.yml
 .gitignore
 CHANGELOG.md
 .mocharc.yml
 tsconfig.json
 tsconfig.scripts.json
-yarn-error.log
 tsconfig.tsbuildinfo

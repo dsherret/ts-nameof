@@ -1,6 +1,7 @@
 tsconfig.json
 tsconfig.tsbuildinfo
 src
-.nyc_output
-coverage
-yarn-error.log
+*.log
+*.js.map
+.rush
+.mocharc.yml

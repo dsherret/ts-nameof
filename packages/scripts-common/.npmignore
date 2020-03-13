@@ -1,4 +1,6 @@
 tsconfig.json
 tsconfig.tsbuildinfo
 src
-yarn-error.log
+*.log
+*.js.map
+.rush
