@@ -2,13 +2,11 @@
 /.vscode
 /.vs
 /.git
-/.nyc_output
 /obj
 /temp
 /bin
 /src
 /dist/tests
-/coverage
 /setup
 /scripts
 /lib
@@ -22,5 +20,4 @@
 CHANGELOG.md
 .mocharc.yml
 tsconfig.json
-yarn-error.log
 tsconfig.tsbuildinfo

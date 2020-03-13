@@ -9,7 +9,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc --b --clean && tsc --b"
   },
   "devDependencies": {
     "@types/mocha": "^7.0.1",

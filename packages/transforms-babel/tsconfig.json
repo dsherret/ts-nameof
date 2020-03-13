@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./dist"
   },
   "extends": "../../tsconfig.common.json",
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [
+    { "path": "../common" },
+    { "path": "../transforms-common" }
+  ]
 }

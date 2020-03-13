@@ -5,13 +5,14 @@
   "main": "dist/main.js",
   "typings": "ts-nameof.d.ts",
   "scripts": {
-    "test": "tsc --build && yarn --silent copy-test-files && nyc --reporter=lcov mocha",
-    "test:debug": "yarn test --inspect-brk",
-    "build": "rimraf dist && tsc --build && yarn build:declarations",
+    "build-test": "tsc --build && npm run --silent copy-test-files",
+    "test": "npm run build-test && mocha",
+    "test:debug": "npm run build-test && mocha --inspect-brk",
+    "build": "rimraf dist && tsc --b --clean && tsc --b && npm run build:declarations",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
-    "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file && yarn --silent verify-declaration-file",
+    "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file && npm run --silent verify-declaration-file",
     "verify-declaration-file": "ts-node  --project scripts/tsconfig.json scripts/verification/main verify-declaration-file",
-    "dopublish": "yarn test && yarn build && yarn verify-declaration-file && echo \"run: npm publish --otp\""
+    "dopublish": "npm run test && npm run build && npm run verify-declaration-file && echo \"run: npm publish --otp\""
   },
   "repository": {
     "type": "git",
@@ -30,20 +31,6 @@
     "url": "https://github.com/dsherret/ts-nameof/issues"
   },
   "homepage": "https://github.com/dsherret/ts-nameof#readme",
-  "nyc": {
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "include": [
-      "src/**/*.ts",
-      "!src/tests/**/*.ts"
-    ],
-    "reporter": [
-      "html"
-    ],
-    "all": true
-  },
   "peerDependencies": {
     "typescript": "*"
   },
@@ -60,13 +47,11 @@
     "@types/node": "^13.7.1",
     "conditional-type-checks": "^1.0.5",
     "copyfiles": "^2.2.0",
-    "coveralls": "^3.0.9",
     "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "ts-morph": "^6.0.3",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.5"
   }
 }

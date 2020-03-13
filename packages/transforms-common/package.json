@@ -9,18 +9,17 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf dist && tsc --build",
-    "test": "tsc --build && nyc --reporter=lcov mocha",
-    "test:debug": "yarn test --inspect-brk"
+    "build": "rimraf dist && tsc --b --clean && tsc --b",
+    "test": "tsc --build && mocha",
+    "test:debug": "tsc --build && mocha --inspect-brk"
   },
   "dependencies": {
     "@ts-nameof/common": "^4.2.0"
   },
   "devDependencies": {
     "@types/mocha": "^7.0.1",
-    "coveralls": "^3.0.9",
+    "@types/node": "^13.7.1",
     "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
     "rimraf": "^3.0.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"

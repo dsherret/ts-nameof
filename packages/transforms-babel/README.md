@@ -5,6 +5,5 @@ Contains the babel transforms used in ts-nameof.
 ## Development Commands
 
 ```
-yarn install
-yarn test
+npm run test
 ```

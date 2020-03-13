@@ -11,10 +11,14 @@ describe("replaceInFiles()", () => {
         paths = paths.map(p => getTestFilePath(p));
         expectedFiles.forEach(f => f.filePath = getTestFilePath(f.filePath));
 
-        const initialFiles = await Promise.all(expectedFiles.map(f => readFile(f.filePath).then(data => ({
-            filePath: f.filePath,
-            contents: data
-        } as FileInfo))));
+        const initialFiles = await Promise.all(expectedFiles.map(f =>
+            readFile(f.filePath).then(data =>
+                ({
+                    filePath: f.filePath,
+                    contents: data
+                } as FileInfo)
+            )
+        ));
 
         try {
             await replaceInFilesPromise(paths);
