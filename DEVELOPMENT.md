@@ -5,7 +5,7 @@
 Open the root directory of the repo and run:
 
 ```bash
-# install rush (monorepo tool)
+# install rush globally (monorepo tool)
 npm install -g @microsoft/rush
 # installs dependencies
 rush update
@@ -32,7 +32,7 @@ run build
 rush build
 # run tests (run in root dir)
 rush test
-# format
+# format the code
 rush format
 ```
 

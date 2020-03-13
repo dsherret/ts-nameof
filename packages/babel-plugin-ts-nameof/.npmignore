@@ -15,6 +15,7 @@
 *.csproj
 *.csproj.user
 *.sln
+*.log
 .travis.yml
 .gitignore
 CHANGELOG.md
