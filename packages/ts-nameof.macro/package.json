@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "ts-nameof.macro.d.ts",
   "scripts": {
-    "build": "rimraf dist && tsc --b --clean && tsc --b && npm run build:declarations",
+    "clean": "rimraf dist && tsc --b --clean",
+    "build": "tsc --b && npm run build:declarations",
     "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file",
     "test": "tsc --build && mocha",
     "test:debug": "npm run build && mocha --inspect-brk",

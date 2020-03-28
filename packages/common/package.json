@@ -9,7 +9,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf dist && tsc --b --clean && tsc --b"
+    "clean": "rimraf dist && tsc --b --clean",
+    "build": "tsc --b"
   },
   "dependencies": {
     "typescript": "^3.8.3"

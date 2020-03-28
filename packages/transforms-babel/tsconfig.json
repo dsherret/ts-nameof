@@ -9,6 +9,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../common" },
-    { "path": "../transforms-common" }
+    { "path": "../transforms-common" },
+    { "path": "../tests-common" }
   ]
 }

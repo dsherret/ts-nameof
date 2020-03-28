@@ -4,7 +4,8 @@
   "description": "nameof in TypeScript for babel.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist && tsc --b --clean && tsc --b",
+    "clean": "rimraf dist &&  tsc --b --clean",
+    "build": "tsc --b",
     "dopublish": "npm run install && npm run build && echo \"Run: npm publish --otp\""
   },
   "keywords": [

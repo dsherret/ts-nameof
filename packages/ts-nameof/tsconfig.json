@@ -4,5 +4,10 @@
     "outDir": "./dist"
   },
   "extends": "../../tsconfig.common.json",
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [
+    { "path": "../transforms-ts" },
+    { "path": "../tests-common" },
+    { "path": "../scripts-common" }
+  ]
 }

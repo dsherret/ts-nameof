@@ -9,9 +9,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf dist && tsc --b --clean && tsc --b",
-    "test": "tsc --build && mocha",
-    "test:debug": "tsc --build && mocha --inspect-brk"
+    "clean": "rimraf dist && tsc --b --clean",
+    "build": "tsc --b",
+    "test": "npm run build && mocha",
+    "test:debug": "npm run build && mocha --inspect-brk"
   },
   "dependencies": {
     "@ts-nameof/common": "^4.2.0"

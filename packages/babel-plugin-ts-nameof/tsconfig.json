@@ -6,6 +6,7 @@
   "extends": "../../tsconfig.common.json",
   "include": ["./src"],
   "references": [
-    { "path": "../transforms-babel" }
+    { "path": "../transforms-babel" },
+    { "path": "../tests-common" }
   ]
 }

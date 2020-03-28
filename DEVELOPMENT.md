@@ -28,12 +28,26 @@ rush build
 ## Standard Commands
 
 ```bash
+# installs dependencies
+rush update
 # build (run in root dir)
 rush build
 # run tests (run in root dir)
 rush test
 # format the code
 rush format
+```
+
+### Clean Rebuild
+
+```
+rush clean && rush rebuild
+```
+
+### Reinstalling Packages
+
+```
+rush purge && rush update
 ```
 
 ## Declaration File

@@ -10,6 +10,13 @@
     },
     {
       "commandKind": "bulk",
+      "name": "clean",
+      "summary": "Cleans all the packages build folders.",
+      "enableParallelism": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "create-declaration-file",
       "summary": "Creates declaration files for all the packages.",
       "enableParallelism": true,
