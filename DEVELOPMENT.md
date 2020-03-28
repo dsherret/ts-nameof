@@ -10,7 +10,7 @@ npm install -g @microsoft/rush
 # installs dependencies
 rush update
 # builds all packages
-run build
+rush build
 ```
 
 ## Packages

@@ -1,5 +1,6 @@
 import * as babelTypes from "@babel/types";
-import { NodePath } from "@babel/traverse";
+import * as babel from "@babel/core";
+import { NodePath, Node } from "@babel/traverse";
 import { throwErrorForSourceFile } from "@ts-nameof/common";
 import { transformCallExpression } from "@ts-nameof/transforms-common";
 import { parse, ParseOptions } from "./parse";
@@ -8,7 +9,7 @@ import { transform } from "./transform";
 export interface TransformOptions extends ParseOptions {
 }
 
-export function plugin({ types: t }: { types: typeof babelTypes; }) {
+export function plugin({ types: t }: { types: typeof babelTypes; }): babel.PluginItem {
     const visitor = {
         CallExpression(path: NodePath, state: unknown) {
             const filePath = (state as any).file.opts.filename as string;
@@ -29,5 +30,6 @@ export function transformNode(t: typeof babelTypes, path: NodePath, options: Tra
     if (parseResult == null)
         return;
     const transformResult = transform(t, transformCallExpression(parseResult));
-    path.replaceWith(transformResult);
+    // temporary assertion due to conflicting type declaration versions
+    path.replaceWith(transformResult as Node);
 }

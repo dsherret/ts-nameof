@@ -14,7 +14,8 @@ module.exports.config = {
             nextControlFlowPosition: "nextLine",
             quoteStyle: "alwaysDouble",
             semiColons: "always",
-            "arrowFunctionExpression.useParentheses": "preferNone",
+            trailingCommas: "never", // todo: eventually change to default
+            "arrowFunction.useParentheses": "preferNone",
             "tryStatement.nextControlFlowPosition": "sameLine"
         }),
         new JsoncPlugin({
