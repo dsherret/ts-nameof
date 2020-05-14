@@ -166,15 +166,8 @@ export function parse(parsingNode: ts.Node, sourceFile: ts.SourceFile, context: 
             if (node.head.text.length > 0)
                 parts.push(node.head.text);
             for (const templateSpan of node.templateSpans) {
-                if (ts.isTemplateHead(templateSpan))
-                    parts.push(templateSpan.text);
-                else if (ts.isTemplateSpan(templateSpan)) {
-                    parts.push(createInterpolateNode(templateSpan.expression, getNodeText(templateSpan.expression, sourceFile)));
-                    parts.push(templateSpan.literal.text);
-                }
-                else {
-                    return assertNever(templateSpan, "Not implemented scenario.");
-                }
+                parts.push(createInterpolateNode(templateSpan.expression, getNodeText(templateSpan.expression, sourceFile)));
+                parts.push(templateSpan.literal.text);
             }
             return parts;
         }

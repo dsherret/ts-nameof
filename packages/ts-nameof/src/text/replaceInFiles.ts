@@ -2,39 +2,16 @@ import * as fs from "fs";
 import { getFileNamesFromGlobs } from "./getFileNamesFromGlobs";
 import { replaceInText } from "./replaceInText";
 
-type OnFinishedCallback = (err?: NodeJS.ErrnoException) => void;
-
-export function replaceInFiles(fileNames: ReadonlyArray<string>, onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: ReadonlyArray<string>, opts?: { encoding?: string; }, onFinished?: OnFinishedCallback): void;
-export function replaceInFiles(fileNames: ReadonlyArray<string>, optsOrOnFinished?: { encoding?: string; } | OnFinishedCallback,
-    onFinishedParam?: OnFinishedCallback): void
-{
-    const opts = { encoding: "utf8" };
-    let onFinished: OnFinishedCallback;
-
-    if (optsOrOnFinished instanceof Function)
-        onFinished = optsOrOnFinished;
-    else if (onFinishedParam instanceof Function)
-        onFinished = onFinishedParam;
-    else
-        onFinished = () => {};
-
-    if (optsOrOnFinished && !(optsOrOnFinished instanceof Function))
-        opts.encoding = optsOrOnFinished.encoding || opts.encoding;
-
-    getFileNamesFromGlobs(fileNames).then(globbedFileNames => doReplaceInFiles(globbedFileNames, opts.encoding)).then(() => {
-        onFinished();
-    }).catch(/*istanbul ignore next*/ err => {
-        onFinished(err);
-    });
+export function replaceInFiles(fileNames: ReadonlyArray<string>): Promise<void[]> {
+    return getFileNamesFromGlobs(fileNames).then(globbedFileNames => doReplaceInFiles(globbedFileNames));
 }
 
-function doReplaceInFiles(fileNames: ReadonlyArray<string>, encoding: string) {
+function doReplaceInFiles(fileNames: ReadonlyArray<string>) {
     const promises: Promise<void>[] = [];
 
     fileNames.forEach(fileName => {
         promises.push(new Promise<void>((resolve, reject) => {
-            fs.readFile(fileName, { encoding }, (err, fileText) => {
+            fs.readFile(fileName, { encoding: "utf8" }, (err, fileText) => {
                 /* istanbul ignore if */
                 if (err) {
                     reject(err);

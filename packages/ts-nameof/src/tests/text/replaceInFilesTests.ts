@@ -1,5 +1,6 @@
 import * as assert from "assert";
-import { getTestFilePath, readFile, writeFile, replaceInFilesPromise } from "./helpers";
+import { getTestFilePath, readFile, writeFile } from "./helpers";
+import { replaceInFiles } from "../../text";
 
 describe("replaceInFiles()", () => {
     interface FileInfo {
@@ -20,7 +21,7 @@ describe("replaceInFiles()", () => {
         ));
 
         try {
-            await replaceInFilesPromise(paths);
+            await replaceInFiles(paths);
             const readFilePromises = expectedFiles.map(f => readFile(f.filePath).then(data => ({ data, expectedContents: f.contents })));
 
             for (const promise of readFilePromises) {

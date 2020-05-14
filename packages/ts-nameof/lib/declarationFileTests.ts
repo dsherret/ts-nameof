@@ -7,14 +7,7 @@ import { IsExact, assert } from "conditional-type-checks";
 /* istanbul ignore next */
 function testFunc() {
     tsNameOf.replaceInFiles(["test"]);
-    tsNameOf.replaceInFiles(["test"], err => {
-        assert<IsExact<any, typeof err>>(true);
-    });
-    tsNameOf.replaceInFiles(["test"], {});
-    tsNameOf.replaceInFiles(["test"], { encoding: "utf-8" });
-    tsNameOf.replaceInFiles(["test"], { encoding: "utf-8" }, err => {
-        assert<IsExact<any, typeof err>>(true);
-    });
+    tsNameOf.replaceInFiles(["test"]).then(() => {});
 
     // replaceInText
     const replaceInTextResult = tsNameOf.replaceInText("fileName.ts", "const t = 5;");

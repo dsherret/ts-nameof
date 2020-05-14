@@ -1,5 +1,6 @@
 import * as assert from "assert";
-import { getTestFilePath, readFile, writeFile, replaceInFilesPromise } from "./helpers";
+import { getTestFilePath, readFile, writeFile } from "./helpers";
+import { replaceInFiles } from "../../text";
 
 describe("replaceInFiles()", () => {
     async function runTest(fileName: string, expectedFileName: string) {
@@ -9,7 +10,7 @@ describe("replaceInFiles()", () => {
         const originalFileText = await readFile(expectedFileName);
 
         try {
-            await replaceInFilesPromise([fileName]);
+            await replaceInFiles([fileName]);
             const data = await readFile(fileName);
             const expectedContents = await readFile(expectedFileName);
             assert.equal(data.replace(/\r?\n/g, "\n"), expectedContents.replace(/\r?\n/g, "\n"));

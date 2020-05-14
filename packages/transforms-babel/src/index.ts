@@ -15,7 +15,8 @@ export function plugin({ types: t }: { types: typeof babelTypes; }): babel.Plugi
             const filePath = (state as any).file.opts.filename as string;
             try {
                 transformNode(t, path, {
-                    traverseChildren: () => path.traverse(visitor, (state as any))
+                    // temp assertion because I'm too lazy to investigate what's going on here
+                    traverseChildren: () => path.traverse(visitor as any, (state as any))
                 });
             } catch (err) {
                 return throwErrorForSourceFile(err.message, filePath);

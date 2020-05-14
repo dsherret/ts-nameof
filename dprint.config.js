@@ -16,7 +16,8 @@ module.exports.config = {
             semiColons: "always",
             trailingCommas: "never", // todo: eventually change to default
             "arrowFunction.useParentheses": "preferNone",
-            "tryStatement.nextControlFlowPosition": "sameLine"
+            "tryStatement.nextControlFlowPosition": "sameLine",
+            newlines: "maintain" // todo: eventually change to default
         }),
         new JsoncPlugin({
             indentWidth: 2
