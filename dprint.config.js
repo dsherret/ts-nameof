@@ -6,6 +6,7 @@ const { JsoncPlugin } = require("./packages/global-dependencies/node_modules/dpr
 module.exports.config = {
     projectType: "openSource",
     lineWidth: 160,
+    newLineKind: "auto", // todo: eventually change to default
     plugins: [
         new TypeScriptPlugin({
             useBraces: "preferNone",
@@ -16,8 +17,7 @@ module.exports.config = {
             semiColons: "always",
             trailingCommas: "never", // todo: eventually change to default
             "arrowFunction.useParentheses": "preferNone",
-            "tryStatement.nextControlFlowPosition": "sameLine",
-            newlines: "maintain" // todo: eventually change to default
+            "tryStatement.nextControlFlowPosition": "sameLine"
         }),
         new JsoncPlugin({
             indentWidth: 2

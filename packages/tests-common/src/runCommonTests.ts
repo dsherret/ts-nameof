@@ -375,7 +375,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should handle the scenarios in issue #104", () => {
                 runTest("nameof.full(m.Data[nameof.interpolate(i)].Title);", "`m.Data[${i}].Title`;");
                 runTest("nameof.full(m.Data[i].Title);", `"m.Data[i].Title";`);
-            })
+            });
         });
     });
 

@@ -16,8 +16,7 @@ describe("replaceInFiles()", () => {
             readFile(f.filePath).then(data => ({
                 filePath: f.filePath,
                 contents: data
-            } as FileInfo)
-            )
+            } as FileInfo))
         ));
 
         try {
