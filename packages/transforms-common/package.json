@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/transforms-common",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "ts-nameof - Common code for transforms.",
   "main": "./dist/index.js",
   "author": "David Sherret",

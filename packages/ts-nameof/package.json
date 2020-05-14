@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@ts-nameof/common": "^4.2.0",
-    "@ts-nameof/transforms-ts": "^4.2.0",
+    "@ts-nameof/transforms-ts": "^4.2.1",
     "glob": "^7.1.6"
   },
   "devDependencies": {
