@@ -176,26 +176,32 @@ function parseNode(node: Node, parent?: Node) {
 function parseNameofFullExpression(expressionNodes: Node[]): StringLiteralNode | TemplateExpressionNode {
     const nodeBuilder = new StringOrTemplateExpressionNodeBuilder();
 
-    for (const node of expressionNodes)
+    for (let i = 0; i < expressionNodes.length; i++) {
+        const node = expressionNodes[i];
+        if (i > 0 && node.kind === "Identifier")
+            nodeBuilder.addText(".");
         addNodeToBuilder(node);
+    }
 
     return nodeBuilder.buildNode();
 
     function addNodeToBuilder(node: Node) {
         switch (node.kind) {
             case "Identifier":
-                if (nodeBuilder.hasText())
-                    nodeBuilder.addText(".");
                 nodeBuilder.addText(node.value);
                 break;
             case "Computed":
                 nodeBuilder.addText("[");
                 const computedNodes = flattenNodeToArray(node.value);
-                for (const computedNode of computedNodes) {
+                for (let i = 0; i < computedNodes.length; i++) {
+                    const computedNode = computedNodes[i];
                     if (computedNode.kind === "StringLiteral")
                         nodeBuilder.addText(`"${computedNode.value}"`);
-                    else
+                    else {
+                        if (i > 0 && computedNode.kind === "Identifier")
+                            nodeBuilder.addText(".");
                         addNodeToBuilder(computedNode);
+                    }
                 }
                 nodeBuilder.addText("]");
                 break;

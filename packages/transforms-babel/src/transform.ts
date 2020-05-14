@@ -25,7 +25,13 @@ function createTemplateLiteral(t: typeof babelTypes, node: common.TemplateExpres
 
     for (const part of node.parts) {
         if (typeof part === "string")
-            quasis.push(t.templateElement({ raw: part }));
+            quasis.push(t.templateElement({
+                // I believe for the use case of this library, both the raw and cooked can be the same, but adding this
+                // just in case for the future...
+                raw: getRawValue(part),
+                // Need to add this for @babel/preset-env.
+                cooked: part,
+            }));
         else {
             const expr = part.expression as babelTypes.Expression;
             expressions.push(expr);
@@ -36,4 +42,10 @@ function createTemplateLiteral(t: typeof babelTypes, node: common.TemplateExpres
     quasis[quasis.length - 1].tail = true;
 
     return t.templateLiteral(quasis, expressions);
+
+    function getRawValue(text: string) {
+        // From
+        // Adds a backslash before every `, \ and ${
+        return text.replace(/\\|`|\${/g, '\\$&');
+    }
 }
