@@ -1,5 +1,4 @@
-ts-nameof
-==========
+# ts-nameof
 
 [![Build Status](https://travis-ci.org/dsherret/ts-nameof.svg)](https://travis-ci.org/dsherret/ts-nameof)
 
@@ -7,13 +6,13 @@ ts-nameof
 
 Monorepo for ts-nameof projects:
 
-* [ts-nameof](packages/ts-nameof) (TypeScript compiler)
-* [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) (Babel compiler)
-* [ts-nameof.macro](packages/ts-nameof.macro) (Babel compiler)
+- [ts-nameof](packages/ts-nameof) (TypeScript compiler)
+- [babel-plugin-ts-nameof](packages/babel-plugin-ts-nameof) (Babel compiler)
+- [ts-nameof.macro](packages/ts-nameof.macro) (Babel compiler)
 
 ## Setup
 
-ts-nameof is a *compile time transform* so it requires some setup. For setup instructions, see the packages above for the compiler you use.
+ts-nameof is a _compile time transform_ so it requires some setup. For setup instructions, see the packages above for the compiler you use.
 
 ## nameof transform
 
@@ -217,5 +216,5 @@ Transforms to:
 
 ## Other
 
-* [Contributing](CONTRIBUTING.md)
-* [Development](DEVELOPMENT.md)
+- [Contributing](CONTRIBUTING.md)
+- [Development](DEVELOPMENT.md)

@@ -3,8 +3,7 @@
  * Rush features. For full documentation, please see https://rushjs.io
  */
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/experiments.schema.json",
-
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/experiments.schema.json"
   /**
     * Rush 5.14.0 improved incremental builds to ignore spurious changes in the pnpm-lock.json file.
     * This optimization is enabled by default. If you encounter a problem where "rush build" is neglecting

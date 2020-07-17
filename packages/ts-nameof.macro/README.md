@@ -1,5 +1,4 @@
-﻿ts-nameof.macro
-===============
+﻿# ts-nameof.macro
 
 [![npm version](https://badge.fury.io/js/ts-nameof.macro.svg)](https://badge.fury.io/js/ts-nameof.macro)
 [![Build Status](https://travis-ci.org/dsherret/ts-nameof.svg)](https://travis-ci.org/dsherret/ts-nameof)
@@ -40,5 +39,5 @@ Transforms to:
 
 ## Other
 
-* [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
-* [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)
+- [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
+- [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)

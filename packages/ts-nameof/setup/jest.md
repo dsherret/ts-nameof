@@ -4,9 +4,9 @@
 
 2. `npm install --save-dev ts-nameof @types/ts-nameof`
 
-3. In *package.json* specify...
+3. In _package.json_ specify...
 
-```
+```jsonc
 {
   // ...
   "jest": {
@@ -19,15 +19,15 @@
 }
 ```
 
-...or in *jest.config.js*...
+...or in _jest.config.js_...
 
-```
+```ts
 module.exports = {
-  // ...
-  globals: {
-    "ts-jest": {
-      "astTransformers": ["ts-nameof"]
+    // ...
+    globals: {
+        "ts-jest": {
+            "astTransformers": ["ts-nameof"]
+        }
     }
-  }
 };
 ```

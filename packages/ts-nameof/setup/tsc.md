@@ -8,27 +8,27 @@ In the meantime, this is possible using [ttypescript](https://github.com/cevek/t
 
 1. Install `ttypescript` and `ts-nameof`:
 
-    ```bash
-    npm install --save-dev ttypescript ts-nameof
-    // or
-    yarn add --dev ttypescript ts-nameof
-    ```
+   ```bash
+   npm install --save-dev ttypescript ts-nameof
+   // or
+   yarn add --dev ttypescript ts-nameof
+   ```
 
 2. Add `ts-nameof` to `tsconfig.json` as a custom transformer:
 
-    ```json
-    {
-        "compilerOptions": {
-            "plugins": [{ "transform": "ts-nameof", "type": "raw" }]
-        }
-    }
-    ```
+   ```json
+   {
+     "compilerOptions": {
+       "plugins": [{ "transform": "ts-nameof", "type": "raw" }]
+     }
+   }
+   ```
 
 3. Compile with `ttsc` instead of `tsc`:
 
-    ```bash
-    npx ttsc
-    ```
+   ```bash
+   npx ttsc
+   ```
 
 ### Swapping out TypeScript with TTypeScript
 

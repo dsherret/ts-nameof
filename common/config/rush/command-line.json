@@ -31,13 +31,6 @@
     },
     {
       "commandKind": "global",
-      "name": "format",
-      "summary": "Formats the code.",
-      "shellCommand": "node packages/global-dependencies/node_modules/dprint/dist/cli-bin.js",
-      "safeForSimultaneousRushProcesses": true
-    },
-    {
-      "commandKind": "global",
       "name": "verify",
       "summary": "Verifies everything is in order.",
       "shellCommand": "rush test && rush verify-declaration-file",

@@ -1,5 +1,4 @@
-﻿babel-plugin-ts-nameof
-======================
+﻿# babel-plugin-ts-nameof
 
 [![npm version](https://badge.fury.io/js/babel-plugin-ts-nameof.svg)](https://badge.fury.io/js/babel-plugin-ts-nameof)
 [![Build Status](https://travis-ci.org/dsherret/ts-nameof.svg)](https://travis-ci.org/dsherret/ts-nameof)
@@ -29,5 +28,5 @@ npm install babel-plugin-ts-nameof @types/ts-nameof --save-dev
 
 ## Other
 
-* [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
-* [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)
+- [Contributing](https://github.com/dsherret/ts-nameof/blob/master/CONTRIBUTING.md)
+- [Development](https://github.com/dsherret/ts-nameof/blob/master/DEVELOPMENT.md)

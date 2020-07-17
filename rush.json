@@ -59,13 +59,6 @@
       "packageName": "babel-plugin-ts-nameof",
       "projectFolder": "packages/babel-plugin-ts-nameof",
       "reviewCategory": "production"
-    },
-    {
-      "packageName": "@ts-nameof/global-dependencies",
-      "projectFolder": "packages/global-dependencies",
-      "reviewCategory": "production",
-      "skipRushCheck": true,
-      "shouldPublish": false
     }
   ]
 }
