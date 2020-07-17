@@ -13,11 +13,11 @@
     "build": "tsc --b"
   },
   "devDependencies": {
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^14.0.1",
+    "@types/mocha": "^8.0.0",
+    "@types/node": "^14.0.23",
     "@types/prettier": "^2.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.7"
   }
 }
