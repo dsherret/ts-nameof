@@ -1,6 +1,6 @@
 {
   "name": "@ts-nameof/common",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "ts-nameof - Common code across packages.",
   "main": "./dist/index.js",
   "author": "David Sherret",
@@ -13,9 +13,9 @@
     "build": "tsc --b"
   },
   "dependencies": {
-    "typescript": "^3.9.7"
   },
   "devDependencies": {
+    "typescript": "^3.9.7",
     "rimraf": "^3.0.2"
   }
 }
