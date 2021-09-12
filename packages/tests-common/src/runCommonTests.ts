@@ -1,7 +1,11 @@
+import { createFromBuffer } from "@dprint/formatter";
+// @ts-ignore
+import { getBuffer } from "@dprint/typescript";
 import * as assert from "assert";
 import * as path from "path";
-import * as prettier from "prettier";
 
+const formatter = createFromBuffer(getBuffer());
+formatter.setConfig({ indentWidth: 2 }, {});
 /**
  * Runs tests across different compilers.
  * @param getTransformedText Function to get the transformed text.
@@ -482,7 +486,7 @@ const t = /\`/g;
 \${nameof(window)}
 \${nameof(alert)}
 nameof(window);
-\`; //test
+\`; // test
 "nameof(window);";
 "\\"nameof(window);";
 'nameof(window);';
@@ -499,11 +503,11 @@ const t = /\`/g;
 $\{"window"\}
 $\{"alert"\}
 nameof(window);
-\`; //test
+\`; // test
 "nameof(window);";
 "\\"nameof(window);";
 "nameof(window);";
-'\\'\\"nameof(window);';
+"'\\"nameof(window);";
 "C:\\\\";
 "window";
 \`\${() => {
@@ -529,7 +533,7 @@ nameof(window);
         if (!expected.endsWith("\n")) {
             expected += "\n";
         }
-        assert.equal(prettier.format(result, { parser: "typescript" }), expected);
+        assert.strictEqual(formatter.formatText("file.ts", result), expected);
     }
 
     function runThrowTest(text: string, possibleExpectedMessages: string | string[]) {
@@ -541,7 +545,7 @@ nameof(window);
         // for some reason, assert.throws was not working
         try {
             transformedText = getTransformedText(text);
-        } catch (ex) {
+        } catch (ex: any) {
             possibleExpectedMessages = getPossibleExpectedMessages();
 
             const actualMessage = (ex as any).message;

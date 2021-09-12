@@ -1,4 +1,4 @@
-import { NamespaceDeclarationKind, Project } from "ts-morph";
+import { ModuleDeclarationKind, Project } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
     const mainFile = project.getSourceFileOrThrow("src/main.ts");
@@ -41,9 +41,9 @@ export function createDeclarationFile(project: Project) {
     function wrapInGlobalModule() {
         const fileText = declarationFile.getText();
         declarationFile.removeText();
-        const apiModule = declarationFile.addNamespace({
+        const apiModule = declarationFile.addModule({
             hasDeclareKeyword: true,
-            declarationKind: NamespaceDeclarationKind.Module,
+            declarationKind: ModuleDeclarationKind.Module,
             name: `"ts-nameof"`,
         });
         apiModule.setBodyText(fileText);

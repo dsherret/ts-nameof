@@ -22,7 +22,7 @@ export function visitSourceFile(sourceFile: ts.SourceFile, context: ts.Transform
         throwIfContextHasInterpolateExpressions(visitSourceFileContext, sourceFile);
 
         return result;
-    } catch (err) {
+    } catch (err: any) {
         return throwErrorForSourceFile(err.message, sourceFile.fileName);
     }
 

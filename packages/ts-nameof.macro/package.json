@@ -27,28 +27,27 @@
   "author": "David Sherret",
   "license": "MIT",
   "peerDependencies": {
-    "babel-plugin-macros": "^2.8.0"
+    "babel-plugin-macros": "^3.1.0"
   },
   "dependencies": {
     "@ts-nameof/transforms-babel": "^4.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/preset-typescript": "^7.10.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-typescript": "^7.15.0",
     "@ts-nameof/scripts-common": "^4.0.2",
     "@ts-nameof/tests-common": "^4.2.0",
-    "@types/babel__core": "^7.1.9",
-    "@types/babel__generator": "^7.6.1",
-    "@types/babel__template": "^7.0.2",
-    "@types/babel__traverse": "^7.0.13",
-    "@types/mocha": "^8.0.0",
-    "@types/node": "^14.0.23",
-    "babel-plugin-macros": "^2.8.0",
-    "mocha": "^8.0.1",
-    "prettier": "^1.19.1",
+    "@types/babel__core": "^7.1.16",
+    "@types/babel__generator": "^7.6.3",
+    "@types/babel__template": "^7.4.1",
+    "@types/babel__traverse": "^7.14.2",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.9.1",
+    "babel-plugin-macros": "^3.1.0",
+    "mocha": "^9.1.1",
     "rimraf": "^3.0.2",
-    "ts-morph": "^7.1.2",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "ts-morph": "^12.0.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
   }
 }

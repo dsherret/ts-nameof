@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "declaration": false,
     "sourceMap": true,
@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "lib": ["es2015"],
+    "lib": ["es2015", "DOM"],
     "esModuleInterop": true
   },
   "compileOnSave": false

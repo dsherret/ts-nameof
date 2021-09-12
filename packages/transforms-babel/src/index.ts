@@ -18,7 +18,7 @@ export function plugin({ types: t }: { types: typeof babelTypes }): babel.Plugin
                     // temp assertion because I'm too lazy to investigate what's going on here
                     traverseChildren: () => path.traverse(visitor as any, (state as any)),
                 });
-            } catch (err) {
+            } catch (err: any) {
                 return throwErrorForSourceFile(err.message, filePath);
             }
         },
