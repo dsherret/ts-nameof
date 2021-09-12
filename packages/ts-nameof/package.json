@@ -12,7 +12,7 @@
     "test:debug": "npm run build-test && mocha --inspect-brk",
     "copy-test-files": "rimraf temp && copyfiles -u 2 \"./src/tests/testFiles/**/*{.js,.txt}\" \"./temp\"",
     "build:declarations": "ts-node --project scripts/tsconfig.json scripts/generation/main create-declaration-file && npm run --silent verify-declaration-file",
-    "verify-declaration-file": "ts-node  --project scripts/tsconfig.json scripts/verification/main verify-declaration-file",
+    "verify-declaration-file": "ts-node --project scripts/tsconfig.json scripts/verification/main verify-declaration-file",
     "dopublish": "npm run test && npm run build && npm run verify-declaration-file && echo \"run: npm publish --otp\""
   },
   "repository": {

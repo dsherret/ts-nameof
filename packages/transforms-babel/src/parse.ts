@@ -303,7 +303,7 @@ export function parse(t: typeof babelTypes, path: NodePath, options: ParseOption
         }
 
         function hasAncestorNameofFull() {
-            let parentPath: NodePath<Node> | undefined = path.parentPath;
+            let parentPath: NodePath<Node> | null | undefined = path.parentPath;
             while (parentPath != null) {
                 if (isNameof(parentPath.node) && parsePropertyName(parentPath.node) === "full") {
                     return true;

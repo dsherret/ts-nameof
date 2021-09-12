@@ -3,4 +3,3 @@ tsconfig.tsbuildinfo
 src
 *.log
 *.js.map
-.rush

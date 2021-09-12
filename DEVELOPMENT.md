@@ -5,12 +5,10 @@
 Open the root directory of the repo and run:
 
 ```bash
-# install rush globally (monorepo tool)
-npm install -g @microsoft/rush
-# installs dependencies
-rush update
-# builds all packages
-rush build
+# install dependencies
+yarn install
+# build
+yarn build
 ```
 
 ## Packages
@@ -28,12 +26,10 @@ rush build
 ## Standard Commands
 
 ```bash
-# installs dependencies
-rush update
 # build (run in root dir)
-rush build
+yarn build
 # run tests (run in root dir)
-rush test
+yarn test
 # format the code (download dprint from dprint.dev)
 dprint fmt
 ```
@@ -41,13 +37,7 @@ dprint fmt
 ### Clean Rebuild
 
 ```
-rush clean && rush rebuild
-```
-
-### Reinstalling Packages
-
-```
-rush purge && rush update
+yarn clean && yarn build
 ```
 
 ## Declaration File
@@ -58,18 +48,18 @@ The global definitions are stored in [lib/global.d.ts](lib/global.d.ts). To make
 
 1. Add a failing test in [lib/global.tests.ts](lib/global.tests.ts) (failing test means you get a compile error)
 2. Update [lib/global.d.ts](lib/global.d.ts).
-3. Run `rush create-declaration-file` in the root directory which will update all the project's declaration files.
+3. Run `yarn create-declaration-file` in the root directory
 
 ### ts-nameof - Updating API
 
 1. Update [packages/ts-nameof/lib/declarationFileTests.ts](packages/ts-nameof/lib/declarationFileTests.ts) with a failing test.
 2. Update the API in [packages/ts-nameof/src/main.ts](packages/ts-nameof/src/main.ts).
-3. Run `rush create-declaration-file`
+3. Run `yarn create-declaration-file` in the root directory
 
 ## After Development
 
 Run the following command in the root directory, which will check that everything is good:
 
 ```bash
-rush verify
+yarn verify
 ```

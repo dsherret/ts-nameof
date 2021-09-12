@@ -16,7 +16,6 @@
 *.csproj.user
 *.sln
 *.log
-.rush
 .travis.yml
 .gitignore
 CHANGELOG.md

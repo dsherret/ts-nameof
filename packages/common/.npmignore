@@ -2,5 +2,4 @@ tsconfig.json
 tsconfig.tsbuildinfo
 *.log
 *.js.map
-.rush
 src

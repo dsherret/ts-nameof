@@ -1,0 +1,23 @@
+{
+  "name": "ts-nameof-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/common",
+    "packages/scripts-common",
+    "packages/tests-common",
+    "packages/transforms-common",
+    "packages/transforms-babel",
+    "packages/transforms-ts",
+    "packages/ts-nameof",
+    "packages/ts-nameof.macro",
+    "packages/babel-plugin-ts-nameof"
+  ],
+  "scripts": {
+    "clean": "yarn workspaces run clean",
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test",
+    "verify": "yarn test && yarn verify-declaration-file",
+    "create-declaration-file": "yarn workspace ts-nameof build:declarations && yarn workspace ts-nameof.macro build:declarations",
+    "verify-declaration-file": "yarn workspace ts-nameof verify-declaration-file"
+  }
+}

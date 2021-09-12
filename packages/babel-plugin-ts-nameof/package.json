@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rimraf dist &&  tsc --b --clean",
     "build": "tsc --b",
+    "test": "echo 'ignore'",
     "dopublish": "npm run install && npm run build && echo \"Run: npm publish --otp\""
   },
   "keywords": [

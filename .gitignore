@@ -73,7 +73,3 @@ jspm_packages/
 
 # OS X temporary files
 .DS_Store
-
-# Rush temporary files
-common/temp/
-**/.rush/temp/
