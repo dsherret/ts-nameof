@@ -15,10 +15,10 @@ module.exports = {
             use: [{
                 loader: "ts-loader", // or awesome-typescript-loader
                 options: {
-                    getCustomTransformers: () => ({ before: [tsNameof] })
-                }
-            }]
-        }]
-    }
+                    getCustomTransformers: () => ({ before: [tsNameof] }),
+                },
+            }],
+        }],
+    },
 };
 ```

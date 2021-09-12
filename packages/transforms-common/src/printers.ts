@@ -1,5 +1,5 @@
-import { NameofCallExpression, Node, TemplateExpressionNode } from "./nodes";
 import { assertNever } from "@ts-nameof/common";
+import { NameofCallExpression, Node, TemplateExpressionNode } from "./nodes";
 
 /**
  * Prints the call expression to a string. Useful for displaying diagnostic information to the user.
@@ -9,22 +9,25 @@ export function printCallExpression(callExpr: NameofCallExpression) {
     let result = "nameof";
 
     writePropertyName();
-    if (callExpr.typeArguments.length > 0)
+    if (callExpr.typeArguments.length > 0) {
         writeTypeArguments();
+    }
     writeArguments();
 
     return result;
 
     function writePropertyName() {
-        if (callExpr.property != null)
+        if (callExpr.property != null) {
             result += `.${callExpr.property}`;
+        }
     }
 
     function writeTypeArguments() {
         result += "<";
         for (let i = 0; i < callExpr.typeArguments.length; i++) {
-            if (i > 0)
+            if (i > 0) {
                 result += ", ";
+            }
             result += printNode(callExpr.typeArguments[i]);
         }
         result += ">";
@@ -33,8 +36,9 @@ export function printCallExpression(callExpr: NameofCallExpression) {
     function writeArguments() {
         result += "(";
         for (let i = 0; i < callExpr.arguments.length; i++) {
-            if (i > 0)
+            if (i > 0) {
                 result += ", ";
+            }
             result += printNode(callExpr.arguments[i]);
         }
         result += ")";
@@ -50,10 +54,11 @@ export function printNode(node: Node): string {
     let result = getCurrentText();
 
     if (node.next != null) {
-        if (node.next.kind === "Identifier")
+        if (node.next.kind === "Identifier") {
             result += "." + printNode(node.next);
-        else
+        } else {
             result += printNode(node.next);
+        }
     }
 
     return result;
@@ -70,8 +75,9 @@ export function printNode(node: Node): string {
                 return `[${printNode(node.value)}]`;
             case "Function":
                 let functionResult = `(${node.parameterNames.join(", ")}) => ${printNode(node.value)}`;
-                if (node.next != null)
+                if (node.next != null) {
                     functionResult = `(${functionResult})`;
+                }
                 return functionResult;
             case "ArrayLiteral":
                 return `[${node.elements.map(e => printNode(e)).join(", ")}]`;
@@ -89,10 +95,11 @@ export function printNode(node: Node): string {
     function printTemplateExpression(TemplateExpression: TemplateExpressionNode) {
         let text = "`";
         for (const part of TemplateExpression.parts) {
-            if (typeof part === "string")
+            if (typeof part === "string") {
                 text += part;
-            else
+            } else {
                 text += "${" + printNode(part) + "}";
+            }
         }
         text += "`";
         return text;

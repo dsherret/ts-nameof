@@ -30,10 +30,9 @@ function createTemplateLiteral(t: typeof babelTypes, node: common.TemplateExpres
                 // just in case for the future...
                 raw: getRawValue(part),
                 // Need to add this for @babel/preset-env.
-                cooked: part
+                cooked: part,
             }));
-        }
-        else {
+        } else {
             const expr = part.expression as babelTypes.Expression;
             expressions.push(expr);
         }

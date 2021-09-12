@@ -1,4 +1,4 @@
-import { Project, TypeGuards, NamespaceDeclarationKind } from "ts-morph";
+import { NamespaceDeclarationKind, Project, TypeGuards } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
     const globalFile = project.addSourceFileAtPath("../../lib/global.d.ts");
@@ -6,18 +6,19 @@ export function createDeclarationFile(project: Project) {
     const namespaceDec = declarationFile.addNamespace({
         name: `"ts-nameof.macro"`,
         declarationKind: NamespaceDeclarationKind.Module,
-        hasDeclareKeyword: true
+        hasDeclareKeyword: true,
     });
 
     namespaceDec.setBodyText(globalFile.getFullText());
 
     for (const statement of namespaceDec.getStatements()) {
-        if (TypeGuards.isAmbientableNode(statement))
+        if (TypeGuards.isAmbientableNode(statement)) {
             statement.setHasDeclareKeyword(false);
+        }
     }
 
     namespaceDec.addExportAssignment({
         expression: "nameof",
-        isExportEquals: false
+        isExportEquals: false,
     });
 }

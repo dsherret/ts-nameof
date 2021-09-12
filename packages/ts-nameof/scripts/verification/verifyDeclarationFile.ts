@@ -6,6 +6,7 @@ export function verifyDeclarationFile() {
     const declarationFileTests = project.addSourceFileAtPath("lib/declarationFileTests.ts");
     const diagnostics = [...declarationFile.getPreEmitDiagnostics(), ...declarationFileTests.getPreEmitDiagnostics()];
 
-    if (diagnostics.length > 0)
+    if (diagnostics.length > 0) {
         console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
+    }
 }

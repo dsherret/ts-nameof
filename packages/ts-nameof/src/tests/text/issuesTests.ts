@@ -1,6 +1,6 @@
 import * as assert from "assert";
-import { getTestFilePath, readFile, writeFile } from "./helpers";
 import { replaceInFiles } from "../../text";
+import { getTestFilePath, readFile, writeFile } from "./helpers";
 
 describe("replaceInFiles()", () => {
     async function runTest(fileName: string, expectedFileName: string) {

@@ -1,26 +1,27 @@
-import * as ts from "typescript";
 import { runCommonTests } from "@ts-nameof/tests-common";
+import * as ts from "typescript";
 import { transformerFactory } from "../transformerFactory";
 
 runCommonTests(run);
 
 function run(text: string) {
-    const results: { fileName: string; fileText: string; }[] = [];
+    const results: { fileName: string; fileText: string }[] = [];
     const compilerOptions: ts.CompilerOptions = {
         strictNullChecks: true,
-        target: ts.ScriptTarget.ES2017
+        target: ts.ScriptTarget.ES2017,
     };
     const transformers: ts.CustomTransformers = {
         before: [transformerFactory],
-        after: []
+        after: [],
     };
     const testFileName = "/file.ts";
     const host: ts.CompilerHost = {
         fileExists: (fileName: string) => fileName === testFileName,
         readFile: (fileName: string) => fileName === testFileName ? text : undefined,
         getSourceFile: (fileName, languageVersion) => {
-            if (fileName !== testFileName)
+            if (fileName !== testFileName) {
                 return undefined;
+            }
             return ts.createSourceFile(fileName, text, languageVersion, false, ts.ScriptKind.TS);
         },
         getDefaultLibFileName: options => ts.getDefaultLibFileName(options),
@@ -31,7 +32,7 @@ function run(text: string) {
         getDirectories: () => [],
         getCanonicalFileName: fileName => fileName,
         useCaseSensitiveFileNames: () => true,
-        getNewLine: () => "\n"
+        getNewLine: () => "\n",
     };
     const program = ts.createProgram(["/file.ts"], compilerOptions, host);
     program.emit(undefined, (fileName, fileText) => results.push({ fileName, fileText }), undefined, false, transformers);

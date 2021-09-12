@@ -7,7 +7,7 @@ const tsNameof = require("ts-nameof");
 
 FuseBox.init({
     transformers: {
-        before: [tsNameof]
-    }
+        before: [tsNameof],
+    },
 });
 ```

@@ -1,7 +1,7 @@
 import * as assert from "assert";
-import * as printers from "../printers";
 import * as factories from "../nodeFactories";
 import { NameofCallExpression, Node } from "../nodes";
+import * as printers from "../printers";
 
 describe("printCallExpression", () => {
     function doTest(callExpr: NameofCallExpression, expectedText: string) {
@@ -13,7 +13,7 @@ describe("printCallExpression", () => {
         doTest({
             property: undefined,
             typeArguments: [],
-            arguments: []
+            arguments: [],
         }, "nameof()");
     });
 
@@ -21,7 +21,7 @@ describe("printCallExpression", () => {
         doTest({
             property: "full",
             typeArguments: [],
-            arguments: []
+            arguments: [],
         }, "nameof.full()");
     });
 
@@ -29,7 +29,7 @@ describe("printCallExpression", () => {
         doTest({
             property: undefined,
             typeArguments: [],
-            arguments: [factories.createIdentifierNode("test")]
+            arguments: [factories.createIdentifierNode("test")],
         }, "nameof(test)");
     });
 
@@ -39,8 +39,8 @@ describe("printCallExpression", () => {
             typeArguments: [],
             arguments: [
                 factories.createIdentifierNode("test1"),
-                factories.createIdentifierNode("test2")
-            ]
+                factories.createIdentifierNode("test2"),
+            ],
         }, "nameof(test1, test2)");
     });
 
@@ -48,7 +48,7 @@ describe("printCallExpression", () => {
         doTest({
             property: undefined,
             typeArguments: [factories.createIdentifierNode("T")],
-            arguments: []
+            arguments: [],
         }, "nameof<T>()");
     });
 
@@ -57,9 +57,9 @@ describe("printCallExpression", () => {
             property: undefined,
             typeArguments: [
                 factories.createIdentifierNode("T"),
-                factories.createIdentifierNode("U")
+                factories.createIdentifierNode("U"),
             ],
-            arguments: []
+            arguments: [],
         }, "nameof<T, U>()");
     });
 
@@ -68,12 +68,12 @@ describe("printCallExpression", () => {
             property: "full",
             typeArguments: [
                 factories.createIdentifierNode("T"),
-                factories.createIdentifierNode("U")
+                factories.createIdentifierNode("U"),
             ],
             arguments: [
                 factories.createIdentifierNode("test1"),
-                factories.createIdentifierNode("test2")
-            ]
+                factories.createIdentifierNode("test2"),
+            ],
         }, "nameof.full<T, U>(test1, test2)");
     });
 });

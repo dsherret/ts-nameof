@@ -6,8 +6,16 @@ export interface NameofCallExpression {
     arguments: Node[];
 }
 
-export type Node = IdentifierNode | StringLiteralNode | NumericLiteralNode | ArrayLiteralNode | ComputedNode | FunctionNode | ImportTypeNode
-    | TemplateExpressionNode | InterpolateNode;
+export type Node =
+    | IdentifierNode
+    | StringLiteralNode
+    | NumericLiteralNode
+    | ArrayLiteralNode
+    | ComputedNode
+    | FunctionNode
+    | ImportTypeNode
+    | TemplateExpressionNode
+    | InterpolateNode;
 
 export interface IdentifierNode {
     kind: "Identifier";

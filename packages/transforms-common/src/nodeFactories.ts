@@ -1,11 +1,21 @@
-import { Node, IdentifierNode, StringLiteralNode, NumericLiteralNode, ArrayLiteralNode, ComputedNode, FunctionNode, ImportTypeNode, InterpolateNode,
-    TemplateExpressionNode } from "./nodes";
+import {
+    ArrayLiteralNode,
+    ComputedNode,
+    FunctionNode,
+    IdentifierNode,
+    ImportTypeNode,
+    InterpolateNode,
+    Node,
+    NumericLiteralNode,
+    StringLiteralNode,
+    TemplateExpressionNode,
+} from "./nodes";
 
 export function createIdentifierNode(value: string, next?: Node | undefined): IdentifierNode {
     return {
         kind: "Identifier",
         value,
-        next
+        next,
     };
 }
 
@@ -13,7 +23,7 @@ export function createStringLiteralNode(value: string, next?: Node | undefined):
     return {
         kind: "StringLiteral",
         value,
-        next
+        next,
     };
 }
 
@@ -21,7 +31,7 @@ export function createNumericLiteralNode(value: number, next?: Node | undefined)
     return {
         kind: "NumericLiteral",
         value,
-        next
+        next,
     };
 }
 
@@ -29,7 +39,7 @@ export function createArrayLiteralNode(elements: ArrayLiteralNode["elements"], n
     return {
         kind: "ArrayLiteral",
         elements,
-        next
+        next,
     };
 }
 
@@ -37,7 +47,7 @@ export function createComputedNode(value: Node, next?: Node | undefined): Comput
     return {
         kind: "Computed",
         value,
-        next
+        next,
     };
 }
 
@@ -46,7 +56,7 @@ export function createFunctionNode(value: Node, parameterNames: string[], next?:
         kind: "Function",
         parameterNames,
         value,
-        next
+        next,
     };
 }
 
@@ -55,7 +65,7 @@ export function createImportTypeNode(isTypeOf: boolean, argument: Node | undefin
         kind: "ImportType",
         isTypeOf,
         argument,
-        next
+        next,
     };
 }
 
@@ -63,7 +73,7 @@ export function createTemplateExpressionNode(parts: (string | InterpolateNode)[]
     return {
         kind: "TemplateExpression",
         parts,
-        next
+        next,
     };
 }
 
@@ -72,6 +82,6 @@ export function createInterpolateNode(expression: unknown, expressionText: strin
         kind: "Interpolate",
         expression,
         expressionText,
-        next
+        next,
     };
 }

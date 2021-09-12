@@ -1,7 +1,7 @@
 /// @ts-check
 /// <reference path="references.d.ts" />
-import { createMacro, MacroError } from "babel-plugin-macros";
 import { transformNode } from "@ts-nameof/transforms-babel";
+import { createMacro, MacroError } from "babel-plugin-macros";
 
 export default createMacro(nameofMacro);
 
@@ -15,16 +15,18 @@ function nameofMacro({ references, state, babel }) {
         const t = babel.types;
         transformNode(t, getPath(), {
             // tell the transformation to expect this identifier's name
-            nameofIdentifierName: path.node.name
+            nameofIdentifierName: path.node.name,
         });
 
         function getPath() {
             const parentPath = path.parentPath; // identifier;
-            if (parentPath.type === "CallExpression")
+            if (parentPath.type === "CallExpression") {
                 return parentPath;
+            }
             const grandParentPath = parentPath.parentPath;
-            if (parentPath.type === "MemberExpression" && grandParentPath.type === "CallExpression")
+            if (parentPath.type === "MemberExpression" && grandParentPath.type === "CallExpression") {
                 return grandParentPath;
+            }
             throw new MacroError("[ts-nameof]: Could not find a call expression at path: " + grandParentPath.getSource());
         }
     });

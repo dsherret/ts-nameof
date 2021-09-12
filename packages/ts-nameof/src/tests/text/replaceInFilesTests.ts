@@ -1,6 +1,6 @@
 import * as assert from "assert";
-import { getTestFilePath, readFile, writeFile } from "./helpers";
 import { replaceInFiles } from "../../text";
+import { getTestFilePath, readFile, writeFile } from "./helpers";
 
 describe("replaceInFiles()", () => {
     interface FileInfo {
@@ -15,7 +15,7 @@ describe("replaceInFiles()", () => {
         const initialFiles = await Promise.all(expectedFiles.map(f =>
             readFile(f.filePath).then(data => ({
                 filePath: f.filePath,
-                contents: data
+                contents: data,
             } as FileInfo))
         ));
 
@@ -36,7 +36,7 @@ describe("replaceInFiles()", () => {
         it("should replace in MyGlobTestFile.txt", async () => {
             await runTest(["globFolder/**/*.txt"], [{
                 filePath: "globFolder/MyGlobTestFile.txt",
-                contents: `console.log("console");\n`
+                contents: `console.log("console");\n`,
             }]);
         });
     });
@@ -76,7 +76,7 @@ console.log("MyInnerInterface");
             it("should modify the file", async () => {
                 await runTest(["GeneralTestFile.txt"], [{
                     filePath: "GeneralTestFile.txt",
-                    contents: expected
+                    contents: expected,
                 }]);
             });
         });

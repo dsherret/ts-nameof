@@ -1,10 +1,10 @@
 /// <reference path="../references.d.ts" />
-import * as assert from "assert";
-import * as path from "path";
-import { runCommonTests } from "@ts-nameof/tests-common";
 import * as babel from "@babel/core";
-import babelPluginMacros from "babel-plugin-macros";
 import "@babel/preset-typescript";
+import { runCommonTests } from "@ts-nameof/tests-common";
+import * as assert from "assert";
+import babelPluginMacros from "babel-plugin-macros";
+import * as path from "path";
 
 runCommonTests(run, { commonPrefix: "import nameof from './ts-nameof.macro';\n" });
 
@@ -18,15 +18,15 @@ describe("using a name other than nameof", () => {
 function run(text: string) {
     return babel.transformSync(text, {
         presets: [
-            "@babel/preset-typescript"
+            "@babel/preset-typescript",
         ],
         plugins: [
-            babelPluginMacros
+            babelPluginMacros,
         ],
         filename: path.join(__dirname, "test.ts"),
         ast: false,
         generatorOpts: {
-            retainLines: true
-        }
+            retainLines: true,
+        },
     })!.code!;
 }

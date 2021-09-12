@@ -8,23 +8,26 @@ export class ArgsChecker {
     }
 
     checkHasArg(argName: string) {
-        if (this.originalArgs.length === 0)
+        if (this.originalArgs.length === 0) {
             return true; // run all
+        }
 
         return this.checkHasExplicitArg(argName);
     }
 
     checkHasExplicitArg(argName: string) {
         const index = this.args.indexOf(argName);
-        if (index === -1)
+        if (index === -1) {
             return false;
+        }
 
         this.args.splice(index, 1);
         return true;
     }
 
     verifyArgsUsed() {
-        if (this.args.length > 0)
+        if (this.args.length > 0) {
             console.error(`Unknown args: ${this.args.join(", ")}`);
+        }
     }
 }

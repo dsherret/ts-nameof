@@ -1,10 +1,11 @@
-import { Project, NamespaceDeclarationKind } from "ts-morph";
+import { NamespaceDeclarationKind, Project } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
     const mainFile = project.getSourceFileOrThrow("src/main.ts");
     const outputFiles = mainFile.getEmitOutput({ emitOnlyDtsFiles: true }).getOutputFiles();
-    if (outputFiles.length !== 1)
+    if (outputFiles.length !== 1) {
         throw new Error(`Expected 1 file when emitting, but had ${outputFiles.length}`);
+    }
 
     const declarationFile = project.createSourceFile("ts-nameof.d.ts", outputFiles[0].getText(), { overwrite: true });
 
@@ -24,11 +25,12 @@ export function createDeclarationFile(project: Project) {
         // web projects and NodeJS does not exist. See issue #22.
         const typesToComment = [
             "ts.TransformerFactory<ts.SourceFile>",
-            "NodeJS.ErrnoException"
+            "NodeJS.ErrnoException",
         ];
         declarationFile.forEachDescendant(descendant => {
-            if (typesToComment.indexOf(descendant.getText()) >= 0)
+            if (typesToComment.indexOf(descendant.getText()) >= 0) {
                 descendant.replaceWithText(`any /* ${descendant.getText()} */`);
+            }
         });
     }
 
@@ -42,7 +44,7 @@ export function createDeclarationFile(project: Project) {
         const apiModule = declarationFile.addNamespace({
             hasDeclareKeyword: true,
             declarationKind: NamespaceDeclarationKind.Module,
-            name: `"ts-nameof"`
+            name: `"ts-nameof"`,
         });
         apiModule.setBodyText(fileText);
         apiModule.getVariableStatementOrThrow(s => s.getDeclarations().some(d => d.getName() === "api"))

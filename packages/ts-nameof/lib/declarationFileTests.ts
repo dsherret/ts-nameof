@@ -1,8 +1,8 @@
 /// <reference path="../ts-nameof.d.ts" />
 /* istanbul ignore next */
 import tsNameOf = require("ts-nameof");
+import { assert, IsExact } from "conditional-type-checks";
 import * as tsNameOfEs6 from "ts-nameof";
-import { IsExact, assert } from "conditional-type-checks";
 
 /* istanbul ignore next */
 function testFunc() {

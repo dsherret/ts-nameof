@@ -10,7 +10,8 @@ export function flattenNodeToArray(node: Node) {
 }
 
 export function getLastNextNode(node: Node) {
-    while (node.next != null)
+    while (node.next != null) {
         node = node.next;
+    }
     return node;
 }

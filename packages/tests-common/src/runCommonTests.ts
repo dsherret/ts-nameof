@@ -1,5 +1,5 @@
-import * as path from "path";
 import * as assert from "assert";
+import * as path from "path";
 import * as prettier from "prettier";
 
 /**
@@ -7,7 +7,7 @@ import * as prettier from "prettier";
  * @param getTransformedText Function to get the transformed text.
  * @param options Options for running the tests.
  */
-export function runCommonTests(getTransformedText: (text: string) => string, options: { commonPrefix?: string; } = {}) {
+export function runCommonTests(getTransformedText: (text: string) => string, options: { commonPrefix?: string } = {}) {
     describe("nameof", () => {
         describe("bad call expressions", () => {
             it("should throw if someone does not provide arguments or type arguments", () => {
@@ -141,7 +141,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
                 const errorPrefix = "Cound not find return statement with an expression in function expression: ";
                 const possibleMessages = [
                     errorPrefix + "{ i; }", // babel
-                    errorPrefix + "{\n    i;\n}" // typescript
+                    errorPrefix + "{\n    i;\n}", // typescript
                 ];
                 runThrowTest(`nameof<MyInterface>(i => { i; });`, possibleMessages);
             });
@@ -163,7 +163,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
                 runThrowTest(`nameof(nameof.interpolate(5));`, [
                     getNotSupportedErrorText("nameof.interpolate(5)"),
                     // it will be this for babel because it checks the parent nodes
-                    getUnusedNameofInterpolateErrorText("5")
+                    getUnusedNameofInterpolateErrorText("5"),
                 ]);
             });
         });
@@ -264,7 +264,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
             it("should get the result of the super keyword", () => {
                 runTest(
                     `class Test {\n  constructor() {\n    nameof.full(super.test);\n  }\n}`,
-                    `class Test {\n  constructor() {\n    "super.test";\n  }\n}`
+                    `class Test {\n  constructor() {\n    "super.test";\n  }\n}`,
                 );
             });
         });
@@ -403,7 +403,7 @@ export function runCommonTests(getTransformedText: (text: string) => string, opt
         it("should throw when the function argument does not return an array", () => {
             runThrowTest(
                 `nameof.toArray<MyInterface>(o => o.Prop1);`,
-                "Unsupported toArray call expression. An array must be returned by the provided function: nameof.toArray<MyInterface>((o) => o.Prop1)"
+                "Unsupported toArray call expression. An array must be returned by the provided function: nameof.toArray<MyInterface>((o) => o.Prop1)",
             );
         });
 
@@ -521,18 +521,21 @@ nameof(window);
     });
 
     function runTest(text: string, expected: string) {
-        if (options.commonPrefix != null)
+        if (options.commonPrefix != null) {
             text = options.commonPrefix + text;
+        }
 
         const result = getTransformedText(text);
-        if (!expected.endsWith("\n"))
+        if (!expected.endsWith("\n")) {
             expected += "\n";
+        }
         assert.equal(prettier.format(result, { parser: "typescript" }), expected);
     }
 
     function runThrowTest(text: string, possibleExpectedMessages: string | string[]) {
-        if (options.commonPrefix != null)
+        if (options.commonPrefix != null) {
             text = options.commonPrefix + text;
+        }
         let transformedText: string | undefined;
 
         // for some reason, assert.throws was not working
@@ -543,12 +546,15 @@ nameof(window);
 
             const actualMessage = (ex as any).message;
             for (const message of possibleExpectedMessages) {
-                if (message === actualMessage)
+                if (message === actualMessage) {
                     return;
+                }
             }
 
-            throw new Error(`Expected the error message of ${JSON.stringify(actualMessage)} to equal `
-                + `one of the following messages: ${JSON.stringify(possibleExpectedMessages)}`);
+            throw new Error(
+                `Expected the error message of ${JSON.stringify(actualMessage)} to equal `
+                    + `one of the following messages: ${JSON.stringify(possibleExpectedMessages)}`,
+            );
         }
 
         throw new Error(`Expected to throw, but returned: ${transformedText}`);
@@ -572,8 +578,9 @@ nameof(window);
             return result;
 
             function getAsArray() {
-                if (typeof possibleExpectedMessages === "string")
+                if (typeof possibleExpectedMessages === "string") {
                     return [possibleExpectedMessages];
+                }
                 return possibleExpectedMessages;
             }
         }
