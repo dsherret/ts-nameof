@@ -8,17 +8,17 @@ If using [ts-loader](https://github.com/TypeStrong/ts-loader) or [awesome-typesc
 const tsNameof = require("ts-nameof");
 
 module.exports = {
-    // ...etc...
-    module: {
-        rules: [{
-            test: /\.tsx?$/,
-            use: [{
-                loader: "ts-loader", // or awesome-typescript-loader
-                options: {
-                    getCustomTransformers: () => ({ before: [tsNameof] }),
-                },
-            }],
-        }],
-    },
+  // ...etc...
+  module: {
+    rules: [{
+      test: /\.tsx?$/,
+      use: [{
+        loader: "ts-loader", // or awesome-typescript-loader
+        options: {
+          getCustomTransformers: () => ({ before: [tsNameof] }),
+        },
+      }],
+    }],
+  },
 };
 ```

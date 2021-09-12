@@ -1,13 +1,13 @@
 /// <reference path="./global.d.ts" />
 namespace TestNamespace {
-    export interface TestType {
-        prop: string;
-    }
+  export interface TestType {
+    prop: string;
+  }
 }
 
 class TestClass {
-    prop1 = "";
-    prop2 = "";
+  prop1 = "";
+  prop2 = "";
 }
 
 // nameof tests

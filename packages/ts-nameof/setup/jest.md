@@ -23,11 +23,11 @@
 
 ```ts
 module.exports = {
-    // ...
-    globals: {
-        "ts-jest": {
-            "astTransformers": ["ts-nameof"],
-        },
+  // ...
+  globals: {
+    "ts-jest": {
+      "astTransformers": ["ts-nameof"],
     },
+  },
 };
 ```

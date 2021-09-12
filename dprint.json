@@ -1,6 +1,7 @@
 {
   "incremental": true,
   "lineWidth": 160,
+  "indentWidth": 2,
   "includes": ["**/*.{ts,tsx,js,jsx,json,md}"],
   "excludes": [
     "common",
