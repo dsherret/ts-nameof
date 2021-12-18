@@ -20,9 +20,9 @@
   },
   "devDependencies": {
     "@ts-nameof/tests-common": "^4.2.0",
-    "mocha": "^9.1.1",
+    "mocha": "^9.1.3",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   }
 }

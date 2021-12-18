@@ -1,4 +1,4 @@
-import { ModuleDeclarationKind, Project, TypeGuards } from "ts-morph";
+import { ModuleDeclarationKind, Node, Project } from "ts-morph";
 
 export function createDeclarationFile(project: Project) {
   const globalFile = project.addSourceFileAtPath("../../lib/global.d.ts");
@@ -12,7 +12,7 @@ export function createDeclarationFile(project: Project) {
   namespaceDec.setBodyText(globalFile.getFullText());
 
   for (const statement of namespaceDec.getStatements()) {
-    if (TypeGuards.isAmbientableNode(statement)) {
+    if (Node.isAmbientable(statement)) {
       statement.setHasDeclareKeyword(false);
     }
   }
