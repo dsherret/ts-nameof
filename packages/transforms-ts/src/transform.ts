@@ -55,7 +55,7 @@ function createTemplateExpression(node: common.TemplateExpressionNode, context: 
         context.interpolateExpressions.delete(tsExpression);
       }
 
-      templateSpans.push(ts.createTemplateSpan(tsExpression, tsText));
+      templateSpans.push(ts.factory.createTemplateSpan(tsExpression, tsText));
     }
     return templateSpans;
   }
