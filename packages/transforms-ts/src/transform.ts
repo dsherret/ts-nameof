@@ -15,12 +15,12 @@ export type TransformResult = ts.StringLiteral | ts.ArrayLiteralExpression | ts.
 export function transform(node: common.Node, context: VisitSourceFileContext | undefined): TransformResult {
   switch (node.kind) {
     case "StringLiteral":
-      return ts.createLiteral(node.value);
+      return ts.factory.createStringLiteral(node.value);
     case "ArrayLiteral":
-      return ts.createArrayLiteral(node.elements.map(element => transform(element, context)));
+      return ts.factory.createArrayLiteralExpression(node.elements.map(element => transform(element, context)));
     case "TemplateExpression":
       if (node.parts.length === 1 && typeof node.parts[0] === "string") {
-        return ts.createNoSubstitutionTemplateLiteral(node.parts[0] as string);
+        return ts.factory.createNoSubstitutionTemplateLiteral(node.parts[0] as string);
       }
       return createTemplateExpression(node, context);
     default:
@@ -32,7 +32,7 @@ function createTemplateExpression(node: common.TemplateExpressionNode, context: 
   const firstPart = typeof node.parts[0] === "string" ? node.parts[0] as string : undefined;
   const parts = firstPart != null ? node.parts.slice(1) : [...node.parts];
 
-  return ts.createTemplateExpression(ts.createTemplateHead(firstPart || ""), getParts());
+  return ts.factory.createTemplateExpression(ts.factory.createTemplateHead(firstPart || ""), getParts());
 
   function getParts() {
     const templateSpans: ts.TemplateSpan[] = [];
@@ -48,7 +48,7 @@ function createTemplateExpression(node: common.TemplateExpressionNode, context: 
       }
 
       const tsExpression = interpolatedNode.expression as ts.Expression;
-      const tsText = !isLast ? ts.createTemplateMiddle(text) : ts.createTemplateTail(text);
+      const tsText = !isLast ? ts.factory.createTemplateMiddle(text) : ts.factory.createTemplateTail(text);
 
       // mark this nameof.interpolate expression as being handled
       if (context != null) {
